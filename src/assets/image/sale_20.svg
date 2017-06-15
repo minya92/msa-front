@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="53px" viewBox="0 0 53 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+    <title>sale_20</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="graphics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sale_20">
+            <path d="M0.708810985,0.708810985 C0.317345488,0.317345488 0.442268932,0 0.999758459,0 L52.0002415,0 C52.5523929,0 53,0.442268932 53,0.999758459 L53,52.0002415 C53,52.5523929 52.6839315,52.6839315 52.291189,52.291189 L27.208811,27.208811 C26.8173455,26.8173455 26.1839315,26.1839315 25.791189,25.791189 L0.708810985,0.708810985 Z" id="base" fill="#801F25"></path>
+            <text id="20%" font-family="ProximaNova-Bold, Proxima Nova" font-size="14" font-weight="bold" fill="#FFFFFF">
+                <tspan x="24.661" y="22">20%</tspan>
+            </text>
+            <text id="скидка" font-family="ProximaNova-Bold, Proxima Nova" font-size="7" font-weight="bold" fill="#FFFFFF">
+                <tspan x="26" y="10">скидка</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
