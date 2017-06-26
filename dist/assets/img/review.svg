@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+    <title>review</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="graphics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="review" fill="#000000">
+            <path d="M11.375,0.270833333 L1.625,0.270833333 C0.73125,0.270833333 0,1.00208333 0,1.89583333 L0,7.85416667 C0,8.74791667 0.73125,9.47916667 1.625,9.47916667 L2.70833333,9.47916667 L2.70833333,12.7291667 L5.95833333,9.47916667 L11.375,9.47916667 C12.26875,9.47916667 13,8.74791667 13,7.85416667 L13,1.89583333 C13,1.00208333 12.26875,0.270833333 11.375,0.270833333" id="Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -52,9 +52,9 @@
 			<div class="container-fluid">
 				<div class="footer-top">
 					<ul>
-						<li><a>Отзывы</a></li>
+						<li><router-link to="/review">Отзывы</router-link></li>
 						<li><a>Напишите нам</a></li>
-						<li><a>Информация</a></li>
+						<li><router-link to="/info">Информация</router-link></li>
 						<li><a>Вопрос и ответ</a></li>
 						<li><a>Статус заказа</a></li>
 					</ul>
@@ -133,7 +133,9 @@
 	}
 	body{
 		font-size: 14px;
+		line-height: 1.42857143;
 	}
+	h1{ font-size: 36px;}
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		display: flex;
@@ -179,13 +181,13 @@
 		padding-right: 50px;
 	}
 	.hbox-phone .fa-icon{
-		vertical-align: bottom;
+		vertical-align: middle;
 		margin-right: 5px;
 		width: 18px;
 		height: 18px;
 	}
 	.hbox-phone a{
-		color: #6c1b20;
+		color: #fff;
 		text-decoration: none;
 		font-size: 16px;
 	}
@@ -217,11 +219,26 @@
 		color: #000;
 	}
 
-	
+
+  .breadcrumbs{
+    font-size: 11px;
+    background: #801f25;
+    height: 30px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  .padding-delmiter{
+    padding: 0 5px;
+  }
   .content-fluid{
     width: 1160px;
-    margin: auto;
-    display: flex;
+    margin: 30px auto;
+  }
+  .f-col{
+  	flex-direction: column;
   }
 
 	footer{
@@ -249,6 +266,14 @@
 		margin-bottom: 5px;
 		display: inline-block;
 		margin-right: 7px;
+	}
+	.footer-top a{
+		text-decoration: none;
+		color: inherit;
+	}
+	.footer-top li:hover a, .footer-top li:hover:before{
+		color: #ccc;
+		font-weight: 600;
 	}
 	.footer-bottom{
 		background: #000;
