@@ -1,16 +1,23 @@
 <template>
   <main-layout>
     <div class="container-fluid">
-    <swiper class="main-slider" :options="swiperOption" ref="mySwiper">
-        <!-- slides -->
-        <swiper-slide><img src="../assets/image/slider/slider_pic.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/image/slider/moto_wall1.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/image/slider/moto-wall2.jpg"></swiper-slide>
-        <!-- Optional controls -->
+      <swiper class="main-slider" :options="swiperOption">
+        <swiper-slide v-for='topSlider in topSliders'>
+          <div class="top-slider-text-content">
+            <h2>{{topSlider.headerText}}</h2>
+            <span>{{topSlider.footerText}}</span>
+          </div>
+          <div class="transbackground"></div>
+          <img :src='topSlider.img'>
+        </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
+        <div class="models-top-slider">
+          <div class="models-top-slider-item" v-for="imgModel in imgModels">
+            <img :src=imgModel>
+          </div>
+        </div>
       </swiper>
-
       <div class="category-menu">
         <div class="category-menu-item">
           <h2>Категория</h2>
@@ -102,8 +109,16 @@
       </div>
     </div>
 
-    <div class="home-box-with-slider">
+    <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
+      <h2>Найти запчасти по производителю</h2>
 
+      <swiper class="main-bot-slider" :options="swiperOptionModels">
+        <swiper-slide v-for='imgModelWhite in imgModelsWhite'>
+          <img :src='imgModelWhite'>
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
     </div>
   </main-layout>
 </template>
@@ -117,45 +132,70 @@
     },
     data() {
       return {
+        imgModels: ['img/honda_color.png', 
+        'img/bmw_color.png', 
+        'img/yamaha_color.png',
+        'img/suzuki_color.png', 
+        'img/ducati_color.png',
+        'img/ktm_color.png'
+        ],
+        imgModelsWhite: ['img/slider/ducati_white.png',
+        'img/slider/kawasaki_white.png',
+        'img/slider/honda_white.png', 
+        'img/slider/bmw_white.png',
+        'img/slider/suzuki_white.png',  
+        'img/slider/yamaha_white.png',
+        'img/slider/ktm_white.png'
+        ],
+        topSliders: [
+        {
+          headerText: 'Мотоэкипировка',
+          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
+          img: 'img/slider/slider_pic.jpg'
+        },
+        {
+          headerText: 'Экипировка',
+          footerText: 'В наличии и под заказ любые комплектующие. Для постоянных покупателей действуют скидки и промо-коды.',
+          img: 'img/slider/moto_wall1.jpg'
+        },
+        {
+          headerText: 'Мото',
+          footerText: 'Для постоянных покупателей действуют скидки и промо-коды. В наличии и под заказ любые комплектующие для вашего мотоцикла.',
+          img: 'img/slider/moto-wall2.jpg'
+        },
+        ],
         swiperOption: {
-          // NotNextTick is a component's own property, and if notNextTick is set to true, the component will not instantiate the swiper through NextTick, which means you can get the swiper object the first time (if you need to use the get swiper object to do what Things, then this property must be true)
-          notNextTick: true,
-          //autoplay: 3000,
+          autoplay: 3000,
           grabCursor : true,
           autoHeight: true,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
           effect: 'fade',
           loop: true,
-          // if you need use plugins in the swiper, you can config in here like this
-          debugger: true,
-          // swiper callbacks
-          onTransitionStart(swiper){
-            //console.log(swiper)
-          },
-          // more Swiper configs and callbacks...
-          // ...
+        },
+        swiperOptionModels: {
+          autoplay: 3000,
+          grabCursor : true,
+          slidesPerView: 3,
+          slidesPerColumn: 2,
+          spaceBetween: 30,
+          prevButton:'.swiper-button-prev',
+          nextButton:'.swiper-button-next',
+          loop: true
         }
       }
     },
-    // you can find current swiper instance object like this, while the notNextTick property value must be true
-    computed: {
-      swiper() {
-        return this.$refs.mySwiper.swiper
-      }
+    methods: {
     },
     mounted() {
-      // you can use current swiper instance object to do something(swiper methods)
-      //console.log('this is current swiper instance object', this.swiper)
-      //this.swiper.slideTo(3, 1000, false)
     }
   }
 </script>
 
 <style scoped>
-.main-slider{
-  max-height: 540px;
-}
+  .main-slider{
+    max-height: 540px;
+  }
   .swiper-slide img {
    width: auto;
    height: auto;
@@ -185,8 +225,80 @@
   margin-top: 12px;
 }
 .home-box-with-slider{
-  background: #771d22 url(../assets/image/bg_red_texture.jpg);
   height: 510px;
   width: 100%;
+}
+.home-box-with-slider h2{
+  padding-left: 190px;
+  padding-top: 70px;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.models-top-slider{
+  position: absolute;
+  top: 360px;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  z-index: 2;
+}
+.models-top-slider .models-top-slider-item{
+  width: 160px;
+  height: 120px;
+  background: #fff;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  margin-right: 40px;
+}
+.models-top-slider .models-top-slider-item:last-child{
+  margin-right: 0px;
+}
+.top-slider-text-content{
+  position: absolute;
+  z-index: 2;
+  top: 150px;
+  text-align: center;
+  color: #fff;
+  max-width: 600px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  padding: 20px;
+}
+.top-slider-text-content h2{
+  font-size: 48px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.top-slider-text-content>span{
+  font-size: 20px;
+}
+.main-bot-slider{
+  width: 1200px;
+  margin-top: 50px;
+}
+.main-bot-slider .swiper-slide{
+  text-align: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+}
+.transbackground{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1;
 }
 </style>

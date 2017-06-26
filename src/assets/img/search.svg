@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="15px" viewBox="0 0 14 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+    <title>search</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="graphics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="search" transform="translate(1.000000, 1.000000)" stroke="#000000" stroke-width="2">
+            <ellipse id="Oval" cx="5.20154651" cy="5.22580645" rx="5.20154651" ry="5.22580645"></ellipse>
+            <path d="M9,10 L11.5755447,12.5908492" id="Line" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

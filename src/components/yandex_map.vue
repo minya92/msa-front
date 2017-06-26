@@ -35,7 +35,7 @@
 
             // Создает стиль значка метки
             s.iconStyle = new YMaps.IconStyle();
-            s.iconStyle.href = "../assets/images/map_pin.svg";
+            s.iconStyle.href = "../assets/img/map_pin.svg";
             s.iconStyle.size = new YMaps.Point(18, 29);
             s.iconStyle.offset = new YMaps.Point(-9, -29);
             // Создает и добавляет метку на карту
@@ -54,6 +54,6 @@
           left: 0;
         }
         .modal_box_close{
-          background: url(../assets/image/close.svg);
+          background: url(../assets/img/close.svg);
         }
       </style>

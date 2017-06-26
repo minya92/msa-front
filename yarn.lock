@@ -2075,9 +2075,9 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-file-loader@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.1.tgz#6b328ee1234a729e4e47d36375dd6d35c0e1db84"
+file-loader@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.2.tgz#4ff1df28af38719a6098093b88c82c71d1794a34"
   dependencies:
     loader-utils "^1.0.2"
 
@@ -2652,6 +2652,10 @@ inject-loader@^3.0.0:
   resolved "https://registry.yarnpkg.com/inject-loader/-/inject-loader-3.0.0.tgz#0aea1f96e589e657bdbb6b26e7d9d41730e5b68f"
   dependencies:
     babel-core "~6"
+
+inputmask-core@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/inputmask-core/-/inputmask-core-2.2.0.tgz#79a75f7f3a4d3312ae95fd2b55a2366a7c91dfba"
 
 interpret@^1.0.0:
   version "1.0.3"
@@ -5387,6 +5391,14 @@ vue-awesome-swiper@^2.4.2:
   dependencies:
     swiper "^3.4.2"
 
+vue-awesome@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-2.3.1.tgz#edd8f54a62af322df81f06ddf25c1ec2ae995b05"
+
+vue-breadcrumbs@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vue-breadcrumbs/-/vue-breadcrumbs-1.1.1.tgz#ccf4c267a59055c376c714df9decf58e87d51570"
+
 vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
@@ -5408,6 +5420,13 @@ vue-loader@^12.1.0:
     vue-hot-reload-api "^2.1.0"
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.2.2"
+
+vue-masked-input@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/vue-masked-input/-/vue-masked-input-0.5.2.tgz#b47f64ea38e41378182918b1928066569b7504f4"
+  dependencies:
+    inputmask-core "^2.2.0"
+    vue "^2.2.6"
 
 vue-router@^2.3.1:
   version "2.5.3"
@@ -5435,7 +5454,7 @@ vue-yandex-maps@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/vue-yandex-maps/-/vue-yandex-maps-0.1.0.tgz#0e6504008b5721f93b5aee20f7c895da8e6e5658"
 
-vue@^2.3.3:
+vue@^2.2.6, vue@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.3.3.tgz#d1eaa8fde5240735a4563e74f2c7fead9cbb064c"
 

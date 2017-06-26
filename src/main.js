@@ -8,22 +8,25 @@ import axios from 'axios';
 import yandexMap from 'vue-yandex-maps';
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
+import 'vue-awesome/icons/flag'
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+import config from './config.js'
+
+Vue.component('icon', Icon)
+
 Vue.use(yandexMap)
 Vue.use(VueAwesomeSwiper)
+Vue.use(router)
 
 Vue.config.productionTip = false
-
-
-export const apiHTTP = axios.create({
-	baseURL: 'http://msa.4rp.org/api',
-	timeout: 1000,
-});
 
 new Vue({
 	el: '#app',
 	router,
+	authenticated: 'false',
 	template: '<App/>',
 	components: { swiper, 
-								swiperSlide, 
-								App }
-})
+		swiperSlide, 
+		App }
+	})
