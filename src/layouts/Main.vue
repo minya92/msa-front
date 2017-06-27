@@ -49,8 +49,8 @@
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
 		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
 		<footer>
-			<div class="container-fluid">
-				<div class="footer-top">
+			<div class="footer-top">
+				<div class="container-fluid">
 					<ul>
 						<li><router-link to="/review">Отзывы</router-link></li>
 						<li><a>Напишите нам</a></li>
@@ -59,39 +59,41 @@
 						<li><a>Статус заказа</a></li>
 					</ul>
 				</div>
-				<div class="footer-bottom">
-					<div class="fbox-lr">
-						<div class="fbox-l-container">
-							<img src="../assets/img/instagram_grey.svg">
-							<img src="../assets/img/vk_grey.svg">
-							<img src="../assets/img/fb_grey.svg">
-							<img src="../assets/img/ok_grey.svg">
-						</div>
-					</div>
-					<div class="fbox-c">
-						<div class="fbox-c-phone">
-							<template v-for="phone in phoneFooter">
-								<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
-							</template>
-						</div>
-						<div class="fbox-c-search"></div>
-						<searchForm></searchForm>
-						<div class="fbox-c-menu">
-							<a>Производители</a>
-							<a>Оплата и доставка</a>
-							<a>О магазине</a>
-						</ul>
+			</div>
+			<div class="footer-bottom">
+				<div class="container-fluid">
+				<div class="fbox-lr">
+					<div class="fbox-l-container">
+						<img src="../assets/img/instagram_grey.svg">
+						<img src="../assets/img/vk_grey.svg">
+						<img src="../assets/img/fb_grey.svg">
+						<img src="../assets/img/ok_grey.svg">
 					</div>
 				</div>
-				<div class="fbox-lr">
-					<div class="fbox-r-container">
-						<img src="../assets/img/logo_footer.png">
-						<span class="copyright">&copy; {{copyright}}</span>
+				<div class="fbox-c">
+					<div class="fbox-c-phone">
+						<template v-for="phone in phoneFooter">
+							<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
+						</template>
 					</div>
+					<div class="fbox-c-search"></div>
+					<searchForm></searchForm>
+					<div class="fbox-c-menu">
+						<a>Производители</a>
+						<a>Оплата и доставка</a>
+						<a>О магазине</a>
+					</ul>
+				</div>
+			</div>
+			<div class="fbox-lr">
+				<div class="fbox-r-container">
+					<img src="../assets/img/logo_footer.png">
+					<span class="copyright">&copy; {{copyright}}</span>
 				</div>
 			</div>
 		</div>
-	</footer>
+	</div>
+</footer>
 </div>
 </template>
 
@@ -155,6 +157,7 @@
 	.container-fluid{
 		max-width: 1400px;
 		width: 100%;
+		margin: auto;
 	}
 	header .container-fluid>div{
 		display: inline-block;
@@ -223,26 +226,26 @@
 		background-color: rgba(128,31,37,0.4);
 	}
 
-  .breadcrumbs{
-    font-size: 11px;
-    background: #801f25;
-    height: 30px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    margin-bottom: 15px;
-  }
-  .padding-delmiter{
-    padding: 0 5px;
-  }
-  .content-fluid{
-    width: 1160px;
-    margin: 30px auto;
-  }
-  .f-col{
-  	flex-direction: column;
-  }
+	.breadcrumbs{
+		font-size: 11px;
+		background: #801f25;
+		height: 30px;
+		color: #fff;
+		display: flex;
+		align-items: center;
+		padding-left: 20px;
+		margin-bottom: 15px;
+	}
+	.padding-delmiter{
+		padding: 0 5px;
+	}
+	.content-fluid{
+		width: 1160px;
+		margin: 30px auto;
+	}
+	.f-col{
+		flex-direction: column;
+	}
 
 	footer{
 		border-top: 13px solid #801f25;
@@ -250,6 +253,8 @@
 	.footer-top{
 		background: #262626;
 		color: #9b9b9b;
+	}
+	.footer-top .container-fluid{
 		display: flex;
 		justify-content: center;
 		height: 68px;
@@ -281,6 +286,8 @@
 	.footer-bottom{
 		background: #000;
 		color: #787878;
+	}
+	.footer-bottom .container-fluid{
 		display: flex;
 		align-items: center;
 		height: 154px;

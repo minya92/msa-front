@@ -107,7 +107,6 @@
           </ul>
         </div>
       </div>
-    </div>
 
     <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
       <h2>Найти запчасти по производителю</h2>
@@ -119,6 +118,7 @@
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
+    </div>
     </div>
   </main-layout>
 </template>
