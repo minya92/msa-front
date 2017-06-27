@@ -14,18 +14,22 @@
       </div>
       <div class="product-details-container">
         <h1>{{product.name}}</h1>
-        <div>
+        <div class="product-price-block">
           <div class="price">{{product.price}} {{product.currency}}</div>
-          <button @click="addToCart(product)"><img src="../assets/img/cart_empty.svg">Вкорзину</button>
-          <div>{{product.stock}}</div>
+          <div class="stock">{{product.stock}}</div>
         </div>
-        <div>{{product.article}}</div>
+        <div class="article">{{product.article}}</div>
+        <button @click="addToCart(product)"><img src="../assets/img/cart_empty.svg">Вкорзину</button>
         <template v-if='product.characteristics'>
-          <div>
-            <div>Характеристики</div>
-            <div v-for="characteristic in product.characteristics">{{characteristic.key}}: {{characteristic.value}}</div>
+          <div class="characteristic-block">
+            <h3>Характеристики</h3>
+            <div v-for="characteristic in product.characteristics">{{characteristic.key}}: <strong>{{characteristic.value}}</strong></div>
           </div>
         </template>
+        <div>
+        <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя></div>
+        <div>Мы принимаем электронные платежи</div>
+        </div>
       </div>
     </div>
     <template v-if='product.description'>
@@ -68,7 +72,7 @@
           {key: 'Размеры', value: '100х50х20'},
           {key: 'Вес', value: '3кг'}
           ],
-          stock: 'на заказ',
+          stock: 'под заказ',
           compatibility: ['BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)']
         }
       }
@@ -141,12 +145,34 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin: 20px 0;
   }
   .product-details-container  button:hover{
     background: #901820;
   }
   .product-details-container  button img{
     padding-right: 10px
+  }
+  .product-price-block .stock{
+    font-size: 20px;
+    color: #b7c1c6;
+    padding-left: 20px;
+  }
+  .product-price-block{
+    display: flex;
+    align-items: baseline;
+    margin-top: 20px;
+  }
+  .product-details-container .article{
+    color: #b7c1c6;
+    margin-top: 20px;
+  }
+  .characteristic-block h3{
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  .characteristic-block>div{
+    margin: 5px 0;
   }
   .product-description, .product-compatibility{
     display: flex;

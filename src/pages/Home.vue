@@ -10,8 +10,8 @@
           <div class="transbackground"></div>
           <img :src='topSlider.img'>
         </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
+        <div class="swiper-button-next" slot="button-next" style="display:none"></div>
         <div class="models-top-slider">
           <div class="models-top-slider-item" v-for="imgModel in imgModels">
             <img :src=imgModel>
@@ -152,21 +152,11 @@
           headerText: 'Мотоэкипировка',
           footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
           img: 'img/slider/slider_pic.jpg'
-        },
-        {
-          headerText: 'Экипировка',
-          footerText: 'В наличии и под заказ любые комплектующие. Для постоянных покупателей действуют скидки и промо-коды.',
-          img: 'img/slider/moto_wall1.jpg'
-        },
-        {
-          headerText: 'Мото',
-          footerText: 'Для постоянных покупателей действуют скидки и промо-коды. В наличии и под заказ любые комплектующие для вашего мотоцикла.',
-          img: 'img/slider/moto-wall2.jpg'
-        },
+        }
         ],
         swiperOption: {
-          autoplay: 3000,
-          grabCursor : true,
+          //autoplay: 3000,
+          grabCursor : false,
           autoHeight: true,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
@@ -246,14 +236,15 @@
   z-index: 2;
 }
 .models-top-slider .models-top-slider-item{
-  width: 160px;
-  height: 120px;
-  background: #fff;
+  width: 200px;    
+  height: 120px;    
+  background: rgba(255, 255, 255,0.5);    
+  box-shadow: #111 2px 2px 5px 2px;  
+  margin-right: 2px;
   align-items: center;
   display: flex;
   justify-content: center;
-  border-radius: 10px;
-  margin-right: 40px;
+  /*border-radius: 10px;*/
 }
 .models-top-slider .models-top-slider-item:last-child{
   margin-right: 0px;
@@ -261,7 +252,7 @@
 .top-slider-text-content{
   position: absolute;
   z-index: 2;
-  top: 150px;
+  top: 135px;
   text-align: center;
   color: #fff;
   max-width: 600px;

@@ -219,6 +219,9 @@
 		color: #000;
 	}
 
+	.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+		background-color: rgba(128,31,37,0.4);
+	}
 
   .breadcrumbs{
     font-size: 11px;
