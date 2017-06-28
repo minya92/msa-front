@@ -8,9 +8,9 @@
     <div class="content-fluid filter-section">
       fsefsef
     </div>
-    <div class="content-fluid" style="display: flex">
+    <div class="content-fluid catalog-section">
       <aside>
-        <a class="btn-action">Акции</a>
+        <a class="btn-action redBtn">Акции</a>
         <div>Каталог</div>
         <ul class="nav-vertical">
           <li>
@@ -44,11 +44,17 @@
             </router-link>
           </div>
         </div>
-        <pagination
-        :current="currentPage" 
-        :total="totalProducts" 
-        :perPage="perPage" 
-        @page-changed="loadProducts"></pagination>
+        <pagination :current="currentPage" :total="totalProducts" :perPage="perPage" @page-changed="loadProducts"></pagination>
+      </div>
+    </div>
+    <div class="container-fluid bottom-action">
+      <div v-for="blockAction in blockActions">
+        <div class="block-action-img" :style='{ backgroundImage: "url(" + blockAction.image + ")", }'></div>
+        <div class="transbackground"></div>
+        <div class="block-action-text-content">
+        <h2>{{blockAction.headerText}}</h2>
+          <span>{{blockAction.footerText}}</span>
+        </div>
       </div>
     </div>
   </main-layout>
@@ -73,6 +79,18 @@
         {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: '34500', currency: 'р', id: '58', image: 'img/catalog/axe.png'},
         {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '59', image: 'img/catalog/axe.png'},
         {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '60', image: 'img/catalog/axe.png'}
+        ],
+        blockActions: [
+        {
+          headerText: 'Большой и длинный заголовок',
+          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
+          image: 'img/article_1.png'
+        },
+        {
+          headerText: 'Большой и длинный заголовок',
+          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
+          image: 'img/article_2.png'
+        }
         ]
       }
     },
@@ -100,6 +118,9 @@
 </script>
 
 <style scoped>
+  .catalog-section{
+    display: flex;
+  }
   .filter-section{
     border-bottom: 1px solid #e7e7e7;
     padding-bottom: 15px;
@@ -115,13 +136,10 @@
   .btn-action{
     height: 50px;
     width: 260px;
-    background: #801f25;
     display: block;
-    text-align: center;
     line-height: 50px;
     text-transform: uppercase;
     font-size: 20px;
-    color: #fff;
   }
   .products-section{    
     margin-right: -40px;
@@ -160,5 +178,39 @@
   .product-price{
     color: #801f25;
     font-weight: 600;
+  }
+  .block-action-img{
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 290px;
+  }
+  .bottom-action{
+    display: flex;
+  }
+  .bottom-action>div{
+    flex: 1;
+    position: relative;
+  }
+  .block-action-text-content{
+    position: absolute;
+    z-index: 2;
+    top: 90px;
+    text-align: center;
+    color: #fff;
+    max-width: 600px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding: 20px;
+  }
+  .block-action-text-content h2{
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  .block-action-text-content>span{
+    font-size: 14px;
   }
 </style>

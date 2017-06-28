@@ -62,38 +62,38 @@
 			</div>
 			<div class="footer-bottom">
 				<div class="container-fluid">
+					<div class="fbox-lr">
+						<div class="fbox-l-container">
+							<img src="../assets/img/instagram_grey.svg">
+							<img src="../assets/img/vk_grey.svg">
+							<img src="../assets/img/fb_grey.svg">
+							<img src="../assets/img/ok_grey.svg">
+						</div>
+					</div>
+					<div class="fbox-c">
+						<div class="fbox-c-phone">
+							<template v-for="phone in phoneFooter">
+								<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
+							</template>
+						</div>
+						<div class="fbox-c-search"></div>
+						<searchForm></searchForm>
+						<div class="fbox-c-menu">
+							<a>Производители</a>
+							<a>Оплата и доставка</a>
+							<a>О магазине</a>
+						</ul>
+					</div>
+				</div>
 				<div class="fbox-lr">
-					<div class="fbox-l-container">
-						<img src="../assets/img/instagram_grey.svg">
-						<img src="../assets/img/vk_grey.svg">
-						<img src="../assets/img/fb_grey.svg">
-						<img src="../assets/img/ok_grey.svg">
+					<div class="fbox-r-container">
+						<img src="../assets/img/logo_footer.png">
+						<span class="copyright">&copy; {{copyright}}</span>
 					</div>
-				</div>
-				<div class="fbox-c">
-					<div class="fbox-c-phone">
-						<template v-for="phone in phoneFooter">
-							<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
-						</template>
-					</div>
-					<div class="fbox-c-search"></div>
-					<searchForm></searchForm>
-					<div class="fbox-c-menu">
-						<a>Производители</a>
-						<a>Оплата и доставка</a>
-						<a>О магазине</a>
-					</ul>
-				</div>
-			</div>
-			<div class="fbox-lr">
-				<div class="fbox-r-container">
-					<img src="../assets/img/logo_footer.png">
-					<span class="copyright">&copy; {{copyright}}</span>
 				</div>
 			</div>
 		</div>
-	</div>
-</footer>
+	</footer>
 </div>
 </template>
 
@@ -387,5 +387,22 @@
 	}
 	footer #search_form input {
 		background: #ccc;
+	}
+
+	.redBtn{
+		background: #801f25;
+		border: none;
+		outline: none;
+		color: #fff;
+		text-align: center;
+	}
+	.transbackground{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: rgba(0,0,0,0.4);
+		z-index: 1;
 	}
 </style>

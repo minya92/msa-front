@@ -1,24 +1,28 @@
 <template id="pagination-template">
   <div class="pagination">
-    <div class="pagination__left">
-      <a href="#" v-if="hasPrev()" @click.prevent="changePage(prevPage)">&larr;</a>
+    <div class="pagination-box">
+      <div class="pagination-left">
+        <a href="#" v-if="hasPrev()" @click.prevent="changePage(prevPage)">&larr;</a>
+      </div>
+      <div class="pagination-mid">
+        <ul>
+          <li v-if="hasFirst()"><a href="#" @click.prevent="changePage(1)">1</a></li>
+          <li v-if="hasFirst()">...</li>
+          <li v-for="page in pages">
+            <a href="#" @click.prevent="changePage(page)" :class="{ current: current == page }">
+              {{ page }}
+            </a>
+          </li>
+          <li v-if="hasLast()">...</li>
+          <li v-if="hasLast()"><a href="#" @click.prevent="changePage(totalPages)">{{ totalPages }}</a></li>
+        </ul>
+      </div>
+      <div class="pagination-right">
+        <a href="#" v-if="hasNext()" @click.prevent="changePage(nextPage)">&rarr;</a>
+      </div>
     </div>
-    <div class="pagination__mid">
-      <ul>
-        <li v-if="hasFirst()"><a href="#" @click.prevent="changePage(1)">1</a></li>
-        <li v-if="hasFirst()">...</li>
-        <li v-for="page in pages">
-          <a href="#" @click.prevent="changePage(page)" :class="{ current: current == page }">
-            {{ page }}
-          </a>
-        </li>
-        <li v-if="hasLast()">...</li>
-        <li v-if="hasLast()"><a href="#" @click.prevent="changePage(totalPages)">{{ totalPages }}</a></li>
-      </ul>
-    </div>
-    <div class="pagination__right">
-      <a href="#" v-if="hasNext()" @click.prevent="changePage(nextPage)">&rarr;</a>
-    </div>
+    <div class="total_items">{{this.total}} товаров</div>
+    <button class="upTop redBtn" @click="upTop">Наверх</button>
   </div>
 </template>
 
@@ -93,6 +97,9 @@
       },
       changePage: function(page) {
         this.$emit('page-changed', page)
+      },
+      upTop: function(){
+          window.scrollTo(0,0);
       }
     }
   }
@@ -104,9 +111,13 @@
     display: flex;
     margin: 30px auto 30px;
     padding: 0 15px;
-    max-width: 1280px;
+    max-width: 900px;
+    justify-content: space-between;
   }
-  .pagination__right a {
+  .pagination-box{
+    display: flex;
+  }
+  .pagination-right a {
     float: right;
   }
   .pagination a, .pagination span {
@@ -128,15 +139,19 @@
     background: #000;
     color: #fff;
   }
-  .pagination__mid {
+  .pagination-mid {
     display: flex;
   }
-  .pagination__mid ul {
+  .pagination-mid ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  .pagination__mid li {
+  .pagination-mid li {
     display: inline-block;
+  }
+  .upTop{
+    width: 65px;
+    height: 21px;
   }
 </style>
