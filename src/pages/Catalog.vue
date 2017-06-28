@@ -6,7 +6,7 @@
       </template>
     </div>
     <div class="content-fluid filter-section">
-fsefsef
+      fsefsef
     </div>
     <div class="content-fluid" style="display: flex">
       <aside>
@@ -29,7 +29,7 @@ fsefsef
 
       <div class="content-section">
         <div class="sort-section">
-          
+
         </div>
         <div class="products-section">
           <div class="product-wrapper" v-for="product in products">
@@ -44,29 +44,57 @@ fsefsef
             </router-link>
           </div>
         </div>
+        <pagination
+        :current="currentPage" 
+        :total="totalProducts" 
+        :perPage="perPage" 
+        @page-changed="loadProducts"></pagination>
       </div>
-
     </div>
   </main-layout>
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import pagination from '@/components/Pagination'
+  import MainLayout from '@/layouts/Main'
 
   export default {
     components: {
-      MainLayout
+      pagination, MainLayout 
     },
     data() {
       return {
+        totalProducts: 0,
+        perPage: 3,
+        currentPage: 1,
         products: [
-          {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '56', image: 'img/catalog/axe.png'},
-          {article: 'acw43q4ca4', description: 'shop_items', price: '34500', currency: 'р', id: '57', image: 'img/catalog/axe.png'},
-          {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: '34500', currency: 'р', id: '58', image: 'img/catalog/axe.png'},
-          {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '59', image: 'img/catalog/axe.png'},
-          {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '60', image: 'img/catalog/axe.png'}
+        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '56', image: 'img/catalog/axe.png'},
+        {article: 'acw43q4ca4', description: 'shop_items', price: '34500', currency: 'р', id: '57', image: 'img/catalog/axe.png'},
+        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: '34500', currency: 'р', id: '58', image: 'img/catalog/axe.png'},
+        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '59', image: 'img/catalog/axe.png'},
+        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '60', image: 'img/catalog/axe.png'}
         ]
       }
+    },
+    methods: {
+      loadProducts: function(page){
+        /*this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":2,"pageSize":3%7D%7D')
+        .then(response => {
+          if (response.data.code != 0){
+            console.log('code != 0');
+            return;
+          }
+          this.totalProducts = response.data.data;
+          this.currentPage = page;
+        }).catch(e => {
+          console.log(e);
+        });*/
+        this.totalProducts = 25;
+        this.currentPage = page;
+      }
+    },
+    created: function(){
+      this.loadProducts(this.currentPage);
     }
   }
 </script>

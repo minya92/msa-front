@@ -171,11 +171,34 @@
 		color: #fff;
 		text-decoration: none;
 	}
-	.header-top-section, .header-bottom-section{
+	.header-top-section{
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 		padding: 0 15px;
+	}
+	.header-top-section .header-logo{
+		flex: 1;
+	}
+	.header-top-section .header-top-section-menu{
+		flex: 2;
+		display: flex;
+		justify-content: center;
+	}
+	.header-top-section .hbox-phone{
+		flex: 2;
+	}
+	.header-top-section .login-section{
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+	}
+	.header-top-section .mini-cart{
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+	}
+	.header-top-section-menu a:hover, .hbox-phone a:hover{
+		font-weight: 600;
 	}
 	.header-top-section-menu a{
 		padding-right: 30px;
@@ -206,6 +229,12 @@
 	.header-bottom{
 		height: 60px;
 		position: relative;
+	}		
+	.header-bottom-section{
+		display: flex;
+		align-items: center;
+		padding: 0 15px;
+		justify-content: space-between;
 	}
 	#catalog-menu{
 		padding-left: 60px;
@@ -221,7 +250,6 @@
 	header #search_form input {
 		color: #000;
 	}
-
 	.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
 		background-color: rgba(128,31,37,0.4);
 	}
@@ -263,9 +291,13 @@
 	.footer-top ul{
 		display: flex;
 		width: 1160px;
-		justify-content: space-around;
+		margin: auto;
 		list-style: none;
 		font-size: 12px;
+	}
+	.footer-top ul li{
+		flex: 1;
+		text-align: center;;
 	}
 	.footer-top ul li:before{
 		content: '\2022';

@@ -5,6 +5,9 @@ import axios from 'axios';
 export const apiHTTP = axios.create({
 	baseURL: 'http://msa.4rp.org/api',
 	timeout: 1000,
+  withCredentials: true,
+  headers: {
+  }
 });
 apiHTTP.install = function(){
   Object.defineProperty(Vue.prototype, '$apiHTTP', {
