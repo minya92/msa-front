@@ -21,7 +21,7 @@
         <a href="#" v-if="hasNext()" @click.prevent="changePage(nextPage)">&rarr;</a>
       </div>
     </div>
-    <div class="total_items">{{this.total}} товаров</div>
+    <div class="total_items">товаров: {{this.total}}</div>
     <button class="upTop redBtn" @click="upTop">Наверх</button>
   </div>
 </template>

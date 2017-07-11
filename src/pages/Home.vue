@@ -14,7 +14,7 @@
         <div class="swiper-button-next" slot="button-next" style="display:none"></div>
         <div class="models-top-slider">
           <div class="models-top-slider-item" v-for="imgModel in imgModels">
-            <img :src=imgModel>
+            <img :src="imgModel">
           </div>
         </div>
       </swiper>

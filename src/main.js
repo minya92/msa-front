@@ -12,6 +12,7 @@ import 'vue-awesome/icons/flag'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import config from './config.js'
+import store from './vuex/store.js'
 
 Vue.component('icon', Icon)
 
@@ -23,8 +24,8 @@ Vue.config.productionTip = false
 
 new Vue({
 	el: '#app',
+	store,
 	router,
-	authenticated: 'false',
 	template: '<App/>',
 	components: { swiper, 
 		swiperSlide, 

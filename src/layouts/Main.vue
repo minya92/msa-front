@@ -6,7 +6,6 @@
 					<div class="container-fluid header-top-section">
 						<router-link to="/" class="header-logo flex-vc">
 							<img src="../assets/img/logo_header.png">
-							<span>MSA MOTO</span>
 						</router-link>
 						<div class="header-top-section-menu">
 							<router-link to="/historybuy">История покупок</router-link>
@@ -17,8 +16,13 @@
 								<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
 							</template>
 						</div>
-						<div class="login-section" v-if='this.$authenticated'>
-							<router-link to="/profile">Личный кабинет</router-link>
+						<div class="login-section" v-if='$store.state.isAuthorized'>
+							<a>{{userName}}
+								<ul class="user-link_menu">
+									<li><router-link to="/profile">Профиль</router-link></li>
+									<li @click.prevent="logout()"><a>Выйти</a></li>
+								</ul></a>
+							</router-link>
 						</div>
 						<div class="login-section" v-else>
 							<a @click.prevent='showAuth=true'>Вход</a> / <a @click.prevent='showRegistry=true'>Регистрация</a>
@@ -31,12 +35,12 @@
 				<div class="header-bottom flex-vc">
 					<div class="container-fluid header-bottom-section">
 						<div style="display: flex; align-items: baseline;">
-							<div id="show-modal-findmoto" @click="showModal=true">
-								<img src="../assets/img/parts.svg">Поиск запчастей
+							<div id="show-modal-findmoto">
+								<span @click="showModal=true"><div class="menu_icon"></div>{{lang.find_menu}}</span>
+								<findMoto v-if="showModal" @close="showModal=false"></findMoto>
 							</div>
-							<findMoto v-if="showModal" @close="showModal=false"></findMoto>
 							<router-link to="/catalog" id="catalog-menu">
-								<img src="../assets/img/menu.svg">Каталог
+								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
 							</router-link>
 						</div>
 						<searchForm></searchForm>
@@ -102,307 +106,35 @@
 	import searchForm from '../components/Search'
 	import auth from '../components/Auth'
 	import registry from '../components/Registry'
+	import style from '../assets/css/style.css'
 	export default{
 		name: 'app',
 		components: {findMoto, searchForm, auth, registry},
 		data() {
 			return{
+				lang: {
+					find_menu: 'Поиск запчастей',
+					catalog: 'Каталог'
+				},
+				userName: 'Личный кабинет',
 				showModal: false,
 				showAuth: false,
 				showRegistry: false,
 				copyright: "2017 MSA MOTO - все права защищены",
-				phoneHeader: ['8-495-000-00-00', '8-495-000-00-00'],
-				phoneFooter: ['8-495-000-00-00', '8-495-000-00-00']
+				phoneHeader: ['+7 (910) 684-44-88'],
+				phoneFooter: ['+7 (910) 684-44-88']
 			}
 		},
 		methods:{
+			logout: function(){
+				this.$store.dispatch('logout');
+			}
 		},
 		created(){
-//console.log(this.$breadcrumbs);
-}
-}
+			if (localStorage.getItem('token')){
+				this.userName = JSON.parse(localStorage.getItem('token')).login;
+				console.log(localStorage.getItem('token'));
+			}
+		}
+	}
 </script>
-
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-	html,
-	body {
-		height: 100%;
-	}
-	body{
-		font-size: 14px;
-		line-height: 1.42857143;
-	}
-	h1{ font-size: 36px;}
-	#app {
-		font-family: 'Avenir', Helvetica, Arial, sans-serif;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-	}
-	.flex-vc{
-		display: flex;
-		align-items: center;
-	}
-	.content-box {
-		flex: 1 0 auto;
-	}
-	#footer {
-		flex: 0 0 auto;
-	}
-	.container-fluid{
-		max-width: 1400px;
-		width: 100%;
-		margin: auto;
-	}
-	header .container-fluid>div{
-		display: inline-block;
-	}
-	.header-top{
-		background: #000;
-		height: 35px;
-		color: #fff;
-	}
-	.header-top a{
-		color: #fff;
-		text-decoration: none;
-	}
-	.header-top-section{
-		display: flex;
-		align-items: center;
-		padding: 0 15px;
-	}
-	.header-top-section .header-logo{
-		flex: 1;
-	}
-	.header-top-section .header-top-section-menu{
-		flex: 2;
-		display: flex;
-		justify-content: center;
-	}
-	.header-top-section .hbox-phone{
-		flex: 2;
-	}
-	.header-top-section .login-section{
-		flex: 1;
-		display: flex;
-		justify-content: flex-end;
-	}
-	.header-top-section .mini-cart{
-		flex: 1;
-		display: flex;
-		justify-content: flex-end;
-	}
-	.header-top-section-menu a:hover, .hbox-phone a:hover{
-		font-weight: 600;
-	}
-	.header-top-section-menu a{
-		padding-right: 30px;
-	}
-	.hbox-phone a{
-		padding-right: 50px;
-	}
-	.hbox-phone .fa-icon{
-		vertical-align: middle;
-		margin-right: 5px;
-		width: 18px;
-		height: 18px;
-	}
-	.hbox-phone a{
-		color: #fff;
-		text-decoration: none;
-		font-size: 16px;
-	}
-	.mini-cart img{
-		vertical-align: bottom;
-		margin-right: 5px;
-		width: 18px;
-		height: 18px;
-	}
-	.login-section a{
-		cursor: pointer;
-	}
-	.header-bottom{
-		height: 60px;
-		position: relative;
-	}		
-	.header-bottom-section{
-		display: flex;
-		align-items: center;
-		padding: 0 15px;
-		justify-content: space-between;
-	}
-	#catalog-menu{
-		padding-left: 60px;
-		text-decoration: none;
-		color: inherit;
-	}
-	#show-modal-findmoto img, #catalog-menu img{
-		padding-right: 15px;
-	}
-	#show-modal-findmoto, #catalog-menu{
-		cursor: pointer;
-	}
-	header #search_form input {
-		color: #000;
-	}
-	.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
-		background-color: rgba(128,31,37,0.4);
-	}
-
-	.breadcrumbs{
-		font-size: 11px;
-		background: #801f25;
-		height: 30px;
-		color: #fff;
-		display: flex;
-		align-items: center;
-		padding-left: 20px;
-		margin-bottom: 15px;
-	}
-	.padding-delmiter{
-		padding: 0 5px;
-	}
-	.content-fluid{
-		width: 1160px;
-		margin: 30px auto;
-	}
-	.f-col{
-		flex-direction: column;
-	}
-
-	footer{
-		border-top: 13px solid #801f25;
-	}
-	.footer-top{
-		background: #262626;
-		color: #9b9b9b;
-	}
-	.footer-top .container-fluid{
-		display: flex;
-		justify-content: center;
-		height: 68px;
-		align-items: center;
-	}
-	.footer-top ul{
-		display: flex;
-		width: 1160px;
-		margin: auto;
-		list-style: none;
-		font-size: 12px;
-	}
-	.footer-top ul li{
-		flex: 1;
-		text-align: center;;
-	}
-	.footer-top ul li:before{
-		content: '\2022';
-		font-size: 46px;
-		vertical-align: middle;
-		margin-bottom: 5px;
-		display: inline-block;
-		margin-right: 7px;
-	}
-	.footer-top a{
-		text-decoration: none;
-		color: inherit;
-	}
-	.footer-top li:hover a, .footer-top li:hover:before{
-		color: #ccc;
-		font-weight: 600;
-	}
-	.footer-bottom{
-		background: #000;
-		color: #787878;
-	}
-	.footer-bottom .container-fluid{
-		display: flex;
-		align-items: center;
-		height: 154px;
-	}
-	.fbox-c {
-		flex: 2;
-		border-left: 1px solid #787878;
-		border-right: 1px solid #787878;
-		height: 100%;
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-	.fbox-lr {
-		flex: 1;
-		display: flex;
-		justify-content: center;
-		text-align: center;
-		font-size: 12px;
-	}
-	.fbox-l-container{
-		display: flex;
-		width: 180px;
-		justify-content: space-around;
-	}
-	.fbox-r-container{
-		width: 180px;
-	}
-	.fbox-r-container span{
-		clear: both;
-		display: block;
-		margin-top: 5px;
-	}
-	.copyright{
-		font-size: 12px;
-	}
-	.fbox-c-phone{
-		margin: 15px 0;
-	}
-	.fbox-c-phone .fa-icon{
-		vertical-align: bottom;
-		margin-right: 5px;
-		width: 18px;
-		height: 18px;
-	}
-	.fbox-c-phone a{
-		color: #9b9b9b;
-		text-decoration: none;
-		margin: 0 15px;
-		font-size: 16px;
-	}
-	.fbox-c-menu{
-		margin: 15px 0;
-	}
-	.fbox-c-menu a{
-		color: #9b9b9b;
-		text-decoration: none;
-		margin: 0 15px;
-		font-size: 12px;
-		cursor: pointer;
-	}
-	.fbox-c a:hover{
-		color: #ccc;
-	}
-	footer #search_form input {
-		background: #ccc;
-	}
-
-	.redBtn{
-		background: #801f25;
-		border: none;
-		outline: none;
-		color: #fff;
-		text-align: center;
-	}
-	.transbackground{
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		background: rgba(0,0,0,0.4);
-		z-index: 1;
-	}
-</style>

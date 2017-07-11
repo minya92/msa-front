@@ -14,7 +14,7 @@
       <span v-if="password.showError" class="text-error">{{password.textError}}</span>
     </div>
     <div class="form-group">
-      <input type="button" @click="submitForm()" value="войти">
+      <button @click="submitForm()">войти</button>
     </div>
     <div class="alt-auth">
       <span class="or-box">{{orText}}</span>
@@ -55,13 +55,9 @@
   }
 },
 created() {
-  this.$authenticated = true;
 },
 methods: {
   submitForm: function(){
-    if (this.email.value.length > 2){
-      this.$authenticated = true;
-    }
   }
 }
 }

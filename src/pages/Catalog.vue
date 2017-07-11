@@ -1,27 +1,30 @@
 <template>
   <main-layout>
-    <div class="breadcrumbs">
+    <div class="container-fluid breadcrumbs">
       <template>
         <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}}</span>
       </template>
     </div>
     <div class="content-fluid filter-section">
-      fsefsef
+      Производитель
+      <div>
+        <input type="checkbox" id="checkbox-stock" v-model="checkedStock">
+        <label for="checkbox">В наличии</label>
+      </div>
+      <vsc ref="vsc" class="vsc" v-bind="dataSlide" v-model="dataSlide.value"></vsc>
     </div>
     <div class="content-fluid catalog-section">
       <aside>
         <a class="btn-action redBtn">Акции</a>
         <div>Каталог</div>
-        <ul class="nav-vertical">
-          <li>
-            <router-link to="/catalog">Категория</router-link>
+        <ul class="aside__nav_vertical">
+          <li v-for="catalog in catalogs">
+              <icon name="caret-down"></icon>
+            <router-link :to="catalog.url">{{catalog.name}}</router-link>
             <ul>
-              <li>Подкатегория товара</li>
-              <li>Подкатегория</li>
-              <li>Подкатегория товара</li>
-              <li>Подкатегория</li>
-              <li>Подкатегория товара</li>
-              <li>Подкатегория</li>
+              <li v-for="childCatalog in catalog.child">
+                <router-link :to="catalog.url">{{childCatalog.name}}</router-link>
+              </li>
             </ul>
           </li>
         </ul>
@@ -47,12 +50,22 @@
         <pagination :current="currentPage" :total="totalProducts" :perPage="perPage" @page-changed="loadProducts"></pagination>
       </div>
     </div>
+    <div class="content-fluid">
+      <RecentView></RecentView>
+    </div>
+    <div class="container-fluid model-grey">
+      <div v-for="imgModelGrey in imgModelsGrey">
+        <img :src="imgModelGrey">
+      </div>
+    </div>
+    <div>
+    </div>
     <div class="container-fluid bottom-action">
       <div v-for="blockAction in blockActions">
         <div class="block-action-img" :style='{ backgroundImage: "url(" + blockAction.image + ")", }'></div>
         <div class="transbackground"></div>
         <div class="block-action-text-content">
-        <h2>{{blockAction.headerText}}</h2>
+          <h2>{{blockAction.headerText}}</h2>
           <span>{{blockAction.footerText}}</span>
         </div>
       </div>
@@ -63,22 +76,47 @@
 <script>
   import pagination from '@/components/Pagination'
   import MainLayout from '@/layouts/Main'
+  import Vsc from 'vue-slider-component'
+  import RecentView from '@/components/RecentView'
 
   export default {
     components: {
-      pagination, MainLayout 
+      pagination, MainLayout, Vsc, RecentView
     },
     data() {
       return {
+        dataSlide:{
+          value: [ 0, 0 ],
+          width: "100%",
+          height: 2,
+          dotSize: 10,
+          min: 0,
+          max: 0,
+          tooltip: "always",
+          formatter: "{value} руб.",
+          bgStyle: { "backgroundColor": "#e7e7e7" },
+          sliderStyle: { "backgroundColor": "#801f25" },
+          tooltipStyle: { "backgroundColor": "#fff", 'color': '#000', 'border': '0'},
+          processStyle: { "backgroundColor": "#801f25" }
+        },
+        imgModelsGrey: ['img/slider/ducati_grey.png',
+        'img/slider/kawasaki_grey.png',
+        'img/slider/honda_grey.png', 
+        'img/slider/bmw_grey.png',
+        'img/slider/suzuki_grey.png',  
+        'img/slider/yamaha_grey.png',
+        'img/slider/ktm_grey.png'
+        ],
+        checkedStock: false,
         totalProducts: 0,
         perPage: 3,
         currentPage: 1,
         products: [
-        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '56', image: 'img/catalog/axe.png'},
-        {article: 'acw43q4ca4', description: 'shop_items', price: '34500', currency: 'р', id: '57', image: 'img/catalog/axe.png'},
-        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: '34500', currency: 'р', id: '58', image: 'img/catalog/axe.png'},
-        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '59', image: 'img/catalog/axe.png'},
-        {article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: '34500', currency: 'р', id: '60', image: 'img/catalog/axe.png'}
+        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 3500, currency: 'р', id: '56', image: 'img/catalog/axe.png' },
+        { article: 'acw43q4ca4', description: 'shop_items', price: 36600, currency: 'р', id: '57', image: 'img/catalog/axe.png' },
+        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: 14500, currency: 'р', id: '58', image: 'img/catalog/axe.png' },
+        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 55500, currency: 'р', id: '59', image: 'img/catalog/axe.png' },
+        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 34500, currency: 'р', id: '60', image: 'img/catalog/axe.png' }
         ],
         blockActions: [
         {
@@ -91,126 +129,54 @@
           footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
           image: 'img/article_2.png'
         }
+        ],
+        catalogs: [
+          {name: 'Большая длинная категория', url:'/1', child:[
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+            ]
+          },
+          {name: 'Длинная категория', url:'/1', child:[
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+              {name: 'Длинная категория', url: '/2'},
+            ]
+          },
         ]
-      }
-    },
-    methods: {
-      loadProducts: function(page){
-        /*this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":2,"pageSize":3%7D%7D')
-        .then(response => {
-          if (response.data.code != 0){
-            console.log('code != 0');
-            return;
-          }
-          this.totalProducts = response.data.data;
-          this.currentPage = page;
-        }).catch(e => {
-          console.log(e);
-        });*/
-        this.totalProducts = 25;
-        this.currentPage = page;
-      }
-    },
-    created: function(){
-      this.loadProducts(this.currentPage);
-    }
   }
-</script>
+},
+methods: {
+  loadProducts: function(page){
+    this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":'+page+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
+      console.log(response.data);
+    }).catch(e => {
+      console.log(e);
+    });
+    this.currentPage = page;
 
-<style scoped>
-  .catalog-section{
-    display: flex;
+    var min = 0;
+    var max = 0;
+    for(var i=0; i < this.products.length; i++){
+      if (min > this.products[i].price || min == 0) min = this.products[i].price;
+      if (max < this.products[i].price) max = this.products[i].price;
+    }
+    this.dataSlide.min = min;
+    this.dataSlide.max = max;
+    this.dataSlide.value = [min, max];
+
   }
-  .filter-section{
-    border-bottom: 1px solid #e7e7e7;
-    padding-bottom: 15px;
-    margin: 20px auto;
-  }
-  aside{
-    width: 260px;
-    margin-right: 40px;
-  }
-  .content-section{
-    width: 860px;
-  }
-  .btn-action{
-    height: 50px;
-    width: 260px;
-    display: block;
-    line-height: 50px;
-    text-transform: uppercase;
-    font-size: 20px;
-  }
-  .products-section{    
-    margin-right: -40px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .product-wrapper{
-    display: flex;
-    width: 33.33%;
-    margin-bottom: 40px;
-  }
-  .product{
-    border: 1px solid #e7e7e7;
-    margin-right: 40px;
-    width: 100%;
-    font-size: 14px;
-    padding: 15px;
-    text-decoration: none;
-    color: inherit;
-  }
-  .product .image{
-    width: 100%;
-    height: 150px;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-  .product-article{
-    font-size: 12px;
-    color: #b9c3c7;
-  }
-  .product-description{
-    height: 62px;
-    overflow: hidden;
-    margin: 5px 0;
-  }
-  .product-price{
-    color: #801f25;
-    font-weight: 600;
-  }
-  .block-action-img{
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 290px;
-  }
-  .bottom-action{
-    display: flex;
-  }
-  .bottom-action>div{
-    flex: 1;
-    position: relative;
-  }
-  .block-action-text-content{
-    position: absolute;
-    z-index: 2;
-    top: 90px;
-    text-align: center;
-    color: #fff;
-    max-width: 600px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    padding: 20px;
-  }
-  .block-action-text-content h2{
-    font-size: 24px;
-    text-transform: uppercase;
-    text-align: center;
-    padding-bottom: 20px;
-  }
-  .block-action-text-content>span{
-    font-size: 14px;
-  }
-</style>
+},
+created: function(){
+  this.$apiHTTP.get('getItemsCount').then(response => {
+    this.totalProducts = response.data.data;
+    this.loadProducts(this.currentPage);
+  }).catch(e => {
+    console.log(e);
+  });
+}
+}
+</script>

@@ -45,6 +45,8 @@
     text-align: left;
     padding: 20px 40px;
     width: 420px;
+    max-height: 96%;
+    overflow: auto;
   }
   .modal_box_close{
     background: url(../assets/img/close.svg);
@@ -70,7 +72,7 @@
     font-size: 12px;
     color: #999;
   }
-  .modal-frame input{
+  .modal-frame input, .modal-frame button{
     width: 340px;
     height: 30px;
     display: block;
@@ -86,7 +88,7 @@
     font-size: 30px;
     letter-spacing: 5px;
   }
-  .modal-frame input[type='button']{
+  .modal-frame button{
     border: 0;
     background: #801f25;
     text-transform: uppercase;

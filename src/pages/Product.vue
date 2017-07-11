@@ -1,6 +1,6 @@
 <template>
   <main-layout>
-    <div class="breadcrumbs">
+    <div class="container-fluid breadcrumbs">
       <template>
         <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}} <span class="padding-delmiter">/</span> {{$route.params.id}}</span>
       </template>
