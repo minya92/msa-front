@@ -15,6 +15,20 @@ h1{ font-size: 36px;}
 button {
 	cursor: pointer;
 }
+.btn_theme{
+	background: #801f25;
+	border: 0;
+	color: #fff;
+	outline: none;
+	text-align: center;
+}
+.btn_theme_white{
+	background: #fff;
+	border: 1px solid #333;
+	color: #000;
+	outline: none;
+	text-align: center;
+}
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	display: flex;
@@ -214,6 +228,17 @@ header #search_form input {
 	flex-direction: column;
 }
 
+
+.arrow_down{
+	position: absolute;
+	left: 0;
+	cursor: pointer;
+}
+.arrow_down:before{
+	content: '\25be';
+	color: #b11028;
+	font-size: 16px;
+}
 /********* Catalog ***********/
 
 .catalog-section{
@@ -233,6 +258,8 @@ aside{
 }
 .aside__nav_vertical li{
 	list-style: none;
+	position: relative;
+	padding-left: 14px;
 }
 .aside__nav_vertical li ul{
 	display: none;
@@ -267,24 +294,32 @@ aside{
 	text-decoration: none;
 	color: inherit;
 }
-.product .image{
+.product__image{
+	display: block;
 	width: 100%;
 	height: 150px;
 	background-repeat: no-repeat;
 	background-position: center center;
+}
+.product .product-name{
+	font-weight: 600;
 }
 .product-article{
 	font-size: 12px;
 	color: #b9c3c7;
 }
 .product-description{
-	height: 62px;
+	max-height: 62px;
 	overflow: hidden;
 	margin: 5px 0;
 }
 .product-price{
 	color: #801f25;
 	font-weight: 600;
+}
+.btn_product{
+	padding: 7px 15px;
+	font-size: 14px;
 }
 .block-action-img{
 	background-repeat: no-repeat;
@@ -447,13 +482,6 @@ footer{
 }
 footer #search_form input {
 	background: #ccc;
-}
-.redBtn{
-	background: #801f25;
-	border: none;
-	outline: none;
-	color: #fff;
-	text-align: center;
 }
 .transbackground{
 	position: absolute;

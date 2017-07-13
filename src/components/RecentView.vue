@@ -8,7 +8,7 @@
     <div class="products-section">
       <div class="product-wrapper" v-for="(product, index) in products" v-if="showMore(index)" >
         <router-link :to="/product/ + product.id" class="product">
-          <div class="image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
+          <div class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
           </div>
           <div class="">
             <div class="product-article">{{product.article}}</div>

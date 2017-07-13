@@ -15,11 +15,11 @@
     </div>
     <div class="content-fluid catalog-section">
       <aside>
-        <a class="btn-action redBtn">Акции</a>
+        <a class="btn-action btn_theme">Акции</a>
         <div>Каталог</div>
         <ul class="aside__nav_vertical">
           <li v-for="catalog in catalogs">
-              <icon name="caret-down"></icon>
+            <span v-if="catalog.child.length" class="arrow_down" @click="toggle"></span>
             <router-link :to="catalog.url">{{catalog.name}}</router-link>
             <ul>
               <li v-for="childCatalog in catalog.child">
@@ -30,47 +30,54 @@
         </ul>
       </aside>
 
-      <div class="content-section">
+      <div class="content-section" v-if="products.length > 0">
         <div class="sort-section">
 
         </div>
         <div class="products-section">
+          <AddToCart v-if="showCart" @close="showCart = false"></AddToCart>
           <div class="product-wrapper" v-for="product in products">
-            <router-link :to="/product/ + product.id" class="product">
-              <div class="image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
-              </div>
+            <div class="product">
+              <router-link :to="/product/ + product.id" class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
+              </router-link>
               <div class="">
+                <div class="product-name">{{product.name}}</div>
                 <div class="product-article">{{product.article}}</div>
                 <div class="product-description">{{product.description}}</div>
                 <div class="product-price">{{product.price}} {{product.currency}}</div>
               </div>
-            </router-link>
-          </div>
-        </div>
-        <pagination :current="currentPage" :total="totalProducts" :perPage="perPage" @page-changed="loadProducts"></pagination>
-      </div>
-    </div>
-    <div class="content-fluid">
-      <RecentView></RecentView>
-    </div>
-    <div class="container-fluid model-grey">
-      <div v-for="imgModelGrey in imgModelsGrey">
-        <img :src="imgModelGrey">
-      </div>
-    </div>
-    <div>
-    </div>
-    <div class="container-fluid bottom-action">
-      <div v-for="blockAction in blockActions">
-        <div class="block-action-img" :style='{ backgroundImage: "url(" + blockAction.image + ")", }'></div>
-        <div class="transbackground"></div>
-        <div class="block-action-text-content">
-          <h2>{{blockAction.headerText}}</h2>
-          <span>{{blockAction.footerText}}</span>
+              <div>
+                <button class="btn_product btn_theme"  @click.prevent='showCart=true'>В корзину</button>
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
+      <pagination :current="currentPage" :total="totalProducts" :perPage="perPage" @page-changed="loadProducts"></pagination>
     </div>
-  </main-layout>
+    <div class="content-section" v-else>{{lang.textEmptyProducts}}</div>
+  </div>
+  <div class="content-fluid">
+    <RecentView></RecentView>
+  </div>
+  <div class="container-fluid model-grey">
+    <div v-for="imgModelGrey in imgModelsGrey">
+      <img :src="imgModelGrey">
+    </div>
+  </div>
+  <div>
+  </div>
+  <div class="container-fluid bottom-action">
+    <div v-for="blockAction in blockActions">
+      <div class="block-action-img" :style='{ backgroundImage: "url(" + blockAction.image + ")", }'></div>
+      <div class="transbackground"></div>
+      <div class="block-action-text-content">
+        <h2>{{blockAction.headerText}}</h2>
+        <span>{{blockAction.footerText}}</span>
+      </div>
+    </div>
+  </div>
+</main-layout>
 </template>
 
 <script>
@@ -78,13 +85,15 @@
   import MainLayout from '@/layouts/Main'
   import Vsc from 'vue-slider-component'
   import RecentView from '@/components/RecentView'
+  import AddToCart from '@/components/AddToCart'
 
   export default {
     components: {
-      pagination, MainLayout, Vsc, RecentView
+      pagination, MainLayout, Vsc, RecentView, AddToCart
     },
     data() {
       return {
+        showCart: false,
         dataSlide:{
           value: [ 0, 0 ],
           width: "100%",
@@ -107,17 +116,14 @@
         'img/slider/yamaha_grey.png',
         'img/slider/ktm_grey.png'
         ],
+        lang: {
+          textEmptyProducts: 'В данной категории нет товаров.'
+        },
         checkedStock: false,
         totalProducts: 0,
         perPage: 3,
         currentPage: 1,
-        products: [
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 3500, currency: 'р', id: '56', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items', price: 36600, currency: 'р', id: '57', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: 14500, currency: 'р', id: '58', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 55500, currency: 'р', id: '59', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 34500, currency: 'р', id: '60', image: 'img/catalog/axe.png' }
-        ],
+        products: [],
         blockActions: [
         {
           headerText: 'Большой и длинный заголовок',
@@ -131,33 +137,63 @@
         }
         ],
         catalogs: [
-          {name: 'Большая длинная категория', url:'/1', child:[
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-            ]
-          },
-          {name: 'Длинная категория', url:'/1', child:[
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-              {name: 'Длинная категория', url: '/2'},
-            ]
-          },
+        {name: 'Большая длинная категория', url:'/1', child:[
+        {name: 'Длинная категория', url: '/2'},
+        {name: 'Длинная категория', url: '/2'},
+        {name: 'Длинная категория', url: '/2'},
+        {name: 'Длинная категория', url: '/2'},
         ]
-  }
+      },
+      {name: 'Большая длинная категория', url:'/1', child:[]
+    },
+    {name: 'Длинная категория', url:'/1', child:[
+    {name: 'Длинная категория', url: '/2'},
+    {name: 'Длинная категория', url: '/2'},
+    {name: 'Длинная категория', url: '/2'},
+    {name: 'Длинная категория', url: '/2'},
+    {name: 'Длинная категория', url: '/2'},
+    ]
+  },
+  ]
+}
 },
 methods: {
   loadProducts: function(page){
-    this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":'+page+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
-      console.log(response.data);
+    this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":'+(page-1)+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
+      var products = [];
+      console.log(response.data.data.length);
+      response.data = {"code":0,"data":[{"artikul":null,"bar_code":null,"cost":550,"currency":"RUB","description":null,"id":149623112236800,"images":[{"full":null,"small":null}],"name":"Test","type":1001},{"artikul":null,"bar_code":14587523459,"cost":415,"currency":"RUB","description":null,"id":149881145875500,"images":[{"default":true,"full":"img/149917599470300","small":"img/thumbnail/149917599470300"}],"name":"Пластик 509","type":1001},{"artikul":null,"bar_code":456789,"cost":7500,"currency":"RUB","description":null,"id":149907069744900,"images":[{"full":null,"small":null}],"name":"Тестовый товар","type":149907064859000}],"error":null};
+      for (var i = 0; i < response.data.data.length; i++){
+        var item = response.data.data[i];
+        products.push({
+          id: item.id, 
+          name: item.name, 
+          article: item.artikul, 
+          description: item.description, 
+          price: item.cost, 
+          currency: item.currency, 
+          image: this.loadImage(item.images.full) 
+        });
+      }
+
+      this.products = products;
+      this.filterPrice();
     }).catch(e => {
       console.log(e);
     });
     this.currentPage = page;
+  },
+  toggle: function(e){
+    console.log(e.target.parentNode);
+  },
+  loadImage: function(image){
+    if (!image){
+      return 'img/default.jpg';
+    }
 
+    return image;
+  },
+  filterPrice: function(){
     var min = 0;
     var max = 0;
     for(var i=0; i < this.products.length; i++){
@@ -167,7 +203,6 @@ methods: {
     this.dataSlide.min = min;
     this.dataSlide.max = max;
     this.dataSlide.value = [min, max];
-
   }
 },
 created: function(){

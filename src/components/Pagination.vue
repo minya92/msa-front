@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="total_items">товаров: {{this.total}}</div>
-    <button class="upTop redBtn" @click="upTop">Наверх</button>
+    <button class="upTop btn_theme" @click="upTop">Наверх</button>
   </div>
 </template>
 

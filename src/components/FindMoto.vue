@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="result-count">Всего запчастей: 33</div>
-    <button class="redBtn" @click="moreBtn">{{lang.moreInfo}}</button>
+    <button class="btn_theme" @click="moreBtn">{{lang.moreInfo}}</button>
   </div>
 </div>
 </transition>

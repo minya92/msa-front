@@ -89,13 +89,8 @@
     letter-spacing: 5px;
   }
   .modal-frame button{
-    border: 0;
-    background: #801f25;
     text-transform: uppercase;
     font-size: 14px;
-    color: #fff;
-    outline: 0;
-    display: block;
     margin: 10px 0;
   }
   .modal-frame label{
