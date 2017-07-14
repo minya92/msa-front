@@ -14,6 +14,8 @@ import Product from '@/pages/Product'
 import Profile from '@/pages/Profile'
 import Review from '@/pages/Review'
 import Information from '@/pages/Information'
+import Cart from '@/pages/Cart'
+import Checkout from '@/pages/Checkout'
 
 // роуты приложения 
 const routes = [
@@ -27,6 +29,8 @@ const routes = [
     },
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },
     { path: '/profile', component: Profile, meta: {breadcrumb: 'Личный кабинет'} },
+    { path: '/cart', component: Cart, meta: {breadcrumb: 'Корзина'} },
+    { path: '/checkout', component: Checkout, meta: {breadcrumb: 'Оформление заказа'} },
     { path: '/review/', component: Review, meta: {breadcrumb: 'Отзывы', title: 'Отзывы'} },
     { path: '/info/', component: Information, meta: {breadcrumb: 'Информация', title: 'Информация'} },
     { path: "*", component: PageNotFound }

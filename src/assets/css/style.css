@@ -300,6 +300,7 @@ aside{
 	height: 150px;
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: contain;
 }
 .product .product-name{
 	font-weight: 600;

@@ -17,7 +17,7 @@ apiHTTP.install = function(){
 Vue.use(apiHTTP);
 
 //
-Vue.prototype.$authenticated = false
+Vue.prototype.$SERVER_URL = 'http://msa.4rp.org/';
 
 export default {
 	check: function(context) {

@@ -35,7 +35,7 @@
 
         </div>
         <div class="products-section">
-          <AddToCart v-if="showCart" @close="showCart = false"></AddToCart>
+          <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
           <div class="product-wrapper" v-for="product in products">
             <div class="product">
               <router-link :to="/product/ + product.id" class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
@@ -47,7 +47,7 @@
                 <div class="product-price">{{product.price}} {{product.currency}}</div>
               </div>
               <div>
-                <button class="btn_product btn_theme"  @click.prevent='showCart=true'>В корзину</button>
+                <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
               </div>
             </div>
           </router-link>
@@ -123,6 +123,7 @@
         totalProducts: 0,
         perPage: 3,
         currentPage: 1,
+        selectProduct: {},
         products: [],
         blockActions: [
         {
@@ -159,10 +160,9 @@
 },
 methods: {
   loadProducts: function(page){
-    this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":'+(page-1)+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
+    page = page-1;
+    this.$apiHTTP.get('getItems?filter=%7B"pagination":%7B"page":'+page+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
       var products = [];
-      console.log(response.data.data.length);
-      response.data = {"code":0,"data":[{"artikul":null,"bar_code":null,"cost":550,"currency":"RUB","description":null,"id":149623112236800,"images":[{"full":null,"small":null}],"name":"Test","type":1001},{"artikul":null,"bar_code":14587523459,"cost":415,"currency":"RUB","description":null,"id":149881145875500,"images":[{"default":true,"full":"img/149917599470300","small":"img/thumbnail/149917599470300"}],"name":"Пластик 509","type":1001},{"artikul":null,"bar_code":456789,"cost":7500,"currency":"RUB","description":null,"id":149907069744900,"images":[{"full":null,"small":null}],"name":"Тестовый товар","type":149907064859000}],"error":null};
       for (var i = 0; i < response.data.data.length; i++){
         var item = response.data.data[i];
         products.push({
@@ -172,7 +172,7 @@ methods: {
           description: item.description, 
           price: item.cost, 
           currency: item.currency, 
-          image: this.loadImage(item.images.full) 
+          image: this.loadImage(item.images[0].small) 
         });
       }
 
@@ -181,6 +181,9 @@ methods: {
     }).catch(e => {
       console.log(e);
     });
+
+      this.products = products;
+      this.filterPrice();
     this.currentPage = page;
   },
   toggle: function(e){
@@ -191,7 +194,7 @@ methods: {
       return 'img/default.jpg';
     }
 
-    return image;
+    return this.$SERVER_URL + image;
   },
   filterPrice: function(){
     var min = 0;
@@ -203,6 +206,10 @@ methods: {
     this.dataSlide.min = min;
     this.dataSlide.max = max;
     this.dataSlide.value = [min, max];
+  },
+  addToCart: function(product){
+    this.product = product;
+    this.showCart=true;
   }
 },
 created: function(){

@@ -5,14 +5,14 @@
         <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}} <span class="padding-delmiter">/</span> {{$route.params.id}}</span>
       </template>
     </div>
-    <div class="content-fluid" style="display: flex">
-      <div class="product-media-container">
-        <div class="main-image"><img :src="product.image"></div>
+    <div class="content-fluid product__detail">
+      <div class="product__detail__media">
+      <div class="main-image"><img :src="loadImage(product.images[0].full)"></div>
         <div class="thumblist">
-          <a v-for="image in product.images"><img :src="image"></a>
+          <a v-for="image in product.images"><img :src="loadImage(image.small)"></a>
         </div>
       </div>
-      <div class="product-details-container">
+      <div class="product__detail__description">
         <h1>{{product.name}}</h1>
         <div class="product-price-block">
           <div class="price">{{product.price}} {{product.currency}}</div>
@@ -20,20 +20,20 @@
         </div>
         <div class="article">{{product.article}}</div>
         <button @click="addToCart(product)"><img src="../assets/img/cart_empty.svg">Вкорзину</button>
-        <template v-if='product.characteristics'>
+        <template v-if='product.chars'>
           <div class="characteristic-block">
             <h3>Характеристики</h3>
-            <div v-for="characteristic in product.characteristics">{{characteristic.key}}: <strong>{{characteristic.value}}</strong></div>
+            <div v-for="char in product.chars">{{char.char_name}}: <strong>{{char.char_value}}</strong></div>
           </div>
         </template>
         <div>
-        <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя></div>
-        <div>Мы принимаем электронные платежи</div>
+          <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя></div>
+          <div>Мы принимаем электронные платежи</div>
         </div>
       </div>
     </div>
     <template v-if='product.description'>
-      <div class="content-fluid product-description">
+      <div class="content-fluid product__detail_description">
         <h3>Описание</h3>
         <div>{{product.description}}</div>
       </div>
@@ -42,7 +42,8 @@
       <div class="content-fluid product-compatibility">
         <h3>Совместимость</h3>
         <ul>
-          <li v-for="compatibility in product.compatibility">{{compatibility}}</li>
+          <li v-for="compatibility in product.compatibility">
+          <router-link :to="/product/ + compatibility.mark_model_id">{{compatibility.mark_model_name}}</router-link></li>
         </ul>
       </div>
     </template>
@@ -58,7 +59,8 @@
     },
     data() {
       return {
-        product: {
+        product: {}
+        /*product: {
           name: 'Сумка на бак QUICK-LOCK Tankbag ION TWO',
           price: '72000',
           currency: 'руб.',
@@ -66,7 +68,7 @@
           images: ['img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png',],
           article: 'AFW4534TFQV34',
           description: 'Удобно и просто, сумка подходит для всех типов бензобаков и во время коротких поездок заботится о ваших личных вещах, таких как бумажник и документы на Мотоцикл. Система крепления Quick Lock EVO поможет в течение нескольких секунд безопасно установить сумку и также легко ее снять.Сумка изготовлена ​​из прочного нейлона 1680D, а также доступна в качестве электрической версии с интегрированным блоком питания. Компактный дизайн.',
-          characteristics: [
+          chars: [
           {key: 'Цвет', value: 'черный'},
           {key: 'Материал', value: 'пластик'},
           {key: 'Размеры', value: '100х50х20'},
@@ -74,19 +76,48 @@
           ],
           stock: 'под заказ',
           compatibility: ['BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)']
-        }
+        }*/
       }
     },
     methods: {
       addToCart: function(item){
         item.quantity += 1;
+      },
+      loadImage: function(image){
+        console.log(image);
+        if (!image){
+          return 'img/default.jpg';
+        }
+
+        return this.$SERVER_URL + image;
       }
+    },
+    created: function(){
+      this.$apiHTTP.get('getItem/'+this.$route.params.id).then(response => {
+        var item = response.data.data;
+        this.product = {
+          id: item.id, 
+          name: item.name, 
+          article: item.artikul, 
+          description: item.description, 
+          price: item.cost, 
+          currency: item.currency, 
+          images: item.images,
+          compatibility: item.supported,
+          chars: item.chars
+        };
+      }).catch(e => {
+        console.log(e);
+      });
     }
   }
 </script>
 
 <style scoped>
-  .product-media-container{
+  .product__detail{
+    display: flex;
+  }
+  .product__detail__media{
     width: 660px;
     margin-right: 40px;
   }
@@ -121,19 +152,19 @@
     display: flex;
     margin-bottom: 10px;
   }
-  .product-details-container{
+  .product__detail__description{
     width: 460px;
   }
-  .product-details-container h1{
+  .product__detail__description h1{
     font-size: 36px;
     font-weight: bold;
   }
-  .product-details-container .price{
+  .product__detail__description .price{
     font-size: 36px;
     font-weight: bold;
     color: #801f25;
   }
-  .product-details-container  button{
+  .product__detail__description  button{
     background: #801f25;
     width: 160px;
     height: 40px;
@@ -147,10 +178,10 @@
     cursor: pointer;
     margin: 20px 0;
   }
-  .product-details-container  button:hover{
+  .product__detail__description  button:hover{
     background: #901820;
   }
-  .product-details-container  button img{
+  .product__detail__description  button img{
     padding-right: 10px
   }
   .product-price-block .stock{
@@ -163,7 +194,7 @@
     align-items: baseline;
     margin-top: 20px;
   }
-  .product-details-container .article{
+  .product__detail__description .article{
     color: #b7c1c6;
     margin-top: 20px;
   }
@@ -174,11 +205,11 @@
   .characteristic-block>div{
     margin: 5px 0;
   }
-  .product-description, .product-compatibility{
+  .product__detail_description, .product-compatibility{
     display: flex;
     flex-direction: column;
   }
-  .product-description h3, .product-compatibility h3{
+  .product__detail_description h3, .product-compatibility h3{
     padding-bottom: 10px;
     text-transform: uppercase;
   }
