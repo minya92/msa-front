@@ -8,7 +8,7 @@
 							<img src="../assets/img/logo_header.png">
 						</router-link>
 						<div class="header-top-section-menu">
-							<router-link to="/historybuy">История покупок</router-link>
+							<router-link v-if='$store.state.isAuthorized' to="/profile/historybuy">История покупок</router-link>
 							<router-link to="/contacts">Контакты</router-link>
 						</div>
 						<div class="hbox-phone">
@@ -17,7 +17,7 @@
 							</template>
 						</div>
 						<div class="login-section" v-if='$store.state.isAuthorized'>
-							<a>{{userName}}
+							<a>{{lang.userName | emptyName}}
 								<ul class="user-link_menu">
 									<li><router-link to="/profile">Профиль</router-link></li>
 									<li @click.prevent="logout()"><a>Выйти</a></li>
@@ -48,6 +48,7 @@
 					</div>
 				</div>
 			</header>
+			<breadcrumbs class="container-fluid"></breadcrumbs>
 			<slot></slot>
 		</div>
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
@@ -107,16 +108,17 @@
 	import auth from '../components/Auth'
 	import registry from '../components/Registry'
 	import style from '../assets/css/style.css'
+	import Breadcrumbs from '@/components/Breadcrumbs'
 	export default{
 		name: 'app',
-		components: {findMoto, searchForm, auth, registry},
+		components: {findMoto, searchForm, auth, registry, Breadcrumbs},
 		data() {
 			return{
 				lang: {
 					find_menu: 'Поиск запчастей',
-					catalog: 'Каталог'
+					catalog: 'Каталог',
+					userName: 'Личный кабинет',
 				},
-				userName: 'Личный кабинет',
 				showModal: false,
 				showAuth: false,
 				showRegistry: false,
@@ -127,13 +129,18 @@
 		},
 		methods:{
 			logout: function(){
-				this.$store.dispatch('logout');
+				this.$store.dispatch('logout')
+			}
+		},
+		filters: {
+			emptyName: function(name){
+				return name ? name : this.lang.userName
 			}
 		},
 		created(){
 			if (localStorage.getItem('token')){
-				this.userName = JSON.parse(localStorage.getItem('token')).login;
-				console.log(localStorage.getItem('token'));
+				this.userName = JSON.parse(localStorage.getItem('token')).login
+				//console.log(localStorage.getItem('token'));
 			}
 		}
 	}

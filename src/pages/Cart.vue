@@ -1,16 +1,11 @@
 <template>
   <main-layout>
-    <div class="container-fluid breadcrumbs">
-      <template>
-        <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}}</span>
-      </template>
-    </div>
-    <div class="content-fluid catalog-section">
+    <div v-if="$store.getters.cartProducts.length" class="content-fluid">
       <table class="table__cart">
         <tbody>
           <tr>
-            <th class="table__cart__picture">Изображение</th>
-            <th>Описание</th>
+            <th class="table__cart__picture">{{lang.picture}}</th>
+            <th>{{lang.description}}</th>
             <th class="table__cart__quantity">Количество</th>
             <th class="table__cart__price">Цена</th>
             <th></th>
@@ -25,12 +20,40 @@
             </td>
             <td class="table__cart__price">{{product.price}}</td>
             <td class="table__cart__remove">
-              <div class="" @click="removeItem(index)">x</div>
+              <div class="" @click="removeItem(product)">x</div>
             </td>
           </tr>
         </tbody>
       </table>
+      <div class="result__cart__table">
+        <div>{{selectDeliveryMethods}}</div>
+        <div>{{selectPaymentMethods}}</div>
+        <div>Сумма: {{total}}</div>
+      </div>
+      <div class="cart-methods-section">
+        <div class="delivery-section">
+          <div class="delivery-section__title">Способ получения заказа</div>
+          <div class="delivery-block" v-for="deliv in delivery" v-if="total >= deliv.minOrderSum">
+            <input type="radio" :value="deliv.id" v-model="selectDelivery">
+            <label class="delivery-block__title" :for="deliv.id">{{deliv.deliveryName}}</label>
+            <div class="delivery-block__description">{{deliv.deliveryDefinition}}</div>
+          </div>
+        </div>
+        <div class="payment-section">
+          <div class="delivery-section__title">Способ оплаты</div>
+          <div class="delivery-block" v-for="payment in payments" v-if="total >= payment.minOrderSum">
+            <input type="radio" :value="payment.id" v-model="selectPayment">
+            <label class="delivery-block__title" :for="payment.id">{{payment.payName}}</label>
+            <div class="delivery-block__description">{{payment.payDefinition}}</div>
+          </div>
+        </div>
+        <div class="data-info-section">
+          <div class="delivery-section__title">Авторизация</div>
+        </div>
+      </div>
+      <button class="btn_theme" @click="sendOrder()">Оформить заказ</button>
     </div>
+    <div class="content-fluid" v-else>{{lang.emptyCart}}</div>
   </main-layout>
 </template>
 
@@ -44,53 +67,147 @@
     data() {
       return {
         products: [],
-        counter: 1,
+        selectDelivery: [],
+        selectPayment: [],
+        lang:{
+          emptyCart: 'Корзина пустая',
+          toCatalog: 'Перейти в каталог',
+          picture: 'Изображение',
+          description: 'Описание'
+        },
+        delivery: [],
+        payments: [],
+      }
+    },
+    computed: {
+      total () {
+        var delivery = this.delivery.find(p => p.id === this.selectDelivery)
+        var deliveryCost = 0
+        if (delivery){
+          deliveryCost = delivery.deliverCost;
+        }
+        return this.products.reduce((total, p) => {
+          return total + p.price * p.quantity + deliveryCost
+        }, 0)
+      },
+      selectPaymentMethods(){
+        var payments = this.payments.find(p => p.id === this.selectPayment)
+        if (!payments){
+          return ''
+        }
+
+        return payments.payName
+      },
+      selectDeliveryMethods(){
+        var delivery = this.delivery.find(p => p.id === this.selectDelivery)
+        if (!delivery){
+          return ''
+        }
+
+        return delivery.deliveryName + ': ' + delivery.deliverCost
       }
     },
     methods: {
       loadImage: function(image){
         if (!image){
-          return 'img/default.jpg';
+          return 'img/default.jpg'
         }
 
         return image;
       },
       quantityMinus: function(product){
-        if (product.quantity > 1)
+        if (product.quantity > 1){
           product.quantity--;
+          this.$store.dispatch('updateCart', product);
+        }
       },
       quantityPlus: function(product){
         product.quantity++;
+        this.$store.dispatch('updateCart', product);
       },
-      removeItem: function(index){
-        console.log(this.products);
-        this.products.splice(index,1);
-        console.log(this.products);
+      removeItem: function(product){
+        this.$store.dispatch('removeCart', product);
+        this.products.splice(this.products.indexOf(product), 1)
+      },
+      sendOrder: function(){
+        /*{
+          phone: '89999999999', 
+          email: 'email@gmail.com', 
+          deliveryType: 1, 
+          deliveryAddress: 'Деревня в которой людишки живут', 
+          orderItems: [
+            { 
+              itemsCount: 3,
+              costID: 149996890525100
+            }
+          ], 
+          payType: 2, 
+        }*/
+        var post = 'phone=89999999999&email=email@gmail.com&deliveryType=1&deliveryAddress=Деревня в которой людишки живут&orderItems=[{"itemsCount":3,"costID":149996890525100}]&payType=2';
+        this.$API.post('placeOrder/', post).then(response => {
+          console.log(response);
+        }).catch(e => {
+          console.log(e);
+        });
+      }, 
+      deliveryMehods: function(){
+        this.$API.get('getDelivery').then(response => {
+          this.delivery = response.data.data
+        })
+      }, 
+      paymentMehods: function(){
+        this.$API.get('getPayTypes').then(response => {
+          this.payments = response.data.data
+        })
+      }
+    },
+    filters: {
+      selectPaymentMethod: function(delivery){
+          console.log(this); 
+        if (delivery){
+          return 'delivery'
+        }
+        var deliverys = this.delivery.find(p => p.id === this.selectDelivery)
+        var deliveryCost = 0
+        if (deliverys){
+          deliveryCost = delivery.deliverCost;
+        }
+        return 'deliveryCost'
       }
     },
     created: function(){
-      var products = [];
-      var data = {"code":0,"data":[{"artikul":null,"bar_code":null,"cost":550,"currency":"RUB","description":null,"id":149623112236800,"images":[{"full":null,"small":null}],"name":"Test","quantity":1001},{"artikul":null,"bar_code":14587523459,"cost":415,"currency":"RUB","description":null,"id":149881145875500,"images":[{"default":true,"full":"img/149917599470300","small":"img/thumbnail/149917599470300"}],"name":"Пластик 509","quantity":1001},{"artikul":null,"bar_code":456789,"cost":7500,"currency":"RUB","description":null,"id":149907069744900,"images":[{"full":null,"small":null}],"name":"Тестовый товар","quantity":149907064859000}],"error":null};
-      for (var i = 0; i < data.data.length; i++){
-        var item = data.data[i];
-        products.push({
-          id: item.id, 
-          name: item.name, 
-          article: item.artikul, 
-          description: item.description, 
-          price: item.cost, 
-          currency: item.currency, 
-          image: this.loadImage(item.images.full),
-          quantity: item.quantity
-        });
+      if (!this.$store.getters.cartProducts.length){
+        return;
       }
-
-      this.products = products;
+      this.deliveryMehods()
+      this.paymentMehods()
+      /*this.$API.get('getOrder/150013152392500').then(response => {
+        console.log(response.data.data.details);
+      }).catch(e => {
+        console.log(e);
+      });*/
+      var $forBlock = this;
+      this.products = [];
+      this.$store.getters.cartProducts.forEach(function(prod){
+        $forBlock.$API.get('getItem/'+prod.id).then(response => {
+          var item = response.data.data;
+          $forBlock.products.push({
+            id: item.id, 
+            name: item.name, 
+            article: item.artikul, 
+            description: item.description, 
+            price: item.cost, 
+            currency: item.currency, 
+            image: $forBlock.loadImage(item.images.full),
+            quantity: prod.quantity
+          });
+        })
+      });
     }
   }
 </script>
 
-<style>
+<style scoped>
   .table__cart{
     width: 100%;
   }
@@ -120,5 +237,39 @@
     color: #fff;
     cursor: pointer; 
     text-align: center;
+  }
+  .cart-methods-section{
+    display: flex;
+    justify-content: space-between;
+  }
+  .delivery-section, .payment-section, .data-info-section{
+    width: 32%;
+    padding: 10px 10px;
+    border-color: #e6e6e7 #d1d2d4 #b8babc #d1d2d4;
+    border-width: 1px;
+    border-style: solid;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+    background-color: #ffffff;
+    background: linear-gradient(to bottom, #ffffff 75%,#f5f5f5 100%);
+  }
+  .delivery-section__title{
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .delivery-block{
+    padding: 10px 0;
+  }
+  .delivery-block__title{
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .delivery-block__description{
+    font-size: 12px;
+  }
+  .result__cart__table{
+    text-align: right;
   }
 </style>

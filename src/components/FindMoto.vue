@@ -73,7 +73,7 @@
       }
     },
     created() {
-      this.$apiHTTP.get('/getMarks').then(response => {
+      this.$API.get('/getMarks').then(response => {
         if (response.data.code != 0){ }
 
           this.marks = response.data.data;
@@ -91,7 +91,7 @@
       },
       selectMark: function(item) {
         this.currentMark = item;
-        this.$apiHTTP.get('/getMarks').then(response => {
+        this.$API.get('/getMarks').then(response => {
           if (response.data.code != 0){ }
 
             this.models = response.data.data;

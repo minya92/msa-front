@@ -2,7 +2,7 @@
   <main-layout>
     <div class="container-fluid">
       <swiper class="main-slider" :options="swiperOption">
-        <swiper-slide v-for='topSlider in topSliders'>
+        <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
           <div class="top-slider-text-content">
             <h2>{{topSlider.headerText}}</h2>
             <span>{{topSlider.footerText}}</span>
@@ -112,7 +112,7 @@
       <h2>Найти запчасти по производителю</h2>
 
       <swiper class="main-bot-slider" :options="swiperOptionModels">
-        <swiper-slide v-for='imgModelWhite in imgModelsWhite'>
+        <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
           <img :src='imgModelWhite'>
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>

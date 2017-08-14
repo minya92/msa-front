@@ -2,26 +2,27 @@ import Vue from 'vue'
 import axios from 'axios';
 
 //
-export const apiHTTP = axios.create({
+export const API = axios.create({
 	baseURL: 'http://msa.4rp.org/api',
 	timeout: 1000,
   withCredentials: true,
   headers: {
+  	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
   }
 });
-apiHTTP.install = function(){
-  Object.defineProperty(Vue.prototype, '$apiHTTP', {
-    get () { return apiHTTP }
+API.install = function(){
+  Object.defineProperty(Vue.prototype, '$API', {
+    get () { return API }
  })
 }
-Vue.use(apiHTTP);
+Vue.use(API);
 
 //
 Vue.prototype.$SERVER_URL = 'http://msa.4rp.org/';
 
 export default {
 	check: function(context) {
-		apiHTTP.get('/api/v1/user').then(response => {
+		API.get('/api/v1/user').then(response => {
 			if (response.body.user != null) {
 				this.authenticated = true
 			}

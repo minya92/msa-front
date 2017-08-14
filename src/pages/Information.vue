@@ -1,10 +1,5 @@
 <template>
   <main-layout>
-    <div class="breadcrumbs">
-      <template>
-        <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}}</span>
-      </template>
-    </div>
     <div class="content-fluid">
       <h1>{{$route.meta.title}}</h1>
       <div v-html="infoText"></div>

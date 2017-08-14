@@ -14,7 +14,7 @@
       <span v-if="password.showError" class="text-error">{{password.textError}}</span>
     </div>
     <div class="form-group">
-      <button @click="submitForm()">войти</button>
+      <button class="btn_theme" @click="submitForm()">войти</button>
     </div>
     <div class="alt-auth">
       <span class="or-box">{{orText}}</span>
@@ -58,6 +58,12 @@ created() {
 },
 methods: {
   submitForm: function(){
+    var post = 'j_username=admin&j_password=admin';
+        this.$API.post('j_security_check/', post).then(response => {
+          console.log(response);
+        }).catch(e => {
+          console.log(e);
+        });
   }
 }
 }

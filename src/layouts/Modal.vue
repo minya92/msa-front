@@ -63,15 +63,6 @@
     padding: 12px 0;
     text-align: center;
   }
-  .span-grey{
-    font-size: 14px;
-    color: #999;
-    text-align: center;
-  }
-  .text-error{
-    font-size: 12px;
-    color: #999;
-  }
   .modal-frame input, .modal-frame button{
     width: 340px;
     height: 30px;
@@ -99,11 +90,5 @@
   }
   .form-group{
     margin: 5px 0;
-  }
-  .modal-fade-enter-active, .modal-fade-leave-active {
-    transition: opacity .7s
-  }
-  .modal-fade-enter, .modal-fade-leave-to {
-    opacity: 0
   }
 </style>

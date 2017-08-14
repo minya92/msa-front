@@ -1,13 +1,8 @@
 <template>
   <main-layout>
-    <div class="container-fluid breadcrumbs">
-      <template>
-        <span>Главная страница <span class="padding-delmiter">/</span> {{this.$breadcrumbs[0].meta.breadcrumb}} <span class="padding-delmiter">/</span> {{$route.params.id}}</span>
-      </template>
-    </div>
     <div class="content-fluid product__detail">
       <div class="product__detail__media">
-      <div class="main-image"><img :src="loadImage(product.images[0].full)"></div>
+      <div class="main-image"><img v-if="product.images" :src="loadImage(product.images[0].full)"></div>
         <div class="thumblist">
           <a v-for="image in product.images"><img :src="loadImage(image.small)"></a>
         </div>
@@ -51,7 +46,7 @@
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '@/layouts/Main.vue'
 
   export default {
     components: {
@@ -84,7 +79,6 @@
         item.quantity += 1;
       },
       loadImage: function(image){
-        console.log(image);
         if (!image){
           return 'img/default.jpg';
         }
@@ -93,7 +87,7 @@
       }
     },
     created: function(){
-      this.$apiHTTP.get('getItem/'+this.$route.params.id).then(response => {
+      this.$API.get('getItem/'+this.$route.params.id).then(response => {
         var item = response.data.data;
         this.product = {
           id: item.id, 

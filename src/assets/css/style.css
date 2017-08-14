@@ -207,6 +207,7 @@ header #search_form input {
 .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled{
 	display: none;
 }
+/*** BREADCRUMBS ***/
 .breadcrumbs{
 	font-size: 11px;
 	background: #801f25;
@@ -216,6 +217,14 @@ header #search_form input {
 	align-items: center;
 	padding-left: 20px;
 	margin-bottom: 15px;
+}
+.breadcrumbs li{
+	list-style: none;
+}
+.breadcrumbs li a{
+	text-decoration: none;
+	cursor: pointer;
+	color: #fff;
 }
 .padding-delmiter{
 	padding: 0 5px;
@@ -263,6 +272,10 @@ aside{
 }
 .aside__nav_vertical li ul{
 	display: none;
+}
+.aside__nav_vertical li a{
+	color: inherit;
+  text-decoration: none;
 }
 .content-section{
 	width: 860px;

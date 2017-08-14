@@ -29,7 +29,7 @@
       <span class="text-error" v-if="phone.error">{{phone.textError}}</span>
     </div>
     <div class="form-group">
-      <button @click="registry">войти</button>
+      <button class="btn_theme" @click="registry">войти</button>
     </div>
     <div class="alt-registry">
       <span class="or-box">или</span>
@@ -73,7 +73,7 @@
         if (this.validate()) return;
 
         this.$store.dispatch('login',JSON.stringify({login: this.name.value}));
-        let post = {
+        /*let post = {
           first_name: '',
           last_name: '',
           login: 'harcioger',//this.name,
@@ -84,8 +84,9 @@
           birthday: null,
           email: 'harcioger@gmail.com'//this.email
         }
-        console.log(post);
-        this.$apiHTTP.post('/clients', post).then(response => {
+        console.log(post);*/
+        var post = 'first_name=&last_name=&login=MrPropper&password='+md5(this.pass)+'&email=email@gmail.com&city=&phone=89999999999&birthday=null';
+        this.$API.post('clients/', post).then(response => {
           console.log(response);
         }).catch(e => {
           console.log(e);

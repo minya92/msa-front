@@ -1,10 +1,10 @@
 <template>
-  <main-layout>
+  <main-layout>vsvs
   </main-layout>
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '../../layouts/Main.vue'
 
   export default {
     components: {
