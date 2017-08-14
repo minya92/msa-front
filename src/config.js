@@ -10,9 +10,20 @@ export const API = axios.create({
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
   }
 });
+export const AUTH_URL = axios.create({
+	baseURL: 'http://msa.4rp.org/auth',
+	timeout: 1000,
+  withCredentials: true,
+  headers: {
+  	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+  }
+});
 API.install = function(){
   Object.defineProperty(Vue.prototype, '$API', {
     get () { return API }
+ })
+  Object.defineProperty(Vue.prototype, '$AUTH_URL', {
+    get () { return AUTH_URL }
  })
 }
 Vue.use(API);

@@ -40,14 +40,14 @@
         headerText: 'Рады вас видеть снова',
         textFromHeaderText: 'Введите телефон или email чтобы продолжить. \n Возможно у вас накопились бонусы',
         orText: 'или',
-        email: { headerText: 'Номер телефона или email:', 
-        value: '', 
-        textError: "Номер телефона или email не верно", 
+        email: { headerText: 'Номер телефона или email:',
+        value: '',
+        textError: "Номер телефона или email не верно",
         showError: false
       },
-      password: { headerText: 'Пароль:', 
-      value: '', 
-      textError: "Номер телефона или email не верно", 
+      password: { headerText: 'Пароль:',
+      value: '',
+      textError: "Номер телефона или email не верно",
       showError: false
     },
     forgotPassword: 'Забыли пароль',
@@ -58,18 +58,25 @@ created() {
 },
 methods: {
   submitForm: function(){
-    var post = 'j_username=admin&j_password=admin';
-        this.$API.post('j_security_check/', post).then(response => {
-          console.log(response);
-        }).catch(e => {
-          console.log(e);
-        });
+    var post = 'j_username=' + this.email.value + '&j_password=' + this.password.value;
+    this.$AUTH_URL.get('index.html').then(
+      this.$AUTH_URL.post('j_security_check/', post)
+    ).then(
+      this.$API.get('clients/current')
+    ).then(response => {
+      if (responce.data != [])
+        console.log('Auth ok')
+      else
+        console.log('Auth fail')
+    }).catch(e => {
+        console.log(e);
+    })
   }
 }
 }
 </script>
 
-<style scoped>  
+<style scoped>
   .alt-auth{
     text-align: center;
   }
@@ -94,7 +101,7 @@ methods: {
     display: inline-block;
     height: 30px;
     width: 30px;
-  }  
+  }
   .auth-social-block .vk{
     background: url(../assets/img/vk.svg) no-repeat;
   }
