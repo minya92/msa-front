@@ -89,7 +89,8 @@
     created: function(){
       this.$API.get('getItem/'+this.$route.params.id).then(response => {
         var item = response.data.data;
-        this.product = {
+        console.log(response)
+        /*this.product = {
           id: item.id, 
           name: item.name, 
           article: item.artikul, 
@@ -99,7 +100,7 @@
           images: item.images,
           compatibility: item.supported,
           chars: item.chars
-        };
+        };*/
       }).catch(e => {
         console.log(e);
       });

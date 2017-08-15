@@ -25,23 +25,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .search_input{
-    position: relative;
-  }
-  .search_input label {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-  }
-  .search_input input[type="text"]{
-    border-radius: 15px;
-    height: 30px;
-    padding: 0 25px;
-    font-size: 14px;
-    width: 460px;
-    border: 1px solid #000;
-    outline: none;
-  }
-</style>

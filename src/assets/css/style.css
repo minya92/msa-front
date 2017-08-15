@@ -383,6 +383,26 @@ aside{
 	flex: 1;
 	padding: 30px 10px;
 }
+/****/
+
+.search_input{
+	position: relative;
+}
+.search_input label {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+.search_input input[type="text"]{
+	border-radius: 15px;
+	height: 30px;
+	padding: 0 25px;
+	font-size: 14px;
+	width: 460px;
+	border: 1px solid #000;
+	outline: none;
+}
+/****/
 /********* End Catalog ***********/
 footer{
 	border-top: 13px solid #801f25;
@@ -391,7 +411,7 @@ footer{
 	background: #262626;
 	color: #9b9b9b;
 }
-.footer-top .container-fluid{
+.footer-top{
 	display: flex;
 	justify-content: center;
 	height: 68px;
@@ -409,8 +429,11 @@ footer{
 	text-align: center;;
 }
 .footer-top ul li:before{
-	content: '\2022';
-	font-size: 46px;
+	content: '';
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #9b9b9b;
 	vertical-align: middle;
 	margin-bottom: 5px;
 	display: inline-block;
@@ -429,9 +452,6 @@ footer{
 	color: #787878;
 }
 .footer-bottom .container-fluid{
-	display: flex;
-	align-items: center;
-	height: 154px;
 }
 .fbox-c {
 	flex: 2;
@@ -505,4 +525,43 @@ footer #search_form input {
 	bottom: 0;
 	background: rgba(0,0,0,0.4);
 	z-index: 1;
+}
+
+/*  MEDIA   */
+@media (max-width: 320px){
+	.header-top{
+		height: auto;
+	}
+	.footer-top{
+		height: auto;
+	}
+	.footer-top ul{
+		width: 100%;
+		flex-direction: column;
+	}
+	.footer-top ul li{
+		margin: 10px 0;
+	}
+	.footer-top ul li:before{
+		width: 5px;
+		height: 5px;
+	}
+	.footer-bottom{
+		padding: 10px 0;
+	}
+	.footer-bottom .container-fluid{
+		flex-direction: column;
+		height: auto;
+	}
+	.search_input input[type="text"]{
+		width: 100%;
+	}
+	.fbox-c-menu{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.fbox-c-menu a{
+		padding: 5px 0;
+	}
 }

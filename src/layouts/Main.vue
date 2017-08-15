@@ -55,15 +55,13 @@
 		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
 		<footer>
 			<div class="footer-top">
-				<div class="container-fluid">
-					<ul>
-						<li><router-link to="/review">Отзывы</router-link></li>
-						<li><a>Напишите нам</a></li>
-						<li><router-link to="/info">Информация</router-link></li>
-						<li><a>Вопрос и ответ</a></li>
-						<li><a>Статус заказа</a></li>
-					</ul>
-				</div>
+				<ul class="footer-top__menu container-fluid">
+					<li><router-link to="/review">Отзывы</router-link></li>
+					<li><a>Напишите нам</a></li>
+					<li><router-link to="/info">Информация</router-link></li>
+					<li><a>Вопрос и ответ</a></li>
+					<li><a>Статус заказа</a></li>
+				</ul>
 			</div>
 			<div class="footer-bottom">
 				<div class="container-fluid">

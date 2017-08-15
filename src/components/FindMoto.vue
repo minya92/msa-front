@@ -75,7 +75,7 @@
     created() {
       this.$API.get('/getMarks').then(response => {
         if (response.data.code != 0){ }
-
+console.log(response.data.data)
           this.marks = response.data.data;
 
         this.paramNextPrev.totalProducts = this.marks.length;

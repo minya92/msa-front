@@ -141,16 +141,17 @@
         page = page-1;
         this.$API.get('getItems?filter=%7B"pagination":%7B"page":'+page+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
           var products = [];
+          console.log(response.data.data)
           for (var i = 0; i < response.data.data.length; i++){
             var item = response.data.data[i];
             products.push({
-              id: item.id, 
-              name: item.name, 
+              id: item.cost_id, 
+              name: item.item_name, 
               article: item.artikul, 
-              description: item.description, 
-              price: item.cost, 
-              currency: item.currency, 
-              image: this.loadImage(item.images[0].small) 
+              description: item.item_description, 
+              price: item.item_cost, 
+              //currency: item.currency, 
+              image: this.loadImage(item.thumbnail) 
             });
           }
 
@@ -207,7 +208,7 @@
       this.loadCatalogs()
 
       this.$API.get('getItemsCount').then(response => {
-        this.totalProducts = response.data.data
+        this.totalProducts = response.data.data.data
         this.loadProducts(this.currentPage)
       })
     }
