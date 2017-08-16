@@ -11,7 +11,7 @@ export const API = axios.create({
   }
 });
 export const AUTH_URL = axios.create({
-	baseURL: 'http://msa.4rp.org/auth',
+	baseURL: 'http://' + window.location.hostname + '/auth',
 	timeout: 1000,
   withCredentials: true,
   headers: {

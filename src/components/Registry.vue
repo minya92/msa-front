@@ -32,13 +32,7 @@
       <button class="btn_theme" @click="registry">войти</button>
     </div>
     <div class="alt-registry">
-      <span class="or-box">или</span>
-      <div class="registry-social-block">
-        <img src="../assets/img/vk.svg" @click="vkAuth()">
-        <img src="../assets/img/fb.svg" @click="fbAuth()">
-        <img src="../assets/img/ok.svg" @click="okAuth()">
-        <img src="../assets/img/instagram.svg" @click="instAuth()">
-      </div>
+      <SocialAuth></SocialAuth>
       <div>
         Забыли пароль / Еще не зарегистрированы?
       </div>
@@ -53,10 +47,11 @@
   import MaskedInput from 'vue-masked-input'
   import md5 from 'md5'
   import axios from 'axios'
+  import SocialAuth from './Social.vue'
 
 
   export default {
-    components: {MaskedInput, ModalFade},
+    components: {MaskedInput, ModalFade, SocialAuth},
     data() {
       return {
         name: {value: '', error: false, require: true, textError: 'Введите ФИО'},
@@ -93,38 +88,10 @@
         });
 
       },
-      vkAuth: function(){
-        axios.get('application/socAuth/settings').then(r => {
-          var url = `https://oauth.vk.com/authorize?client_id=${r.vk.client_id}&display=${r.vk.display}&redirect_uri=${r.vk.redirect_uri}&response_type=${r.vk.response_type}&v=${r.vk.v}&revoke=1&scope=${r.vk.scope}`;
-          console.log(url);
-          window.location = url;
-        });
-      },
-      fbAuth: function(){
-        axios.get('application/socAuth/settings').then(r => {
-          var url = `https://www.facebook.com/${r.fb.v}/dialog/oauth?client_id=${r.fb.client_id}&redirect_uri=${r.fb.redirect_uri}`;
-          console.log(url);
-          window.location = url;
-        });
-      },
-      okAuth: function(){
-        axios.get('application/socAuth/settings').then(r => {
-          var url = `https://connect.ok.ru/oauth/authorize?client_id=${r.ok.client_id}&redirect_uri=${r.ok.redirect_uri}&response_type=${r.ok.response_type}&scope=${r.vk.scope}`;
-          console.log(url);
-          window.location = url;
-        });
-      },
-      instAuth: function(){
-        axios.get('application/socAuth/settings').then(r => {
-          var url = `https://api.instagram.com/oauth/authorize/?client_id=${r.inst.client_id}&redirect_uri=${r.inst.redirect_uri}&response_type=code`;
-          console.log(url);
-          window.location = url;
-        });
-      },
       validate: function(){
         var error = false;
         if (this.name.require && !this.name.value){
-          this.name.error = true; 
+          this.name.error = true;
           error = true;
         } else {
           this.name.error = false;
@@ -161,43 +128,8 @@
   }
 </script>
 
-<style scoped> 
+<style scoped>
   .alt-registry{
     text-align: center;
-  }
-  .or-box{
-    line-height: 20px;
-    font-size: 14px;
-    text-transform: uppercase;
-  }
-  .or-box:before, .or-box:after{
-    content: '';
-    display: inline-block;
-    height: 1px;
-    width: 25%;
-    background: #ccc;
-    vertical-align: middle;
-    margin: 0 10px;
-  }
-  .registry-social-block{
-    margin: 12px 0;
-  }
-  .auth-social-block a{
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-  }  
-  .auth-social-block .vk{
-    background: url(../assets/img/vk.svg) no-repeat;
-  }
-  .auth-social-block .vk:hover{
-    background: url(../assets/img/vk_hover.svg) no-repeat;
-  }
-
-  .auth-social-block .fb{
-    background: url(../assets/img/fb.svg) no-repeat;
-  }
-  .auth-social-block .fb:hover{
-    background: url(../assets/img/fb_hover.svg) no-repeat;
   }
 </style>
