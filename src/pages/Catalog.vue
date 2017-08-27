@@ -1,21 +1,16 @@
 <template>
   <main-layout>
     <div class="content-fluid filter-section">
-      Производитель
-      <div>
-        <input type="checkbox" id="checkbox-stock" v-model="checkedStock">
-        <label for="checkbox">В наличии</label>
-      </div>
-      <vsc ref="vsc" class="vsc" v-bind="dataSlide" v-model="dataSlide.value"></vsc>
+      <vsc ref="vsc" class="vsc" @callback="vscChange" v-bind="dataSlide" v-model="dataSlide.value" v-show="dataSlide.max && dataSlide.min"></vsc>
     </div>
     <div class="content-fluid catalog-section">
       <aside>
         <a class="btn-action btn_theme">Акции</a>
-        <div>Каталог</div>
+        <div class="aside__v-menu__title">Каталог</div>
         <ul class="aside__nav_vertical">
           <li v-for="catalog in catalogs">
             <!--<span v-if="catalog.child.length" class="arrow_down" @click="toggle"></span>-->
-            <router-link :to="''+catalog.url">{{catalog.name}}</router-link>
+            <router-link :to="`/catalog/types=${catalog.url}`">{{catalog.name}}</router-link>
             <!--<ul>
               <li v-for="childCatalog in catalog.child">
                 <router-link :to="catalog.url">{{childCatalog.name}}</router-link>
@@ -26,9 +21,7 @@
       </aside>
 
       <div class="content-section" v-if="products.length > 0">
-        <div class="sort-section">
-
-        </div>
+        <div class="sort-section"></div>
         <div class="products-section">
           <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
           <div class="product-wrapper" v-for="product in products">
@@ -48,7 +41,7 @@
           </router-link>
         </div>
       </div>
-      <pagination :current="currentPage" :total="totalProducts" :perPage="perPage" @page-changed="loadProducts"></pagination>
+      <pagination :current="currentPage" :total="totalProducts" :pageSize="pageSize" @page-changed="loadProducts"></pagination>
     </div>
     <div class="content-section" v-else>{{lang.textEmptyProducts}}</div>
   </div>
@@ -81,6 +74,7 @@
   import Vsc from 'vue-slider-component'
   import RecentView from '@/components/RecentView'
   import AddToCart from '@/components/AddToCart'
+  import lodash from 'lodash'
 
   export default {
     components: {
@@ -96,6 +90,7 @@
           dotSize: 10,
           min: 0,
           max: 0,
+          interval: 1,
           tooltip: "always",
           formatter: "{value} руб.",
           bgStyle: { "backgroundColor": "#e7e7e7" },
@@ -114,9 +109,8 @@
         lang: {
           textEmptyProducts: 'В данной категории нет товаров.'
         },
-        checkedStock: false,
         totalProducts: 0,
-        perPage: 3,
+        pageSize: 12,
         currentPage: 1,
         selectProduct: {},
         products: [],
@@ -135,37 +129,65 @@
         catalogs: []
       }
     },
+    watch: {
+      '$route' (to, from) {
+        this.loadPage()
+      }
+    },
     methods: {
       loadProducts: function(page){
         this.currentPage = page;
-        page = page-1;
-        this.$API.get('getItems?filter=%7B"pagination":%7B"page":'+page+',"pageSize":'+this.perPage+'%7D%7D').then(response => {
-          var products = [];
-          console.log(response.data.data)
-          for (var i = 0; i < response.data.data.length; i++){
-            var item = response.data.data[i];
-            products.push({
-              id: item.cost_id, 
-              name: item.item_name, 
-              article: item.artikul, 
-              description: item.item_description, 
-              price: item.item_cost, 
-              //currency: item.currency, 
-              image: this.loadImage(item.thumbnail) 
-            });
-          }
+        let query = `?cost_min=${this.dataSlide.value[0]}&cost_max=${this.dataSlide.value[1]}`
+        if (typeof this.$route.params.types != 'undefined'){
+          query += `&types=%5B${this.$route.params.types}%5D`;
+        }
+        if (typeof this.$route.params.searchDetails != 'undefined'){
+          query += `&marks_models_id=${this.$route.params.searchDetails}`;
+        }
+        query += `&page=${this.currentPage}&pageSize=${this.pageSize}`;
 
-          this.products = products;
-          this.filterPrice();
-        }).catch(e => {
-          console.log(e);
-        });
+        this.$API.get('getItemsCount'+query).then(r => {
+          this.totalProducts = r.data.data
+
+          this.$API.get("getItems"+query).then(response => {
+            var products = [];
+            for (var i = 0; i < response.data.data.length; i++){
+              var item = response.data.data[i];
+              products.push({
+                id: item.items_catalog_id, 
+                name: item.item_name, 
+                article: item.artikul, 
+                description: item.item_description, 
+                price: item.item_cost, 
+                currency: item.currency, 
+                image: this.loadImage(item.thumbnail) 
+              });
+            }
+
+            this.products = products;
+            this.filterPrice();
+          })
+        })
+      },
+      getItemsMaxMinCost: function(){
+        let query = ''
+
+        if (typeof this.$route.params.types != 'undefined'){
+          query += `?types=%5B${this.$route.params.types}%5D`
+        }
+
+        this.$API.get('getItemsMaxMinCost'+query).then(r => {
+          this.dataSlide.value = [r.data.data.min_cost, r.data.data.max_cost]
+          this.dataSlide.min = r.data.data.min_cost
+          this.dataSlide.max = r.data.data.max_cost
+        })
       },
       loadCatalogs: function(){
-        this.$API.get('getTypes').then(response => {
+        this.$API.get('getTypes').then(r => {
           var catalogs = [];
-          for (var i = 0; i < response.data.data.length; i++){
-            var item = response.data.data[i];
+          
+          for (var i = 0; i < r.data.data.length; i++){
+            var item = r.data.data[i];
             catalogs.push({
               id: item.items_types_id, 
               parentType: item.parent_type, 
@@ -173,7 +195,6 @@
               url: item.items_types_id
             });
           }
-          console.log(catalogs)
             this.catalogs = catalogs;
         })
       },
@@ -188,29 +209,45 @@
         return this.$SERVER_URL + image;
       },
       filterPrice: function(){
-        var min = 0;
-        var max = 0;
+        var min = this.dataSlide.min;
+        var max = this.dataSlide.max;
+
         for(var i=0; i < this.products.length; i++){
           if (min > this.products[i].price || min == 0) min = this.products[i].price;
           if (max < this.products[i].price) max = this.products[i].price;
         }
+        
         this.dataSlide.min = min;
         this.dataSlide.max = max;
-        this.dataSlide.value = [min, max];
       },
       addToCart: function(product){
         this.product = product;
         this.$store.dispatch("addToCart", {id: product.id, quantity: 1})
         this.showCart=true;
-      }
+      },
+      loadPage: function(){
+        this.dataSlide.min = 0
+        this.dataSlide.max = 0
+
+        this.loadCatalogs()
+        this.getItemsMaxMinCost()
+        this.loadProducts(1)
+      },
+      vscChange: _.debounce(function (e) {
+        this.loadProducts(1)
+      }, 1000)
     },
     created: function(){
-      this.loadCatalogs()
-
-      this.$API.get('getItemsCount').then(response => {
-        this.totalProducts = response.data.data.data
-        this.loadProducts(this.currentPage)
-      })
+      this.loadPage()
     }
   }
 </script>
+
+<style>
+  .vue-slider-tooltip-wrap{
+    top: 0 !important;
+  }
+  .vue-slider-tooltip:before{
+    display: none !important;
+  }
+</style>

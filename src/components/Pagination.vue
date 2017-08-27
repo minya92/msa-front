@@ -38,7 +38,7 @@
         type: Number,
         default: 0
       },
-      perPage: {
+      pageSize: {
         type: Number,
         default: 9
       },
@@ -73,7 +73,7 @@
         return (end < this.totalPages) ? end : this.totalPages
       },
       totalPages: function() {
-        return Math.ceil(this.total/this.perPage)
+        return Math.ceil(this.total/this.pageSize)
       },
       nextPage: function() {
         return this.current + 1

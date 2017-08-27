@@ -48,7 +48,9 @@
 					</div>
 				</div>
 			</header>
-			<breadcrumbs class="container-fluid"></breadcrumbs>
+			<div class="bg__theme_two">
+				<breadcrumbs class="container-fluid"></breadcrumbs>
+			</div>
 			<slot></slot>
 		</div>
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
@@ -64,7 +66,7 @@
 				</ul>
 			</div>
 			<div class="footer-bottom">
-				<div class="container-fluid">
+				<div class="container-fluid footer-bottom__content">
 					<div class="fbox-lr">
 						<div class="fbox-l-container">
 							<img src="../assets/img/instagram_grey.svg">

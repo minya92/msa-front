@@ -11,33 +11,35 @@
             <div :class="['next-result', NextIsActive() ? '' : 'disabled']" @click="nextResult">></div>
           </div>
           <div class="slider-marks">
-            <div :class="['slider-mark', currentMark === index ? 'current' : '']" 
+            <div :class="['slider-mark', currentMark === mark.marks_models_id ? 'current' : '']" 
             v-for="(mark, index) in marks" 
             v-if="showMore(index)"  
-            @click="selectMark(index)">
-            <img :src="'img/suzuki_color.png'" :title="mark.mm_name">
+            @click="selectMark(mark.marks_models_id)">
+            <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
+            <div v-else>{{mark.mm_name}}</div>
           </div>
         </div>
       </div>
       <div class="form-group" v-if="models.length">          
         <div class="title-group">{{lang.selectModel}}</div>
         <div class="slider-marks">
-          <div :class="['slider-mark', currentModel === index ? 'current' : '']" 
+          <div :class="['slider-mark', currentModel === model.marks_models_id ? 'current' : '']" 
           v-for="(model, index) in models" 
           v-if="showMore(index)"  
-          @click="selectModel(index)">
-          <img :src="'img/suzuki_color.png'" :title="model.mm_name">
+          @click="selectModel(model.marks_models_id)">
+          <img v-if="model.thumbnail"  :src="model.thumbnail" :title="model.mm_name">
+          <div v-else>{{model.mm_name}}</div>
         </div>
       </div>
     </div>
     <div class="form-group" v-if="years.length">  
       <div class="title-group">{{lang.selectYear}}</div>
       <div class="years">        
-        <div v-for="year in years" :class="[currentYear === year ? 'current' : '']" @click="selectYear(year)">{{year}}</div>
+        <div v-for="year in years" :class="[currentYear === year ? 'current' : '']" @click="selectYear(year)">{{year.mm_name}}</div>
       </div>
     </div>
-    <div class="result-count">Всего запчастей: 33</div>
-    <button class="btn_theme" @click="moreBtn">{{lang.moreInfo}}</button>
+    <div class="result-count">Всего запчастей: {{countDetail}}</div>
+    <router-link class="btn_theme search-detail"  :to="'/catalog/search='+currentMarkModels">{{lang.moreInfo}}</router-link>
   </div>
 </div>
 </transition>
@@ -69,47 +71,57 @@
           perItems: 6,
           currentItems: 0,
           indexResultItems: 1
-        }
+        },
+        countDetail: 0,
+        currentMarkModels: null
       }
     },
     created() {
       this.$API.get('/getMarks').then(response => {
         if (response.data.code != 0){ }
-console.log(response.data.data)
           this.marks = response.data.data;
 
         this.paramNextPrev.totalProducts = this.marks.length;
         this.NextIsActive();
-      }).catch(e => {
-        console.log('error api');
-      });
+      })
 
       this.getYears();
     },
     methods: {
       getYears: function() {
       },
-      selectMark: function(item) {
-        this.currentMark = item;
-        this.$API.get('/getMarks').then(response => {
+      selectMark: function(marksModelsId) {
+        this.currentMark = marksModelsId
+        this.currentMarkModels = marksModelsId
+        this.years = []
+        this.totalDetails(this.currentMark)
+        
+        this.$API.get('/getModels/'+marksModelsId).then(response => {
           if (response.data.code != 0){ }
 
-            this.models = response.data.data;
-        }).catch(e => {
-          console.log('error api');
-        });
+          this.models = response.data.data
+        })
       },
-      selectModel: function(item) {
-        this.currentModel = item;
-        this.years = [];
-        var to = this.endDate;
-        for (var y = this.startDate; y >= to; y--) {
-          this.years.push(y);
-        }
+      selectModel: function(marksModelsId) {
+        this.currentModel = marksModelsId
+        this.currentMarkModels = marksModelsId
+        this.totalDetails(this.currentModel)
+
+        this.$API.get('/getYears/'+marksModelsId).then(response => {
+          if (response.data.code != 0){ }
+
+          this.years = response.data.data;
+        })
       },
       selectYear: function(item) {
         this.currentYear = item;
-        console.log(this.currentYear);
+        this.currentMarkModels = marksModelsId
+        this.totalDetails(this.currentYear)
+      },
+      totalDetails: function(param){
+        this.$API.get(`getItemsCount?marks_models_id=${param}`).then(r => {
+          this.countDetail = r.data.data
+        })
       },
 
       NextIsActive: function(){
@@ -262,11 +274,15 @@ console.log(response.data.data)
     font-size: 30px;
     padding: 10px 0
   }
-  #find_moto button{
+  #find_moto .search-detail{
     width: 220px;
     height: 50px;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
   }
 </style>

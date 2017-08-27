@@ -68,17 +68,17 @@
         </div>
       </div>
 
-    <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
-      <h2>Найти запчасти по производителю</h2>
+      <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
+        <h2>Найти запчасти по производителю</h2>
 
-      <swiper class="main-bot-slider" :options="swiperOptionModels">
-        <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
-          <img :src='imgModelWhite'>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
-    </div>
+        <swiper class="main-bot-slider" :options="swiperOptionModels">
+          <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
+            <img :src='imgModelWhite'>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      </div>
     </div>
   </main-layout>
 </template>

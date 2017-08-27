@@ -4,7 +4,6 @@ import axios from 'axios';
 //
 export const API = axios.create({
 	baseURL: 'http://msa.4rp.org/api',
-	timeout: 1000,
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -12,7 +11,6 @@ export const API = axios.create({
 });
 export const AUTH_URL = axios.create({
 	baseURL: 'http://msa.4rp.org/auth',
-	timeout: 1000,
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'

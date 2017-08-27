@@ -2,9 +2,9 @@
   <main-layout>
     <div class="content-fluid product__detail">
       <div class="product__detail__media">
-      <div class="main-image"><img v-if="product.images" :src="loadImage(product.images[0].full)"></div>
+      <div class="main-image"><img v-if="product.images" :src="loadFullImage(numCurrentImage)"></div>
         <div class="thumblist">
-          <a v-for="image in product.images"><img :src="loadImage(image.small)"></a>
+          <a v-for="(image, index) in product.images"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
         </div>
       </div>
       <div class="product__detail__description">
@@ -22,7 +22,7 @@
           </div>
         </template>
         <div>
-          <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя></div>
+          <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя</div>
           <div>Мы принимаем электронные платежи</div>
         </div>
       </div>
@@ -37,8 +37,7 @@
       <div class="content-fluid product-compatibility">
         <h3>Совместимость</h3>
         <ul>
-          <li v-for="compatibility in product.compatibility">
-          <router-link :to="/product/ + compatibility.mark_model_id">{{compatibility.mark_model_name}}</router-link></li>
+          <li v-for="compatibility in product.compatibility">{{compatibility.mark_model_name}}</li>
         </ul>
       </div>
     </template>
@@ -54,24 +53,9 @@
     },
     data() {
       return {
-        product: {}
-        /*product: {
-          name: 'Сумка на бак QUICK-LOCK Tankbag ION TWO',
-          price: '72000',
-          currency: 'руб.',
-          image: 'img/catalog/axe.png',
-          images: ['img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png','img/catalog/shop_items_catalog_image9131.png','img/catalog/shop_items_catalog_image9224.png',],
-          article: 'AFW4534TFQV34',
-          description: 'Удобно и просто, сумка подходит для всех типов бензобаков и во время коротких поездок заботится о ваших личных вещах, таких как бумажник и документы на Мотоцикл. Система крепления Quick Lock EVO поможет в течение нескольких секунд безопасно установить сумку и также легко ее снять.Сумка изготовлена ​​из прочного нейлона 1680D, а также доступна в качестве электрической версии с интегрированным блоком питания. Компактный дизайн.',
-          chars: [
-          {key: 'Цвет', value: 'черный'},
-          {key: 'Материал', value: 'пластик'},
-          {key: 'Размеры', value: '100х50х20'},
-          {key: 'Вес', value: '3кг'}
-          ],
-          stock: 'под заказ',
-          compatibility: ['BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)', 'BMW srfw 234 vsdf (2012 - 2116)']
-        }*/
+        product: {},
+        numCurrentImage: 0,
+        imgDefault: 'img/default.jpg'
       }
     },
     methods: {
@@ -80,30 +64,34 @@
       },
       loadImage: function(image){
         if (!image){
-          return 'img/default.jpg';
+          return this.imgDefault
         }
 
-        return this.$SERVER_URL + image;
+        return this.$SERVER_URL + image
+      },
+      loadFullImage: function(){
+        if (this.product.images.length == 0){
+          return this.imgDefault
+        }
+
+        return this.loadImage(this.product.images[this.numCurrentImage].full_image)
       }
     },
     created: function(){
-      this.$API.get('getItem/'+this.$route.params.id).then(response => {
-        var item = response.data.data;
-        console.log(response)
-        /*this.product = {
-          id: item.id, 
-          name: item.name, 
+      this.$API.get('getItem/'+this.$route.params.id).then(r => {
+        var item = r.data.data;
+        this.product = {
+          id: item.cost_id, 
+          name: item.item_name, 
           article: item.artikul, 
-          description: item.description, 
-          price: item.cost, 
+          description: item.item_description, 
+          price: item.item_cost, 
           currency: item.currency, 
           images: item.images,
           compatibility: item.supported,
           chars: item.chars
-        };*/
-      }).catch(e => {
-        console.log(e);
-      });
+        };
+      })
     }
   }
 </script>

@@ -19,11 +19,9 @@ import Checkout from '@/pages/Checkout'
 const routes = [
     { path: '/', component: Home },
     { path: '/contacts', component: Contacts },
-    { path: '/catalog/', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}, 
-      children: [
-        { path: ':id', name: 'product', component: Product }
-      ] 
-    },
+    { path: '/catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
+    { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
+    { path: '/catalog/search=:searchDetails', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },
     { path: '/profile', component: Profile, meta: {breadcrumb: 'Личный кабинет'},
       children: [
@@ -43,5 +41,5 @@ export default new Router({
   //mode: 'history',
   base: __dirname,
   routes, 
-  //linkActiveClass: 'is-active' 
+  linkActiveClass: 'current' 
 })
