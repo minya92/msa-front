@@ -282,7 +282,7 @@
     font-size: 14px;
     display: flex;
     justify-content: center;
-    align-items: center;
     text-decoration: none;
+    align-items: center;
   }
 </style>
