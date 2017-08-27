@@ -142,7 +142,7 @@
           query += `&types=%5B${this.$route.params.types}%5D`;
         }
         if (typeof this.$route.params.searchDetails != 'undefined'){
-          query += `&marks_models_id=${this.$route.params.searchDetails}`;
+          query += `&mark_model=${this.$route.params.searchDetails}`;
         }
         query += `&page=${this.currentPage}&pageSize=${this.pageSize}`;
 

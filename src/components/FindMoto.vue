@@ -25,7 +25,7 @@
         <div class="slider-marks">
           <div :class="['slider-mark', currentModel === model.marks_models_id ? 'current' : '']" 
           v-for="(model, index) in models" 
-          v-if="showMore(index)"  
+          
           @click="selectModel(model.marks_models_id)">
           <img v-if="model.thumbnail"  :src="model.thumbnail" :title="model.mm_name">
           <div v-else>{{model.mm_name}}</div>
