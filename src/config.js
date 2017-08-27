@@ -11,6 +11,7 @@ export const API = axios.create({
 });
 export const AUTH_URL = axios.create({
 	baseURL: 'http://msa.4rp.org/auth',
+	//baseURL: 'http://' + window.location.hostname + '/auth',
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'

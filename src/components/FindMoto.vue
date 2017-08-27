@@ -84,12 +84,8 @@
         this.paramNextPrev.totalProducts = this.marks.length;
         this.NextIsActive();
       })
-
-      this.getYears();
     },
     methods: {
-      getYears: function() {
-      },
       selectMark: function(marksModelsId) {
         this.currentMark = marksModelsId
         this.currentMarkModels = marksModelsId
@@ -98,7 +94,7 @@
         
         this.$API.get('/getModels/'+marksModelsId).then(response => {
           if (response.data.code != 0){ }
-
+          
           this.models = response.data.data
         })
       },
@@ -115,11 +111,12 @@
       },
       selectYear: function(item) {
         this.currentYear = item;
-        this.currentMarkModels = marksModelsId
-        this.totalDetails(this.currentYear)
+        this.currentMarkModels = item.marks_models_id
+
+        this.totalDetails(this.currentMarkModels)
       },
       totalDetails: function(param){
-        this.$API.get(`getItemsCount?marks_models_id=${param}`).then(r => {
+        this.$API.get(`getItemsCount?mark_model=${param}`).then(r => {
           this.countDetail = r.data.data
         })
       },

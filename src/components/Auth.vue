@@ -17,11 +17,7 @@
       <button class="btn_theme" @click="submitForm()">войти</button>
     </div>
     <div class="alt-auth">
-      <span class="or-box">{{orText}}</span>
-      <div class="auth-social-block">
-        <a class="vk"></a>
-        <a class="fb"></a>
-      </div>
+      <SocialAuth></SocialAuth>
       <div>
         {{forgotPassword}} / {{notRegistered}}
       </div>
@@ -33,8 +29,9 @@
 
 <script>
   import ModalFade from '../layouts/Modal.vue'
+  import SocialAuth from './Social.vue'
   export default {
-    components: {ModalFade},
+    components: {ModalFade, SocialAuth},
     data() {
       return {
         headerText: 'Рады вас видеть снова',
@@ -79,40 +76,5 @@ methods: {
 <style scoped>
   .alt-auth{
     text-align: center;
-  }
-  .or-box{
-    line-height: 20px;
-    font-size: 14px;
-    text-transform: uppercase;
-  }
-  .or-box:before, .or-box:after{
-    content: '';
-    display: inline-block;
-    height: 1px;
-    width: 25%;
-    background: #ccc;
-    vertical-align: middle;
-    margin: 0 10px;
-  }
-  .auth-social-block{
-    margin: 12px 0;
-  }
-  .auth-social-block a{
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-  }
-  .auth-social-block .vk{
-    background: url(../assets/img/vk.svg) no-repeat;
-  }
-  .auth-social-block .vk:hover{
-    background: url(../assets/img/vk_hover.svg) no-repeat;
-  }
-
-  .auth-social-block .fb{
-    background: url(../assets/img/fb.svg) no-repeat;
-  }
-  .auth-social-block .fb:hover{
-    background: url(../assets/img/fb_hover.svg) no-repeat;
   }
 </style>
