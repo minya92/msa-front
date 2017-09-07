@@ -27,9 +27,7 @@
 						<div class="login-section" v-else>
 							<a @click.prevent='showAuth=true'>Вход</a> / <a @click.prevent='showRegistry=true'>Регистрация</a>
 						</div>
-						<div class="mini-cart">
-							<img src="../assets/img/cart_empty.svg">корзина пуста
-						</div>
+						<minicart></minicart>
 					</div>
 				</div>
 				<div class="header-bottom flex-vc">
@@ -103,15 +101,16 @@
 </template>
 
 <script>
-	import findMoto from '../components/FindMoto'
-	import searchForm from '../components/Search'
-	import auth from '../components/Auth'
-	import registry from '../components/Registry'
-	import style from '../assets/css/style.css'
+	import findMoto from '@/components/FindMoto'
+	import searchForm from '@/components/Search'
+	import auth from '@/components/Auth'
+	import registry from '@/components/Registry'
+	import style from '@/assets/css/style.css'
 	import Breadcrumbs from '@/components/Breadcrumbs'
+	import minicart from '@/components/cart/Minicart'
 	export default{
 		name: 'app',
-		components: {findMoto, searchForm, auth, registry, Breadcrumbs},
+		components: {findMoto, searchForm, auth, registry, Breadcrumbs, minicart},
 		data() {
 			return{
 				lang: {

@@ -24,7 +24,7 @@
       }
     },
     created() {
-      console.log(this.product.price);
+      
     },
     methods: {
     }

@@ -149,7 +149,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .modal_box_close{
     background: url(../assets/img/close.svg);
     width: 30px;

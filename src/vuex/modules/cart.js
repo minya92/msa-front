@@ -1,22 +1,33 @@
 import * as types from './../mutation-types'
 
-// initial state
-// shape: [{ id, quantity }]
-const state = {
-  added: [],
-  checkoutStatus: null
+function saveItems(data){
+  localStorage.setItem('itemsCart', JSON.stringify(data))
+}
+function getItems(){
+  try {
+    let result = JSON.parse(localStorage.getItem('itemsCart'))
+    
+    return result ? result : []
+  } catch (e){
+    saveItems([])
+    return []
+  }
 }
 
-// getters
+const state = {
+  items: getItems(),
+  checkoutStatus: null,
+  orderId: null
+}
+
 const getters = {
   checkoutStatus: state => state.checkoutStatus,
-  cartProducts: state => state.added
+  cartProducts: state => state.items
 }
 
-// actions
 const actions = {
   checkout ({ commit, state }, products) {
-    const savedCartItems = [...state.added]
+    const savedCartItems = [...state.items]
     commit(types.CHECKOUT_REQUEST)
     shop.buyProducts(
       products,
@@ -32,39 +43,49 @@ const actions = {
   },
   updateCart ({ commit }, product) {
     commit(types.UPDATE_CART, product)
+  },
+  successCheckout ({ commit }, orderId) {
+    commit(types.CHECKOUT_REQUEST, orderId)
   }
 }
-// mutations
+
 const mutations = {
   [types.ADD_TO_CART] (state, {id, quantity} ) {
-    const record = state.added.find(p => p.id === id)
+    const record = state.items.find(p => p.id === id)
     if (!record) {
-      state.added.push({
+      state.items.push({
         id,
         quantity: quantity
       })
     } else {
       record.quantity++
     }
+
+    saveItems(state.items)
   },
   [types.UPDATE_CART] (state, {id, quantity} ) {
-    const record = state.added.find(p => p.id === id)
+    const record = state.items.find(p => p.id === id)
     if (!record) {
-      state.added.push({
+      state.items.push({
         id,
         quantity: quantity
       })
     } else {
       record.quantity = quantity
     }
+
+    saveItems(state.items)
   },
   [types.REMOVE_CART] (state, {id} ) {
-      state.added.splice(state.added.indexOf(id), 1)
+      state.items.splice(state.items.indexOf(id), 1)
+      saveItems(state.items)
   },
 
-  [types.CHECKOUT_REQUEST] (state) {
+  [types.CHECKOUT_REQUEST] (state, {orderId}) {
     // clear cart
-    state.added = []
+    state.items = []
+    state.orderId = orderId
+    saveItems(state.items)
     state.checkoutStatus = null
   },
 
@@ -73,8 +94,7 @@ const mutations = {
   },
 
   [types.CHECKOUT_FAILURE] (state, { savedCartItems }) {
-    // rollback to the cart saved before sending the request
-    state.added = savedCartItems
+    state.items = savedCartItems
     state.checkoutStatus = 'failed'
   }
 }

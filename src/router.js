@@ -12,8 +12,10 @@ import Profile from '@/pages/profile/Profile'
 import HistoryBuy from '@/pages/profile/HistoryBuy'
 import Review from '@/pages/Review'
 import Information from '@/pages/Information'
-import Cart from '@/pages/Cart'
-import Checkout from '@/pages/Checkout'
+
+import Cart from '@/pages/cart/Cart'
+import Checkout from '@/pages/cart/Checkout'
+import SuccessCheckout from '@/pages/cart/Success'
 
 // роуты приложения 
 const routes = [
@@ -30,6 +32,7 @@ const routes = [
     },
     { path: '/cart', component: Cart, meta: {breadcrumb: 'Корзина'} },
     { path: '/checkout', component: Checkout, meta: {breadcrumb: 'Оформление заказа'} },
+    { path: '/cart/success', component: SuccessCheckout, meta: {breadcrumb: 'Оформление заказа'}, props: { name: 'world' }},
     { path: '/review/', component: Review, meta: {breadcrumb: 'Отзывы', title: 'Отзывы'} },
     { path: '/info/', component: Information, meta: {breadcrumb: 'Информация', title: 'Информация'} },
     { path: "*", component: PageNotFound }

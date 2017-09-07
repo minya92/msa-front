@@ -154,7 +154,7 @@
             for (var i = 0; i < response.data.data.length; i++){
               var item = response.data.data[i];
               products.push({
-                id: item.items_catalog_id, 
+                id: item.cost_id, 
                 name: item.item_name, 
                 article: item.artikul, 
                 description: item.item_description, 
