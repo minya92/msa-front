@@ -50,25 +50,31 @@ const actions = {
 }
 
 const mutations = {
-  [types.ADD_TO_CART] (state, {id, quantity} ) {
-    const record = state.items.find(p => p.id === id)
+  [types.ADD_TO_CART] (state, item ) {
+    const record = state.items.find(p => p.id === item.product.id)
     if (!record) {
-      state.items.push({
-        id,
-        quantity: quantity
-      })
+      if (item.product.id && item.product.price && item.quantity) {
+        state.items.push({
+          id: item.product.id,
+          quantity: item.quantity,
+          price: item.product.price,
+          currency: item.product.currency
+        })
+      }
     } else {
       record.quantity++
     }
 
     saveItems(state.items)
   },
-  [types.UPDATE_CART] (state, {id, quantity} ) {
-    const record = state.items.find(p => p.id === id)
+  [types.UPDATE_CART] (state, item ) {
+    const record = state.items.find(p => p.id === item.product.cost_id)
     if (!record) {
       state.items.push({
-        id,
-        quantity: quantity
+        id: item.product.cost_id,
+        quantity: item.quantity,
+        price: item.product.price,
+        currency: item.product.currency
       })
     } else {
       record.quantity = quantity

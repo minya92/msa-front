@@ -222,7 +222,7 @@
       },
       addToCart: function(product){
         this.product = product;
-        this.$store.dispatch("addToCart", {id: product.id, quantity: 1})
+        this.$store.dispatch("addToCart", {product: product, quantity: 1})
         this.showCart=true;
       },
       loadPage: function(){

@@ -126,6 +126,22 @@ header>div{
 	display: flex;
 	justify-content: flex-end;
 }
+.minicart__img{
+	position: relative;
+	margin-right: 10px;
+}
+.minicart__count{
+	position: absolute;
+	background: #801f25;
+	color: #fff;
+	border-radius: 50%;top: -4px;
+    right: -3px;
+    font-size: 10px;
+    min-width: 14px;
+    min-height: 14px;
+    z-index: 1;
+    text-align: center;
+}
 .header-top-section-menu a:hover, .hbox-phone a:hover{
 	font-weight: 600;
 }

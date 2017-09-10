@@ -1,8 +1,11 @@
 <template>
 	<router-link to="cart" class="mini-cart">
-    <img src="../../assets/img/cart_empty.svg">
+    <div class="minicart__img">
+      <img src="../../assets/img/cart_empty.svg">
+      <span class="minicart__count">{{count}}</span>
+    </div>
     <div v-if="count">
-      товаров: {{count}}
+      {{totalPrice}} 
     </div>
     <div v-else>
       корзина пуста
@@ -21,6 +24,11 @@
         },
       }
     },
+    methods: {
+      formatPrice: function(val){
+        return val.toString().replace(/(\d{1,3})(?=((\d{3})*)$)/g, " $1")
+      }
+    },
     computed: {
       items: function(){
         this.orderId = this.$store.state.cart.orderId
@@ -33,6 +41,19 @@
         }, this);
 
         return count
+      },
+      totalPrice: function(){
+        let total = 0
+        let currency = ''
+        
+        this.$store.getters.cartProducts.forEach(function(element) {
+            total+= element.quantity * element.price
+            if (element.currency) { 
+              currency = element.currency 
+            }
+        }, this);
+
+        return `${this.formatPrice(total)} ${currency}`
       }
     },
     created: function(){
