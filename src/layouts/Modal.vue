@@ -1,7 +1,8 @@
 <template>
   <transition name="modal-fade" mode="out-in">
-    <div class="modal-frame">
-      <div class="modal-content-section">
+    <div class="modal-frame" @click.prevent="$emit('close')">
+      <div class="modal-content-section" @click.stop>
+        <a class="modal_box_close" @click="$emit('close')"></a>
         <slot></slot>
       </div>
     </div>
@@ -29,6 +30,10 @@
     text-align: center;
     z-index: 100;
   }
+  .modal-frame img{
+    max-width: 100%;
+    max-height: 100%;
+  }
   .modal-frame:after {
     display: inline-block;
     height: 100%;
@@ -44,8 +49,9 @@
     vertical-align: middle;    
     text-align: left;
     padding: 20px 40px;
-    width: 420px;
+    /*width: 420px;*/
     max-height: 96%;
+    max-width: 80%;
     overflow: auto;
   }
   .modal_box_close{

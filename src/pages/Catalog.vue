@@ -20,29 +20,34 @@
         </ul>
       </aside>
 
-      <div class="content-section" v-if="products.length > 0">
-        <div class="sort-section"></div>
-        <div class="products-section">
-          <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
-          <div class="product-wrapper" v-for="product in products">
-            <div class="product">
-              <router-link :to="/product/ + product.id" class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
-              </router-link>
-              <div class="">
-                <div class="product-name">{{product.name}}</div>
-                <div class="product-article">{{product.article}}</div>
-                <div class="product-description">{{product.description}}</div>
-                <div class="product-price">{{product.price}} {{product.currency}}</div>
+      <div class="content-section">
+				<div id="page-preloader">
+					<span class="spinner"></span>
+				</div>
+        <template v-if="products.length > 0">
+          <div class="sort-section"></div>
+          <div class="products-section">
+            <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
+            <div class="product-wrapper" v-for="product in products">
+              <div class="product">
+                <router-link :to="/product/ + product.id" class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
+                </router-link>
+                <div class="">
+                  <div class="product-name">{{product.name}}</div>
+                  <div class="product-article">{{product.article}}</div>
+                  <div class="product-description">{{product.description}}</div>
+                  <div class="product-price">{{product.price}} {{product.currency}}</div>
+                </div>
+                
+                <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
               </div>
-              
-              <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
-            </div>
-          </router-link>
+            </router-link>
+          </div>
         </div>
-      </div>
-      <pagination :current="currentPage" :total="totalProducts" :pageSize="pageSize" @page-changed="loadProducts"></pagination>
+        <pagination :current="currentPage" :total="totalProducts" :pageSize="pageSize" @page-changed="loadProducts"></pagination>
+      </template>
+      <template v-else>{{lang.textEmptyProducts}}</template>
     </div>
-    <div class="content-section" v-else>{{lang.textEmptyProducts}}</div>
   </div>
   <div class="content-fluid">
     <RecentView></RecentView>
@@ -97,6 +102,7 @@
           tooltipStyle: { "backgroundColor": "#fff", 'color': '#000', 'border': '0'},
           processStyle: { "backgroundColor": "#801f25" }
         },
+        preloader: null,
         imgModelsGrey: ['img/slider/ducati_grey.png',
         'img/slider/kawasaki_grey.png',
         'img/slider/honda_grey.png', 
@@ -148,6 +154,8 @@
         this.$API.get('getItemsCount'+query).then(r => {
           this.totalProducts = r.data.data
 
+          
+          this.preloader.style.display = "block";
           this.$API.get("getItems"+query).then(response => {
             var products = [];
             for (var i = 0; i < response.data.data.length; i++){
@@ -165,7 +173,10 @@
 
             this.products = products;
             this.filterPrice();
+            this.preloader.style.display = "none";
           })
+        }).catch(err => {
+            this.preloader.style.display = "none";
         })
       },
       getItemsMaxMinCost: function(){
@@ -237,6 +248,9 @@
       }, 1000)
     },
     created: function(){
+    },
+    mounted() {
+      this.preloader = document.getElementById("page-preloader");
       this.loadPage()
     }
   }

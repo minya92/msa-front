@@ -1,4 +1,3 @@
-import shop from '../../api/shop'
 import * as types from '../mutation-types'
 
 // initial state
@@ -14,9 +13,9 @@ const getters = {
 // actions
 const actions = {
   getAllProducts ({ commit }) {
-    shop.getProducts(products => {
+    /*shop.getProducts(products => {
       commit(types.RECEIVE_PRODUCTS, { products })
-    })
+    })*/
   }
 }
 

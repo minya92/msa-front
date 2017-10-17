@@ -1,11 +1,16 @@
 <template>
   <main-layout>
+    <modal-fade v-if="showModal" @close="showModal=false">
+      <img :src="loadFullImage(numCurrentImage)">
+    </modal-fade>
     <div class="content-fluid product__detail">
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
       <div class="product__detail__media">
-      <div class="main-image"><img v-if="product.images" :src="loadFullImage(numCurrentImage)"></div>
+      <div class="main-image">
+        <img v-if="product.images" :src="loadFullImage(numCurrentImage)" @click="openModal">
+      </div>
         <div class="thumblist">
-          <a v-for="(image, index) in product.images"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
+          <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
         </div>
       </div>
       <div class="product__detail__description">
@@ -48,21 +53,29 @@
 <script>
   import MainLayout from '@/layouts/Main.vue'
   import AddToCart from '@/components/AddToCart'
+  import ModalFade from '@/layouts/Modal.vue'
 
   export default {
     components: {
-      MainLayout, AddToCart
+      MainLayout, AddToCart, ModalFade
     },
     data() {
       return {
         product: {},
         numCurrentImage: 0,
         imgDefault: 'img/default.jpg',
-        showCart: false
+        showCart: false,
+        showModal: false
       }
     },
     methods: {
-      addToCart:  function(product){
+      openModal: function(){
+        this.showModal=true
+      },
+      close: function(){
+        this.showModal=false
+      },
+      addToCart: function(product){
         this.product = product;
         this.$store.dispatch("addToCart", {product: product, quantity: 1})
         this.showCart=true;

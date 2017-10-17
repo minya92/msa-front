@@ -1,6 +1,5 @@
 <template>
-  <modal-fade>
-    <a class="modal_box_close" @click="$emit('close')"></a>
+  <modal-fade @close="$emit('close')">
     <div class="head-text">Рады вас видеть снова</div>
     <div class="span-grey">Введите телефон или email чтобы продолжить<br>Возможно у вас накопились бонусы</div>
     <div class="form-group">
@@ -43,11 +42,11 @@
 </template>
 
 <script>
-  import ModalFade from '../layouts/Modal.vue'
+  import ModalFade from '@/layouts/Modal.vue'
   import MaskedInput from 'vue-masked-input'
   import md5 from 'md5'
   import axios from 'axios'
-  import SocialAuth from './Social.vue'
+  import SocialAuth from '@/components/Social.vue'
 
 
   export default {

@@ -205,6 +205,30 @@ header>div{
 #show-modal-findmoto .menu_icon{
 	background: url(../img/parts.svg);
 }
+/*  */
+#page-preloader {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0,0,0, 0.1);
+  z-index: 1;
+}
+
+#page-preloader .spinner {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+	background: url('../img/dualring.svg') no-repeat;
+  background-size: contain;
+}
+/* */
 #catalog-menu .menu_icon, #show-modal-findmoto .menu_icon{
 	width: 20px;
 	height: 20px;
@@ -316,6 +340,7 @@ aside{
 }
 .content-section{
 	flex: 1;
+	position: relative;
 }
 .btn-action{
 	height: 50px;
