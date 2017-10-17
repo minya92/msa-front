@@ -167,15 +167,29 @@
     z-index: 100;
     background: #fff;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    top: 75px;
+    top: 69px;
+    display: none;
+    border: 1px solid #eee;
   }
-  #find_moto:before{
+  #find_moto:after{
     content: '';
     border: 9px solid transparent;
     border-bottom: 9px solid #fff;
     position: absolute;
     top: -18px;
     left: 45px;
+  }
+  #find_moto:before{
+    content: '';
+    border-top: 9px solid transparent;
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: -10px;
+    left: 0;
+  }
+  #show-modal-findmoto:hover #find_moto{
+    display: block;
   }
   .find-fade-enter-active {
     transition: all .3s ease;

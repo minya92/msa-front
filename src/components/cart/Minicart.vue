@@ -1,5 +1,5 @@
 <template>
-	<router-link to="cart" class="mini-cart">
+	<router-link to="/cart" class="mini-cart">
     <div class="minicart__img">
       <img src="../../assets/img/cart_empty.svg">
       <span class="minicart__count">{{count}}</span>

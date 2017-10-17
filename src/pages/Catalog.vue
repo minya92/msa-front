@@ -34,9 +34,8 @@
                 <div class="product-description">{{product.description}}</div>
                 <div class="product-price">{{product.price}} {{product.currency}}</div>
               </div>
-              <div>
-                <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
-              </div>
+              
+              <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
             </div>
           </router-link>
         </div>

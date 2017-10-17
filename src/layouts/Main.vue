@@ -34,8 +34,8 @@
 					<div class="container-fluid header-bottom-section">
 						<div style="display: flex; align-items: baseline;">
 							<div id="show-modal-findmoto">
-								<span @click="showModal=true"><div class="menu_icon"></div>{{lang.find_menu}}</span>
-								<findMoto v-if="showModal" @close="showModal=false"></findMoto>
+								<span><div class="menu_icon"></div>{{lang.find_menu}}</span>
+								<findMoto></findMoto>
 							</div>
 							<router-link to="/catalog" id="catalog-menu">
 								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
@@ -54,6 +54,12 @@
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
 		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
 		<footer>
+			<div class="footer-top__ss">Наши каналы:
+				<div class="footer-top__ssi"><img src="../assets/img/instagram.svg">Инстаграм</div>
+				<div class="footer-top__ssi"><img src="../assets/img/vk.svg">Вконтакте</div>
+				<div class="footer-top__ssi"><img src="../assets/img/fb.svg">Facebook</div>
+				<div class="footer-top__ssi"><img src="../assets/img/ok.svg">Однокласники</div>
+			</div>
 			<div class="footer-top">
 				<ul class="footer-top__menu container-fluid">
 					<li><router-link to="/review">Отзывы</router-link></li>
@@ -90,7 +96,9 @@
 				</div>
 				<div class="fbox-lr">
 					<div class="fbox-r-container">
-						<img src="../assets/img/logo_footer.png">
+						<router-link to="/">
+							<img src="../assets/img/logo_footer.png">
+						</router-link>
 						<span class="copyright">&copy; {{copyright}}</span>
 					</div>
 				</div>
@@ -118,7 +126,6 @@
 					catalog: 'Каталог',
 					userName: 'Личный кабинет',
 				},
-				showModal: false,
 				showAuth: false,
 				showRegistry: false,
 				copyright: "2017 MSA MOTO - все права защищены",

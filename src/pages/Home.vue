@@ -1,23 +1,28 @@
 <template>
   <main-layout>
+    <div class="top__slider__cc">
+      <div class="container-fluid">
+        <swiper class="main-slider" :options="swiperOption">
+          <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
+            <div class="top-slider-text-content">
+              <h2>{{topSlider.headerText}}</h2>
+              <span>{{topSlider.footerText}}</span>
+            </div>
+            <div class="transbackground"></div>
+            <img :src='topSlider.img'>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
+          <div class="swiper-button-next" slot="button-next" style="display:none"></div>
+          <div class="models-top-slider">
+            <div class="models-top-slider-item" v-for="imgModel in imgModels">
+              <img :src="imgModel">
+            </div>
+          </div>
+        </swiper>
+      </div>
+    </div>
+    
     <div class="container-fluid">
-      <swiper class="main-slider" :options="swiperOption">
-        <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
-          <div class="top-slider-text-content">
-            <h2>{{topSlider.headerText}}</h2>
-            <span>{{topSlider.footerText}}</span>
-          </div>
-          <div class="transbackground"></div>
-          <img :src='topSlider.img'>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
-        <div class="swiper-button-next" slot="button-next" style="display:none"></div>
-        <div class="models-top-slider">
-          <div class="models-top-slider-item" v-for="imgModel in imgModels">
-            <img :src="imgModel">
-          </div>
-        </div>
-      </swiper>
       <div class="category-menu">
         <div class="category-menu-item">
           <h2>Категория</h2>
@@ -67,17 +72,21 @@
           </ul>
         </div>
       </div>
+    </div>
 
-      <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
-        <h2>Найти запчасти по производителю</h2>
+    <div style="background: #771d22 url('img/bg_red_texture.jpg'); background-size:100% 100%">
+      <div class="container-fluid">
+        <div class="home-box-with-slider">
+          <h2>Найти запчасти по производителю</h2>
 
-        <swiper class="main-bot-slider" :options="swiperOptionModels">
-          <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
-            <img :src='imgModelWhite'>
-          </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
+          <swiper class="main-bot-slider" :options="swiperOptionModels">
+            <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
+              <img :src='imgModelWhite'>
+            </swiper-slide>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
+        </div>
       </div>
     </div>
   </main-layout>

@@ -11,9 +11,11 @@
             <th></th>
           </tr>
           <tr v-for="(product, index) in products">
-            <td class="table__cart__picture"><img :src="product.image"></td>
+            <td class="table__cart__picture">
+              <router-link :to="'product/'+product.id"><img :src="product.image"></router-link></td>
             <td>
-              <div class="table__cart__title-item">{{product.name}}</div>
+              <router-link class="table__cart__title-item" :to="'product/'+product.id">
+              {{product.name}}</router-link>
               <div>{{product.description}}</div>
             </td>
             <td class="table__cart__quantity">
@@ -260,6 +262,8 @@
   }
   .table__cart__title-item{
     font-weight: 600;
+    text-decoration: none;
+    color: inherit;
   }
   .table__cart__quantity{
     text-align: center;

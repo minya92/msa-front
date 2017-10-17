@@ -1,6 +1,7 @@
 <template>
   <main-layout>
     <div class="content-fluid product__detail">
+      <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
       <div class="product__detail__media">
       <div class="main-image"><img v-if="product.images" :src="loadFullImage(numCurrentImage)"></div>
         <div class="thumblist">
@@ -46,21 +47,25 @@
 
 <script>
   import MainLayout from '@/layouts/Main.vue'
+  import AddToCart from '@/components/AddToCart'
 
   export default {
     components: {
-      MainLayout
+      MainLayout, AddToCart
     },
     data() {
       return {
         product: {},
         numCurrentImage: 0,
-        imgDefault: 'img/default.jpg'
+        imgDefault: 'img/default.jpg',
+        showCart: false
       }
     },
     methods: {
-      addToCart: function(item){
-        item.quantity += 1;
+      addToCart:  function(product){
+        this.product = product;
+        this.$store.dispatch("addToCart", {product: product, quantity: 1})
+        this.showCart=true;
       },
       loadImage: function(image){
         if (!image){

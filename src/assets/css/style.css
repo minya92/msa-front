@@ -38,6 +38,9 @@ button {
 	flex-direction: column;
 	height: 100%;
 }
+.top__slider__cc{
+	background: #000;
+}
 .flex-vc{
 	display: flex;
 	align-items: center;
@@ -334,6 +337,7 @@ aside{
 	margin-bottom: 40px;
 }
 .product{
+	position: relative;
 	border: 1px solid #e7e7e7;
 	margin-right: 40px;
 	width: 100%;
@@ -365,10 +369,18 @@ aside{
 .product-price{
 	color: #801f25;
 	font-weight: 600;
+	font-size: 18px;
 }
 .btn_product{
+	display: none;
 	padding: 7px 15px;
 	font-size: 14px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.product:hover .btn_product{
+	display: block;
 }
 .block-action-img{
 	background-repeat: no-repeat;
@@ -541,7 +553,24 @@ height: 130px;
 /****/
 /********* End Catalog ***********/
 footer{
-	border-top: 13px solid #801f25;
+	/*border-top: 13px solid #801f25;*/
+}
+.footer-top__ss{
+	background: #801f25;
+	display: flex;
+	justify-content: center;
+	height: 68px;
+	align-items: center;
+	color: #fff;
+}
+.footer-top__ssi{
+	display: flex;
+	align-items: center;
+	margin: 0 8px 0 12px;
+	cursor: pointer;
+}
+.footer-top__ss img{
+	margin-right: 10px;
 }
 .footer-top{
 	background: #262626;
