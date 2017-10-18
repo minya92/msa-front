@@ -1,11 +1,10 @@
 <template>
   <main-layout>
     <div class="content-fluid filter-section">
-      <vsc ref="vsc" class="vsc" @callback="vscChange" v-bind="dataSlide" v-model="dataSlide.value" v-show="dataSlide.max && dataSlide.min"></vsc>
+      <span style="margin-right: 25px;">Цена:</span> <vsc ref="vsc" class="vsc" @callback="vscChange" v-bind="dataSlide" v-model="dataSlide.value" v-show="dataSlide.max && dataSlide.min"></vsc>
     </div>
     <div class="content-fluid catalog-section">
       <aside>
-        <a class="btn-action btn_theme">Акции</a>
         <div class="aside__v-menu__title">Каталог</div>
         <ul class="aside__nav_vertical">
           <li v-for="catalog in catalogs">
@@ -25,12 +24,20 @@
 					<span class="spinner"></span>
 				</div>
         <template v-if="products.length > 0">
-          <div class="sort-section"></div>
+          <div class="sort-section">
+            Сортировать по: 
+            <select>
+              <option>возрастанию цены</option>
+              <option>убыванию цены</option>
+              <option>наименованию</option>
+            </select>
+          </div>
           <div class="products-section">
             <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
             <div class="product-wrapper" v-for="product in products">
               <div class="product">
-                <router-link :to="/product/ + product.id" class="product__image" :style='{ backgroundImage: "url(" + product.image + ")", }'>
+                <router-link :to="/product/ + product.id" class="product__image">
+                <img :src="product.image">
                 </router-link>
                 <div class="">
                   <div class="product-name">{{product.name}}</div>
@@ -215,7 +222,7 @@
         if (!image){
           return 'img/default.jpg';
         }
-
+        
         return this.$SERVER_URL + image;
       },
       filterPrice: function(){

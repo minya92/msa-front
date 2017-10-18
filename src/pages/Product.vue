@@ -1,7 +1,14 @@
 <template>
   <main-layout>
     <modal-fade v-if="showModal" @close="showModal=false">
-      <img :src="loadFullImage(numCurrentImage)">
+      
+      <div class="main-image">
+        <img v-if="product.images" :src="loadFullImage(numCurrentImage)" @click="openModal">
+      </div>
+        <div class="modal__thumblist thumblist">
+          <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="selectImage($event,index)" ref="image.id"></a>
+        </div>
+      </div>
     </modal-fade>
     <div class="content-fluid product__detail">
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
@@ -93,6 +100,10 @@
         }
 
         return this.loadImage(this.product.images[this.numCurrentImage].full_image)
+      }, 
+      selectImage: function(elem, index){
+        let imageSrc = this.$SERVER_URL + this.product.images[index].full_image
+        elem.target.offsetParent.getElementsByClassName("main-image")[0].firstChild.setAttribute("src",imageSrc)
       }
     },
     created: function(){
@@ -222,5 +233,9 @@
   .product-compatibility ul li{
     width: 33.33%;
     padding: 5px 10px 5px 0;
+  }
+  .modal__thumblist.thumblist a{
+    width: 48px;
+    height: 48px;
   }
 </style>
