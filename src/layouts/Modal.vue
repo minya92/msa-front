@@ -97,4 +97,14 @@
   .form-group{
     margin: 5px 0;
   }
+  @media screen and (max-width: 375px) {
+    .modal-content-section{
+      padding: 10px;
+    max-height: 96%;
+    max-width: 90%;
+    }
+    .modal-frame input, .modal-frame button{
+      width: 100%;
+    }
+  }
 </style>

@@ -295,7 +295,7 @@
     text-decoration: none;
     align-items: center;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 375px) {
     #find_moto{
       width: 300px;
       padding: 10px;

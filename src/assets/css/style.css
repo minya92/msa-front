@@ -534,6 +534,10 @@ display: flex;
 justify-content: center;
 /*border-radius: 10px;*/
 }
+.models-top-slider .models-top-slider-item img{
+	max-height: 100%;
+	max-width: 100%;
+}
 .models-top-slider .models-top-slider-item:last-child{
 margin-right: 0px;
 }
@@ -758,7 +762,7 @@ footer #search_form input {
 		margin-right: 20px;
 	}
 }
-@media (max-width: 320px){
+@media (max-width: 375px){
 	.container-fluid{
 		padding: 0 5px;
 	}
@@ -796,6 +800,28 @@ footer #search_form input {
 		justify-content: center;
 		padding: 10px;
 	}
+	.top-slider-text-content{
+		top: 0;
+		max-width: 100%;
+		padding: 5px 10px;
+	}
+	.top-slider-text-content h2{
+		font-size: 18px;
+		padding-bottom: 0;
+	}
+	.top-slider-text-content>span{
+		font-size: 11px;
+	}
+	.models-top-slider {
+		top: 100px;
+	}
+	.models-top-slider .models-top-slider-item {
+		height: 50px;
+	}
+	.models-top-slider .models-top-slider-item img {
+    max-height: 80%;
+    max-width: 80%;
+	}
 	.footer-top{
 		height: auto;
 	}
@@ -805,7 +831,7 @@ footer #search_form input {
 		flex-wrap: wrap;
 	}
 	.footer-top ul li{
-		margin: 10px 0;
+		margin: 8px 5px;
 		flex: auto;
 	}
 	.footer-top ul li:before{
@@ -814,6 +840,9 @@ footer #search_form input {
 	}
 	.footer-top__ssi span{
 		display: none;
+	}
+	.fbox-c{
+		border: none;
 	}
 	.footer-bottom{
 		padding: 10px 0;
@@ -853,12 +882,8 @@ footer #search_form input {
 		flex-wrap: wrap;
 	}
 	.main-bot-slider{
-		width: 310px;
+		width: 365px;
 	}
-	#find_moto{
-		width: 290px;
-	}
-
 	.bottom-action {
 		flex-direction: column;
 	}
@@ -875,5 +900,48 @@ footer #search_form input {
 	.block-action-img {
 		height: 140px;
 		background-size: cover;
+	}
+	@media (max-width: 320px){
+		.home-box-with-slider{
+			height: 200px;
+		}
+		.home-box-with-slider h2{
+			padding-left: 0;
+			padding-top: 20px;
+			font-size: 12px;
+			text-align: center;
+		}
+		.main-bot-slider{
+			margin-top: 20px;
+		}
+		.main-bot-slider .swiper-slide{
+			padding: 0 10px;
+			height: 40px;
+		}
+		.main-bot-slider{
+			width: 310px;
+		}
+		.top-slider-text-content{
+			top: 0;
+			max-width: 100%;
+			padding: 5px 10px;
+		}
+		.top-slider-text-content h2{
+			font-size: 16px;
+			padding-bottom: 0;
+		}
+		.top-slider-text-content>span{
+			font-size: 10px;
+		}
+		.models-top-slider {
+			top: 88px;
+		}
+		.models-top-slider .models-top-slider-item {
+			height: 40px;
+		}
+		.models-top-slider .models-top-slider-item img {
+			max-height: 80%;
+			max-width: 80%;
+		}
 	}
 }

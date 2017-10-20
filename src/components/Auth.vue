@@ -80,4 +80,9 @@ methods: {
   .modal__auth__content{
     width: 340px;
   }
+  @media screen and (max-width: 375px) {
+    .modal__auth__content{
+      width: 100%;
+    }
+  }
 </style>
