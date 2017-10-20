@@ -16,6 +16,9 @@ const actions = {
     /*shop.getProducts(products => {
       commit(types.RECEIVE_PRODUCTS, { products })
     })*/
+  },
+  recentItem ({ commit, item }) {
+    console.log(item);
   }
 }
 

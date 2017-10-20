@@ -631,7 +631,7 @@ footer{
 }
 .footer-top ul li{
 	flex: 1;
-	text-align: center;;
+	text-align: center;
 }
 .footer-top ul li:before{
 	content: '';
@@ -759,6 +759,9 @@ footer #search_form input {
 	}
 }
 @media (max-width: 320px){
+	.container-fluid{
+		padding: 0 5px;
+	}
 	.header-top{
 		height: auto;
 	}
@@ -773,6 +776,18 @@ footer #search_form input {
 	.header-top-section-menu a, .hbox-phone a{
 		padding: 5px 10px;
 	}
+	.header-bottom{
+		height: auto;
+	}
+	.header-bottom-section{
+		flex-direction: column;
+	}
+	.header-bottom-section>div{
+		padding: 5px 0;
+	}
+	#catalog-menu > span, #show-modal-findmoto > span{
+		height: auto;
+	}
 	.hbox-phone{
 		display: flex;
 		justify-content: center;
@@ -786,14 +801,19 @@ footer #search_form input {
 	}
 	.footer-top ul{
 		width: 100%;
-		flex-direction: column;
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 	.footer-top ul li{
 		margin: 10px 0;
+		flex: auto;
 	}
 	.footer-top ul li:before{
 		width: 5px;
 		height: 5px;
+	}
+	.footer-top__ssi span{
+		display: none;
 	}
 	.footer-bottom{
 		padding: 10px 0;
@@ -823,7 +843,7 @@ footer #search_form input {
 		text-align: center;
 	}
 	.main-bot-slider{
-		margin-top: 30px;
+		margin-top: 20px;
 	}
 	.main-bot-slider .swiper-slide{
 		padding: 0 10px;

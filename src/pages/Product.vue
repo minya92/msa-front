@@ -120,6 +120,8 @@
           compatibility: item.supported,
           chars: item.chars
         };
+
+        this.$store.dispatch("recentItem", product);
       })
     }
   }

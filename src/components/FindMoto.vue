@@ -1,7 +1,6 @@
 <template>
   <transition name="find-fade">
     <div id="find_moto">
-      <a class="modal_box_close" @click="$emit('close')"></a>
       <h2>{{lang.findParts}}</h2>
       <div class="moto-box-selection">
         <div class="form-group">          
@@ -295,5 +294,40 @@
     justify-content: center;
     text-decoration: none;
     align-items: center;
+  }
+  @media screen and (max-width: 320px) {
+    #find_moto{
+      width: 300px;
+      padding: 10px;
+    }
+    #find_moto h2 {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    .result-count {
+      font-size: 18px;
+    }
+    #find_moto .search-detail{
+      font-size: 12px;
+      padding: 10px;
+      height: auto;
+      width: 100%;
+    }
+    .form-group .slider-mark{
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+    .title-group {
+      padding-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group .slider-mark{
+      padding: 5px;
+    }
+    .form-group .slider-mark{
+      width: 33.33%;
+    }
   }
 </style>

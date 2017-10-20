@@ -6,6 +6,7 @@ import {LOGIN_SUCCESS} from './mutation-types.js'
 import {LOGOUT} from './mutation-types.js'
 
 import cart from './modules/cart.js'
+import recentProducts from './modules/product.js'
 
 Vue.use(Vuex)
 
@@ -60,7 +61,8 @@ const actions = {
 export default new Vuex.Store({
 	state,
   modules:{
-    cart
+    cart,
+    recentProducts
   },
 	mutations,
 	getters,
