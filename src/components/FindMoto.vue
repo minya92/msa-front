@@ -5,14 +5,9 @@
       <div class="moto-box-selection">
         <div class="form-group">          
           <div class="title-group">{{lang.selectMark}}</div>
-          <div class="prev-next">
-            <div :class="['prev-result', PrevIsActive() ? '' : 'disabled']" @click="prevResult"><</div>
-            <div :class="['next-result', NextIsActive() ? '' : 'disabled']" @click="nextResult">></div>
-          </div>
           <div class="slider-marks">
             <div :class="['slider-mark', currentMark === mark.marks_models_id ? 'current' : '']" 
             v-for="(mark, index) in marks" 
-            v-if="showMore(index)"  
             @click="selectMark(mark.marks_models_id)">
             <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
             <div v-else>{{mark.mm_name}}</div>
@@ -81,7 +76,7 @@
           this.marks = response.data.data;
 
         this.paramNextPrev.totalProducts = this.marks.length;
-        this.NextIsActive();
+        //this.NextIsActive();
       })
     },
     methods: {
@@ -203,7 +198,6 @@
   #find_moto h2{
     text-align: center;
     font-size: 34px;
-    margin: 20px 0;
   }
   .years{
     display: flex;
@@ -239,7 +233,7 @@
   .form-group .slider-mark{
     display: flex;
     width: 16.66%;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     justify-content: center;
     align-items: center;
     padding: 10px;
@@ -316,18 +310,14 @@
     .form-group .slider-mark{
       margin-bottom: 5px;
       font-size: 11px;
+      padding: 5px;
+      width: 33.33%;
     }
     .title-group {
       padding-bottom: 10px;
     }
     .form-group {
       margin-bottom: 10px;
-    }
-    .form-group .slider-mark{
-      padding: 5px;
-    }
-    .form-group .slider-mark{
-      width: 33.33%;
     }
   }
 </style>

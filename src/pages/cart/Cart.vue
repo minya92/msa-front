@@ -40,7 +40,8 @@
             <div class="checkout-heading">Покупатель</div>
             <div class="row__customer_group" v-for="field in Object.keys(userFields)">
               <label :class="userFields[field].require ? 'require' : ''">{{userFields[field].name}}</label>
-              <input v-model="userFields[field].value"  :class="userFields[field].error ? 'error-val' : ''"/>
+              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 1111-11" />
+              <input v-else v-model="userFields[field].value"  @blur="validateInput(field)" :class="userFields[field].error ? 'error-val' : ''"/>
             </div>
         </div>
         <div class="simplecheckout-right-column">
@@ -72,10 +73,11 @@
 
 <script>
   import MainLayout from '@/layouts/Main'
+  import MaskedInput from 'vue-masked-input'
 
   export default {
     components: {
-      MainLayout
+      MainLayout, MaskedInput
     },
     data() {
       return {
@@ -123,6 +125,20 @@
       }
     },
     methods: {
+      validateInput: function(field){
+        if (field == 'email'){
+          this.validateEmail();
+        }
+      },
+      validateEmail: function() {
+        var reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/
+        console.log(this.userFields)
+        if (!this.userFields.email.value.match(reg)) {
+          this.userFields.email.error = true;
+          return;
+        }
+        this.userFields.email.error = false;
+      },
       loadImage: function(image){
         if (!image){
           return 'img/default.jpg'
@@ -356,5 +372,13 @@
   }
   input.error-val{
     border: 1px solid red;
+  }
+  @media screen and (max-width: 375px) {
+    .cart-methods-section{
+      flex-direction: column;
+    }
+    .simplecheckout-left-column, .simplecheckout-right-column{
+      width: 100%;
+    }
   }
 </style>

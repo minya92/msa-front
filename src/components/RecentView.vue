@@ -86,6 +86,7 @@
 <style scoped>
   .recent-view{
     position: relative;
+    overflow: hidden;
   }
   .recent-view .product-wrapper {
     display: flex;
@@ -125,5 +126,11 @@
   }
   .next-result{
 
+  }
+  @media screen and (max-width: 375px) {
+    .product-wrapper, .recent-view .product-wrapper {
+      margin-bottom: 10px;
+      width: 50%;
+    }
   }
 </style>

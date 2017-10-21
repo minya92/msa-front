@@ -26,10 +26,6 @@ const actions = {
 const mutations = {
   [types.RECEIVE_PRODUCTS] (state, { products }) {
     state.all = products
-  },
-
-  [types.ADD_TO_CART] (state, { id }) {
-    state.all.find(p => p.id === id).inventory--
   }
 }
 

@@ -121,7 +121,7 @@
           chars: item.chars
         };
 
-        this.$store.dispatch("recentItem", product);
+        this.$store.dispatch("recentItem", this.product);
       })
     }
   }
@@ -239,5 +239,30 @@
   .modal__thumblist.thumblist a{
     width: 48px;
     height: 48px;
+  }
+  
+  @media (max-width: 375px){
+    .product__detail__description h1{
+      font-size: 18px;
+    }
+    .product__detail__description .price{
+      font-size: 16px;
+    }
+    .product-price-block, .product__detail__description .article{
+      margin-top: 10px;
+    }
+    .product__detail__media{
+      margin-right: 20px;
+    }
+    .main-image{
+      height: 200px;
+    }
+    .thumblist a {
+      width: 50px;
+      height: 50px
+    }
+    .product__detail__description  button{
+      margin: 10px 0;
+    }
   }
 </style>
