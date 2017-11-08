@@ -41,7 +41,7 @@ const routes = [
 
 // экспорт роутера 
 export default new Router({ 
-  //mode: 'history',
+  mode: 'history',
   base: __dirname,
   routes, 
   linkActiveClass: 'current' 
