@@ -17,15 +17,23 @@ const actions = {
       commit(types.RECEIVE_PRODUCTS, { products })
     })*/
   },
-  recentItem ({ commit, item }) {
-    console.log(item);
+  recentItem ({ commit }, product) {
+    commit(types.RECEIVE_PRODUCTS, product)
   }
 }
 
 // mutations
 const mutations = {
-  [types.RECEIVE_PRODUCTS] (state, { products }) {
-    state.all = products
+  [types.RECEIVE_PRODUCTS] (state, { id, name, description, price, currency, images, article}) {
+    state.all.push({ 
+      id, 
+      name, 
+      description, 
+      price, 
+      currency, 
+      article, 
+      image:(images.length > 0 ? images[0].thumbnail : '')
+    });
   }
 }
 

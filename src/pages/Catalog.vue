@@ -26,10 +26,11 @@
         <template v-if="products.length > 0">
           <div class="sort-section">
             Сортировать по: 
-            <select>
-              <option>возрастанию цены</option>
-              <option>убыванию цены</option>
-              <option>наименованию</option>
+            <select v-model="selectedSort" @change="changePageFromSort">
+              <option value="" selected>по добавлению</option>
+              <option value="name">наименованию</option>
+              <option value="cost">возрастанию цены</option>
+              <option value="costDesc">убыванию цены</option>
             </select>
           </div>
           <div class="products-section">
@@ -45,15 +46,16 @@
                   <div class="product-description">{{product.description}}</div>
                   <div class="product-price">{{product.price}} {{product.currency}}</div>
                 </div>
-                
-                <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
+                <div class="btns_product">
+                  <button class="btn_product btn_theme_white"  @click.prevent='$router.push({path: `/product/${product.id}`})'>Подробнее</button>
+                  <button class="btn_product btn_theme"  @click.prevent='addToCart(product)'>В корзину</button>
+                </div>
               </div>
             </router-link>
           </div>
         </div>
-        <pagination :current="currentPage" :total="totalProducts" :pageSize="pageSize" @page-changed="loadProducts"></pagination>
+        <pagination :current="currentPage" :total="totalProducts" :pageSize="pageSize" @page-changed="changePage"></pagination>
       </template>
-      <template v-else>{{lang.textEmptyProducts}}</template>
     </div>
   </div>
   <div class="content-fluid">
@@ -126,6 +128,7 @@
         currentPage: 1,
         selectProduct: {},
         products: [],
+        selectedSort: '',
         blockActions: [
         {
           headerText: 'Большой и длинный заголовок',
@@ -147,8 +150,17 @@
       }
     },
     methods: {
+      changePage: function(page){
+        this.$router.push({name: 'catalog', params: { id: page }})
+      },
+      changePageFromSort: function(){
+        if (this.selectedSort != ''){
+          this.$router.push({name: 'catalog', params: { id: 1 }, query: {  sort: this.selectedSort }})
+        } else {
+          this.$router.push({name: 'startCatalog'})
+        }
+      },
       loadProducts: function(page){
-        this.currentPage = page;
         let query = `?cost_min=${this.dataSlide.value[0]}&cost_max=${this.dataSlide.value[1]}`
         if (typeof this.$route.params.types != 'undefined'){
           query += `&types=%5B${this.$route.params.types}%5D`;
@@ -157,6 +169,7 @@
           query += `&mark_model=${this.$route.params.searchDetails}`;
         }
         query += `&page=${this.currentPage}&pageSize=${this.pageSize}`;
+        query += `&order=${this.selectedSort}`;
 
         this.$API.get('getItemsCount'+query).then(r => {
           this.totalProducts = r.data.data
@@ -247,17 +260,23 @@
         this.dataSlide.max = 0
 
         this.loadCatalogs()
-        this.getItemsMaxMinCost()
-        this.loadProducts(1)
+        
+        if (this.$route.params.id == undefined || !isNaN(this.$route.params.id)){
+          this.$route.params.id == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.params.id);
+          this.$route.query.sort != undefined ? this.selectedSort = this.$route.query.sort : this.selectedSort = '';
+          
+          this.preloader = document.getElementById("page-preloader");
+          this.getItemsMaxMinCost()
+          this.loadProducts(this.currentPage)
+        }
       },
       vscChange: _.debounce(function (e) {
-        this.loadProducts(1)
+        this.loadProducts(this.currentPage)
       }, 1000)
     },
     created: function(){
     },
     mounted() {
-      this.preloader = document.getElementById("page-preloader");
       this.loadPage()
     }
   }

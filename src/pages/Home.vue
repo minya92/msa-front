@@ -24,23 +24,8 @@
     
     <div class="container-fluid">
       <div class="category-menu">
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Наибольшущая подкатегория товара для всех</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
+        <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
+          <h2>{{catalog.name}}</h2>
         </div>
       </div>
     </div>
@@ -72,6 +57,7 @@
     },
     data() {
       return {
+        catalogs: [],
         imgModels: ['img/honda_color.png', 
         'img/bmw_color.png', 
         'img/yamaha_color.png',
@@ -116,8 +102,22 @@
       }
     },
     methods: {
+      getCatalogs: function(){
+        this.$API.get('getTypes').then(r => {
+          var catalogs = [];
+          for (var i = 0; i < r.data.data.length; i++){
+            var item = r.data.data[i];
+            catalogs.push({
+              id: item.items_types_id, 
+              name: item.type_description
+            });
+          }
+            this.catalogs = catalogs;
+        })
+      }
     },
-    mounted() {
+    created() {
+      this.getCatalogs();
     }
   }
 </script>

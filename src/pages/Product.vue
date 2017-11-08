@@ -1,7 +1,6 @@
 <template>
   <main-layout>
     <modal-fade v-if="showModal" @close="showModal=false">
-      
       <div class="main-image">
         <img v-if="product.images" :src="loadFullImage(numCurrentImage)" @click="openModal">
       </div>

@@ -50,8 +50,8 @@
     text-align: left;
     padding: 20px 40px;
     /*width: 420px;*/
-    max-height: 100%;
-    max-width: 100%;
+    max-height: 96%;
+    max-width: 96%;
     overflow: auto;
   }
   .modal_box_close{

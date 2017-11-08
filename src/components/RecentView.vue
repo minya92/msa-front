@@ -32,13 +32,7 @@
           currentItems: 0,
           indexResultItems: 1
         },
-        products: [
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 3, currency: 'р', id: '56', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items', price: 36, currency: 'р', id: '57', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catatalog_image20589', price: 145, currency: 'р', id: '58', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 5550, currency: 'р', id: '59', image: 'img/catalog/axe.png' },
-        { article: 'acw43q4ca4', description: 'shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589 shop_items_catalog_image20589', price: 34500, currency: 'р', id: '60', image: 'img/catalog/axe.png' }
-        ],
+        products: [],
         blockActions: [
         {
           headerText: 'Большой и длинный заголовок',
@@ -54,6 +48,8 @@
       }
     },
     created() {
+      this.products = this.$store.getters.allProducts;
+      console.log(this.products);
       this.paramNextPrev.totalProducts = this.products.length;
       this.NextIsActive();
     },

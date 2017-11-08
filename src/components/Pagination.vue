@@ -149,6 +149,7 @@
   }
   .pagination-mid li {
     display: inline-block;
+    padding: 0 3px;
   }
   .upTop{
     width: 65px;
