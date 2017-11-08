@@ -17,9 +17,12 @@ import Cart from '@/pages/cart/Cart'
 import Checkout from '@/pages/cart/Checkout'
 import SuccessCheckout from '@/pages/cart/Success'
 
+import DoAuth from '@/components/auth/DoAuth'
+
 // роуты приложения 
 const routes = [
     { path: '/', component: Home },
+    { path: '/doAuth', component: DoAuth },
     { path: '/contacts', component: Contacts },
     { path: '/catalog', name: 'catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
