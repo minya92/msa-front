@@ -2,7 +2,7 @@
   <modal-fade @close="$emit('close')">
     <div class="modal__auth__content">
       <div class="head-text">{{headerText}}</div>
-      <div class="span-grey" v-html="">{{textFromHeaderText}}</div>
+      <div class="span-grey">{{textFromHeaderText}}</div>
       <div class="form-group">
         <label>{{email.headerText}}</label>
         <input type="text" v-model="email.value">
@@ -55,21 +55,48 @@ created() {
 },
 methods: {
   submitForm: function(){
-    var post = 'j_username=' + this.email.value + '&j_password=' + this.password.value;
-    this.$AUTH_URL.get('index.html').then(
-      this.$AUTH_URL.post('j_security_check/', post)
-    ).then(
-      this.$API.get('clients/current')
-    ).then(response => {
-      if (responce.data != [])
-        console.log('Auth ok')
-      else
-        console.log('Auth fail')
-    }).catch(e => {
-        console.log(e);
-    })
+    this.doAuth(this.email.value, this.password.value)
+  },
+  doAuth: function(login, pass) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", '/auth', true);
+        xhr.onreadystatechange = function(evt) {
+            if (xhr.readyState == 4) {
+                resolve();
+            }
+        };
+        xhr.send();
+    }).then(function(urlParams) {
+        return new Promise(function(resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            var stage = 0;
+
+            var body = 'j_username=' + encodeURIComponent(login) +
+              '&j_password=' + encodeURIComponent(pass);
+
+            xhr.open("POST", 'j_security_check', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function(evt) {               
+                if (xhr.readyState == 4) {
+                    if (xhr.status != 302 && xhr.status != 404) {
+                        if (xhr.responseText.indexOf('"j_password" id="password"') == -1) {
+                            resolve();
+                        } else {
+                            xhr.abort();
+                            reject();
+                        }
+                    } else 
+                        resolve();
+                }
+            };
+
+            xhr.send(body);
+        });
+    });
   }
-}
+  }
 }
 </script>
 

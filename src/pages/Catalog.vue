@@ -150,6 +150,14 @@
       }
     },
     methods: {
+      vscChange: _.debounce(function (e) {
+        let query = Object.assign({}, this.$route.query);
+        if (e[0] != 0)  query.min_cost = e[0];
+        if (e[1] != 0)  query.max_cost = e[1];
+        query.page = 1;
+        
+        this.$router.push({query: query})
+      }, 1000),
       changePage: function(page){
         let query = Object.assign({}, this.$route.query);
         query.sort = this.selectedSort;
@@ -160,6 +168,7 @@
       changePageFromSort: function(){
         let query = Object.assign({}, this.$route.query);
         query.sort = this.selectedSort;
+        query.page = 1;
         
         this.$router.push({query: query})
       },
@@ -210,7 +219,14 @@
         }
 
         this.$API.get('getItemsMaxMinCost'+query).then(r => {
-          this.dataSlide.value = [r.data.data.min_cost, r.data.data.max_cost]
+          this.dataSlide.value = [
+            typeof this.$route.query.min_cost != undefined ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
+            typeof this.$route.query.max_cost != undefined ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
+          ];
+          console.log(typeof this.$route.query.min_cost != undefined ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
+            )
+            console.log(typeof this.$route.query.max_cost != undefined ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
+          )
           this.dataSlide.min = r.data.data.min_cost
           this.dataSlide.max = r.data.data.max_cost
         })
@@ -272,10 +288,7 @@
           this.getItemsMaxMinCost()
           this.loadProducts(this.currentPage)
         }
-      },
-      vscChange: _.debounce(function (e) {
-        this.loadProducts(this.currentPage)
-      }, 1000)
+      }
     },
     created: function(){
     },

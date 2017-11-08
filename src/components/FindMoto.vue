@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="result-count">Всего запчастей: {{countDetail}}</div>
-    <router-link class="btn_theme search-detail"  :to="'/catalog/search='+currentMarkModels">{{lang.moreInfo}}</router-link>
+    <router-link class="btn_theme search-detail"  :to="'/catalog/search='+currentIdByQueryMark">{{lang.moreInfo}}</router-link>
   </div>
 </div>
 </transition>
@@ -67,7 +67,7 @@
           indexResultItems: 1
         },
         countDetail: 0,
-        currentMarkModels: null
+        currentIdByQueryMark: ''
       }
     },
     created() {
@@ -82,7 +82,7 @@
     methods: {
       selectMark: function(marksModelsId) {
         this.currentMark = marksModelsId
-        this.currentMarkModels = marksModelsId
+        this.currentIdByQueryMark = marksModelsId
         this.years = []
         this.totalDetails(this.currentMark)
         
@@ -94,7 +94,7 @@
       },
       selectModel: function(marksModelsId) {
         this.currentModel = marksModelsId
-        this.currentMarkModels = marksModelsId
+        this.currentIdByQueryMark = marksModelsId
         this.totalDetails(this.currentModel)
 
         this.$API.get('/getYears/'+marksModelsId).then(response => {
@@ -105,13 +105,14 @@
       },
       selectYear: function(item) {
         this.currentYear = item;
-        this.currentMarkModels = item.marks_models_id
+        this.currentIdByQueryMark = item.marks_models_id
 
-        this.totalDetails(this.currentMarkModels)
+        this.totalDetails(this.currentIdByQueryMark)
       },
       totalDetails: function(param){
         this.$API.get(`getItemsCount?mark_model=${param}`).then(r => {
           this.countDetail = r.data.data
+          console.log(param)
         })
       },
 
