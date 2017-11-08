@@ -25,6 +25,7 @@ const actions = {
 // mutations
 const mutations = {
   [types.RECEIVE_PRODUCTS] (state, { id, name, description, price, currency, images, article}) {
+    console.log(images)
     state.all.push({ 
       id, 
       name, 

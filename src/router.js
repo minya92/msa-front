@@ -21,8 +21,7 @@ import SuccessCheckout from '@/pages/cart/Success'
 const routes = [
     { path: '/', component: Home },
     { path: '/contacts', component: Contacts },
-    { path: '/catalog', name: 'startCatalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
-    { path: '/catalog/:id', name: 'catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
+    { path: '/catalog', name: 'catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/search=:searchDetails', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },

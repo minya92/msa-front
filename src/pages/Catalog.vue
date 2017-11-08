@@ -151,14 +151,17 @@
     },
     methods: {
       changePage: function(page){
-        this.$router.push({name: 'catalog', params: { id: page }})
+        let query = Object.assign({}, this.$route.query);
+        query.sort = this.selectedSort;
+        query.page = page;
+        
+        this.$router.push({query: query})
       },
       changePageFromSort: function(){
-        if (this.selectedSort != ''){
-          this.$router.push({name: 'catalog', params: { id: 1 }, query: {  sort: this.selectedSort }})
-        } else {
-          this.$router.push({name: 'startCatalog'})
-        }
+        let query = Object.assign({}, this.$route.query);
+        query.sort = this.selectedSort;
+        
+        this.$router.push({query: query})
       },
       loadProducts: function(page){
         let query = `?cost_min=${this.dataSlide.value[0]}&cost_max=${this.dataSlide.value[1]}`
@@ -261,8 +264,8 @@
 
         this.loadCatalogs()
         
-        if (this.$route.params.id == undefined || !isNaN(this.$route.params.id)){
-          this.$route.params.id == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.params.id);
+        if (this.$route.query.page == undefined || !isNaN(this.$route.query.page)){
+          this.$route.query.page == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.query.page);
           this.$route.query.sort != undefined ? this.selectedSort = this.$route.query.sort : this.selectedSort = '';
           
           this.preloader = document.getElementById("page-preloader");
