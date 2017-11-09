@@ -28,8 +28,10 @@
     <div class="container-fluid">
       <div class="category-menu">
         <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
-          <img :src="catalog.img" />
-          <h2>{{catalog.name}}</h2>
+          <router-link :to="`/catalog/types=${catalog.id}`">
+            <img :src="catalog.img" />
+            <h2>{{catalog.name}}</h2>
+          </router-link>
         </div>
       </div>
     </div>
@@ -65,12 +67,12 @@
       return {
         catalogs: [
           {
-            id: 1,
+            id: 149996868299000,
             name: 'Комплекты пластика',
             img: 'img/motoplast.png'
           },
           {
-            id: 2,
+            id: 150581197408400,
             name: 'Свет',
             img: 'img/lamp.png'
           }
