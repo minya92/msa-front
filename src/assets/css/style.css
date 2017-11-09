@@ -643,6 +643,10 @@ footer{
 	align-items: center;
 	color: #fff;
 }
+.footer-top__ss a{
+	color: #fff;
+	text-decoration: none;
+}
 .footer-top__ssi{
 	display: flex;
 	align-items: center;
