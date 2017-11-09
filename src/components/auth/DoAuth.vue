@@ -30,20 +30,19 @@ export default {
               var body = 'j_username=' + encodeURIComponent(login) +
                 '&j_password=' + encodeURIComponent(pass);
 
-              xhr.open("POST", 'j_security_check', true);
+              xhr.open("POST", 'api/j_security_check', true);
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-              xhr.onreadystatechange = function(evt) {               
+              xhr.onreadystatechange = function(evt) {
                   if (xhr.readyState == 4) {
-                      if (xhr.status != 302 && xhr.status != 404) {
-                          if (xhr.responseText.indexOf('"j_password" id="password"') == -1) {
-                              resolve();
-                          } else {
-                              xhr.abort();
-                              reject();
-                          }
-                      } else 
-                          resolve();
+                        if (xhr.responseText.indexOf('"j_password" id="password"') == -1) {
+                            alert('ok!');
+                            resolve();
+                        } else {
+                            alert('fail');
+                            xhr.abort();
+                            reject();
+                        }
                   }
               };
 
