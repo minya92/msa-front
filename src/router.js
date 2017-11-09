@@ -26,7 +26,7 @@ const routes = [
     { path: '/contacts', component: Contacts },
     { path: '/catalog', name: 'catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
-    { path: '/catalog/search=:searchDetails', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
+    { path: '/catalog/search=:searchDetails', name: 'catalogSearch', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },
     { path: '/profile', component: Profile, meta: {breadcrumb: 'Личный кабинет'},
       children: [

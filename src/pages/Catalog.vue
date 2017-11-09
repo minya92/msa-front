@@ -62,9 +62,12 @@
     <RecentView></RecentView>
   </div>
   <div class="container-fluid model-grey">
-    <div v-for="imgModelGrey in imgModelsGrey">
-      <img :src="imgModelGrey">
-    </div>
+    <router-link class="models-top-slider-item" v-for="imgModelGrey in imgModelsGrey" 
+      :key="imgModelGrey.marks_models_id"
+      :to="{name:'catalogSearch', params: {searchDetails: imgModelGrey.marks_models_id}}" 
+    >
+      <img :src="imgModelGrey.full_image" :alt="imgModelGrey.mm_name" :title="imgModelGrey.mm_name">
+    </router-link>
   </div>
   <div>
   </div>
@@ -112,14 +115,7 @@
           processStyle: { "backgroundColor": "#801f25" }
         },
         preloader: null,
-        imgModelsGrey: ['img/slider/ducati_grey.png',
-        'img/slider/kawasaki_grey.png',
-        'img/slider/honda_grey.png', 
-        'img/slider/bmw_grey.png',
-        'img/slider/suzuki_grey.png',  
-        'img/slider/yamaha_grey.png',
-        'img/slider/ktm_grey.png'
-        ],
+        imgModelsGrey: [],
         lang: {
           textEmptyProducts: 'В данной категории нет товаров.'
         },
@@ -154,7 +150,7 @@
         let query = Object.assign({}, this.$route.query);
         if (e[0] != 0)  query.min_cost = e[0];
         if (e[1] != 0)  query.max_cost = e[1];
-        query.page = 1;
+        if (e[0] != 0)   query.page = 1;
         
         this.$router.push({query: query})
       }, 1000),
@@ -220,13 +216,10 @@
 
         this.$API.get('getItemsMaxMinCost'+query).then(r => {
           this.dataSlide.value = [
-            typeof this.$route.query.min_cost != undefined ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
-            typeof this.$route.query.max_cost != undefined ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
+            typeof this.$route.query.min_cost == 'undefined' ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
+            typeof this.$route.query.max_cost == 'undefined' ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
           ];
-          console.log(typeof this.$route.query.min_cost != undefined ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
-            )
-            console.log(typeof this.$route.query.max_cost != undefined ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
-          )
+          
           this.dataSlide.min = r.data.data.min_cost
           this.dataSlide.max = r.data.data.max_cost
         })
@@ -288,12 +281,18 @@
           this.getItemsMaxMinCost()
           this.loadProducts(this.currentPage)
         }
+      },
+      getMarksBannerGrey: function(){
+        this.$API.get('getMarksForBaner/3').then(r => {
+          this.imgModelsGrey = r.data.data;
+        });
       }
     },
     created: function(){
     },
     mounted() {
       this.loadPage()
+      this.getMarksBannerGrey();
     }
   }
 </script>

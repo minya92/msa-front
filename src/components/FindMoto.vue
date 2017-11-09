@@ -112,7 +112,6 @@
       totalDetails: function(param){
         this.$API.get(`getItemsCount?mark_model=${param}`).then(r => {
           this.countDetail = r.data.data
-          console.log(param)
         })
       },
 

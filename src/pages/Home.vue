@@ -14,9 +14,12 @@
           <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
           <div class="swiper-button-next" slot="button-next" style="display:none"></div>
           <div class="models-top-slider">
-            <div class="models-top-slider-item" v-for="imgModel in imgModels">
-              <img :src="imgModel">
-            </div>
+            <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels" 
+              :key="index"
+              :to="{name:'catalogSearch', params: {searchDetails: imgModel.marks_models_id}}" 
+            >
+              <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
+            </router-link>
           </div>
         </swiper>
       </div>
@@ -37,7 +40,9 @@
 
           <swiper class="main-bot-slider" :options="swiperOptionModels">
             <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
-              <img :src='imgModelWhite'>
+              <router-link :to="{name:'catalogSearch', params: {searchDetails: imgModelWhite.marks_models_id}}" >
+                <img :src="imgModelWhite.full_image" :alt="imgModelWhite.mm_name" :title="imgModelWhite.mm_name">
+              </router-link>
             </swiper-slide>
             <div class="swiper-button-prev" slot="button-prev"></div>
             <div class="swiper-button-next" slot="button-next"></div>
@@ -58,13 +63,7 @@
     data() {
       return {
         catalogs: [],
-        imgModels: ['img/honda_color.png', 
-        'img/bmw_color.png', 
-        'img/yamaha_color.png',
-        'img/suzuki_color.png', 
-        'img/ducati_color.png',
-        'img/ktm_color.png'
-        ],
+        imgModels: [],
         imgModelsWhite: ['img/slider/ducati_white.png',
         'img/slider/kawasaki_white.png',
         'img/slider/honda_white.png', 
@@ -114,9 +113,21 @@
           }
             this.catalogs = catalogs;
         })
+      },
+      getMarksBannerTop: function(){
+        this.$API.get('getMarksForBaner/1').then(r => {
+          this.imgModels = r.data.data;
+        });
+      },
+      getMarksBannerBottom: function(){
+        this.$API.get('getMarksForBaner/2').then(r => {
+          this.imgModelsWhite = r.data.data;
+        });
       }
     },
     created() {
+      this.getMarksBannerTop();
+      this.getMarksBannerBottom();
       this.getCatalogs();
     }
   }
