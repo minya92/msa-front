@@ -19,6 +19,7 @@ export default {
       return new Promise(function(resolve, reject) {
           var xhr = new XMLHttpRequest();
           xhr.open("get", '/auth', true);
+          xhr.withCredentials = true;
           xhr.onreadystatechange = function(evt) {
               if (xhr.readyState == 4) {
                   resolve();
@@ -34,6 +35,7 @@ export default {
                 '&j_password=' + encodeURIComponent(pass);
 
               xhr.open("POST", 'api/j_security_check', true);
+              xhr.withCredentials = true;
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
               xhr.onreadystatechange = function(evt) {
