@@ -1,7 +1,12 @@
 <template>
 	<main-layout>
 		<div id="profile" class="content-fluid">
-			<aside>
+			<aside v-if="false">
+				
+			</aside>
+			<aside v-else>
+				<button class="test btn_theme">авторизоваться</button>
+				<button class="test btn_theme">регистрироваться</button>
 			</aside>
 			<div class="content-section">
 				<slot></slot>
@@ -28,5 +33,10 @@
 <style>
 	#profile{
 		display: flex;
+	}
+	.test{
+    padding: 5px 10px;
+		margin-bottom: 5px;
+		width: 100%;
 	}
 </style>

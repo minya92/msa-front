@@ -15,6 +15,9 @@ h1{ font-size: 36px;}
 button {
 	cursor: pointer;
 }
+.txtcenter{
+	text-align: center
+}
 .btn_theme{
 	background: #801f25;
 	border: 0;
@@ -561,8 +564,8 @@ justify-content: center;
 /*border-radius: 10px;*/
 }
 .models-top-slider .models-top-slider-item img{
-	max-height: 100%;
-	max-width: 100%;
+	max-height: 70%;
+	max-width: 70%;
 }
 .models-top-slider .models-top-slider-item:last-child{
 margin-right: 0px;

@@ -61,6 +61,7 @@
       }
     },
     created() {
+      this.$store.dispatch('pathRedirectLogin', this.$route.path);
     },
     methods: {
       registry: function(){

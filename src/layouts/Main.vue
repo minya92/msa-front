@@ -222,11 +222,11 @@
 .footer-top__ssi svg path{
 	fill: #fff;
 }
-.footer-top__ssi svg:hover rect{
+.footer-top__ssi:hover svg rect{
 	stroke: #801f25;
 	fill: #fff;
 }
-.footer-top__ssi svg:hover path{
+.footer-top__ssi:hover svg path{
 	fill: #801f25;
 }
 </style>

@@ -9,7 +9,10 @@ export default {
     }
   },
   created() {
-    this.doAuth(this.$route.query.login, this.$route.query.password);
+    let that = this;
+    this.doAuth(this.$route.query.login, this.$route.query.password).then(function(){
+        that.$router.push({path: that.$store.getters.pathRedirectLogin});
+    });
   },
   methods: {
     doAuth: function(login, pass) {
@@ -36,10 +39,8 @@ export default {
               xhr.onreadystatechange = function(evt) {
                   if (xhr.readyState == 4) {
                         if (xhr.responseText.indexOf('"j_password" id="password"') == -1) {
-                            alert('ok!');
                             resolve();
                         } else {
-                            alert('fail');
                             xhr.abort();
                             reject();
                         }
