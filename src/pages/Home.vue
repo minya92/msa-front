@@ -28,6 +28,7 @@
     <div class="container-fluid">
       <div class="category-menu">
         <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
+          <img :src="catalog.img" />
           <h2>{{catalog.name}}</h2>
         </div>
       </div>
@@ -62,7 +63,18 @@
     },
     data() {
       return {
-        catalogs: [],
+        catalogs: [
+          {
+            id: 1,
+            name: 'Комплекты пластика',
+            img: 'img/motoplast.png'
+          },
+          {
+            id: 2,
+            name: 'Свет',
+            img: 'img/lamp.png'
+          }
+        ],
         imgModels: [],
         imgModelsWhite: ['img/slider/ducati_white.png',
         'img/slider/kawasaki_white.png',
@@ -128,7 +140,7 @@
     created() {
       this.getMarksBannerTop();
       this.getMarksBannerBottom();
-      this.getCatalogs();
+      //this.getCatalogs();
     }
   }
 </script>

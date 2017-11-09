@@ -13,21 +13,17 @@ import recentProducts from './modules/product.js'
 Vue.use(Vuex)
 
 const state = {
-	isAuthorized: !!localStorage.getItem('token'),
+	loginInfo: null,
 	pending: false,
   pathRedirectLogin: '/'
 }
 
 const mutations = {
-	[LOGIN] (state) {
-		state.pending = true;
-	},
-	[LOGIN_SUCCESS] (state) {
-		state.isAuthorized = true;
-		state.pending = false;
+	[LOGIN] (state, loginInfo) {
+		state.loginInfo = loginInfo;
 	},
 	[LOGOUT](state) {
-		state.isAuthorized = false;
+		state.loginInfo = null;
 	},
 	[PATH_REDIRECT_LOGIN](state, path) {
 		state.pathRedirectLogin = path;
@@ -36,7 +32,11 @@ const mutations = {
 
 const getters = {
   isAuthorized: state => {
-    return state.isAuthorized;
+    return state.loginInfo != null;
+  },
+  getName: state => {
+    console.log(state.loginInfo)
+    return state.loginInfo.f_name;
   },
   pathRedirectLogin: state => {
     return state.pathRedirectLogin;
@@ -45,18 +45,9 @@ const getters = {
 
 const actions = {
  login({ commit }, creds) {
-   commit(LOGIN);
-   return new Promise(resolve => {
-     setTimeout(() => {
-       console.log(creds);
-       localStorage.setItem("token", creds);
-       commit(LOGIN_SUCCESS);
-       resolve();
-     }, 1000);
-   });
+   commit(LOGIN, creds);
  },
  logout({ commit }) {
-   localStorage.removeItem("token");
    commit(LOGOUT);
  },
  pathRedirectLogin({ commit }, path) {

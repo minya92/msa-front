@@ -1,5 +1,5 @@
 <template>
-  <profile-layout>
+  <profile-layout v-if="!notFound">
     <div class="head-strip">
       <span>Заказ №{{dataOrder.order_id}}</span>
       <span>{{statusName}}</span>
@@ -15,7 +15,7 @@
         </tr>
         <tr v-for="(product, index) in dataOrder.contents">
           <td class="table__items__picture">
-            <router-link :to="'product/'+product.item_cost_id"><img :src="product.image"></router-link></td>
+            <router-link :to="'product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
           <td>
             <router-link class="table__items__title-item" :to="'product/'+product.item_cost_id">
             {{product.item_name}}</router-link>
@@ -27,7 +27,13 @@
         </tr>
       </tbody>
     </table>
-    {{dataOrder.details}}
+    
+    <ul class="history-list">
+      <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{history.s_date | getDate}} - {{history.status_name}}</li>
+    </ul>
+  </profile-layout>
+  <profile-layout v-else>
+    Заказ не найден.
   </profile-layout>
 </template>
 
@@ -41,6 +47,15 @@
     data() {
       return {
         dataOrder: {},
+        notFound: false
+      }
+    },
+    filters: {
+      getDate: function(datetext) {
+        var date = new Date(datetext)
+        if (date) return `${("0" + date.getDate()).slice(-2)}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()} ${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
+
+        return ''
       }
     },
     computed: {
@@ -50,10 +65,11 @@
     },
     methods: {
       getOrderInfoById: function(){
-      this.$API.get('getOrder/'+this.$route.params.id).then(r => {
-        this.dataOrder = r.data.data;
-        console.log(r.data.data);
-      })
+        this.$API.get('getOrder/'+this.$route.params.id).then(r => {
+          this.dataOrder = r.data.data;
+        }).catch(err => {
+          this.notFound = true;
+        })
       }
     }, 
     created(){
@@ -78,5 +94,8 @@
   }
   .table__items td{
     padding: 3px 5px;
+  }
+  .history-list{
+    list-style: none;
   }
 </style>
