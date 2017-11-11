@@ -38,7 +38,7 @@
             <div class="product-wrapper" v-for="product in products">
               <div class="product">
                 <router-link :to="/product/ + product.id" class="product__image">
-                <img :src="product.image">
+                <preload-image-loader :src="product.image"></preload-image-loader>
                 </router-link>
                 <div class="">
                   <div class="product-name">{{product.name}}</div>
@@ -91,10 +91,11 @@
   import RecentView from '@/components/RecentView'
   import AddToCart from '@/components/AddToCart'
   import lodash from 'lodash'
+  import PreloadImageLoader from '@/components/LoadImage'
 
   export default {
     components: {
-      pagination, MainLayout, Vsc, RecentView, AddToCart
+      pagination, MainLayout, Vsc, RecentView, AddToCart, PreloadImageLoader
     },
     data() {
       return {
@@ -142,7 +143,8 @@
     },
     watch: {
       '$route' (to, from) {
-        this.loadPage()
+        this.products = [];
+        this.loadPage();
       }
     },
     methods: {
@@ -195,7 +197,7 @@
                 description: item.item_description, 
                 price: item.item_cost, 
                 currency: item.currency, 
-                image: this.loadImage(item.thumbnail) 
+                image: item.thumbnail
               });
             }
 
@@ -242,13 +244,6 @@
       },
       toggle: function(e){
         console.log(e.target.parentNode);
-      },
-      loadImage: function(image){
-        if (!image){
-          return 'img/default.jpg';
-        }
-        
-        return this.$SERVER_URL + image;
       },
       filterPrice: function(){
         var min = this.dataSlide.min;

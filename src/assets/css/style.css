@@ -555,7 +555,7 @@ color: #fff;
 }
 .models-top-slider{
 position: absolute;
-top: 360px;
+bottom: 5%;
 display: flex;
 list-style: none;
 align-items: center;
@@ -584,7 +584,7 @@ margin-right: 0px;
 .top-slider-text-content{
 position: absolute;
 z-index: 2;
-top: 135px;
+top: 10%;
 text-align: center;
 color: #fff;
 max-width: 600px;

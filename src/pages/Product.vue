@@ -13,7 +13,10 @@
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
       <div class="product__detail__media">
       <div class="main-image">
-        <img v-if="product.images" :src="loadFullImage(numCurrentImage)" @click="openModal">
+        <preload-image-loader v-if="product.images" 
+          :src="loadFullImage(numCurrentImage)"
+          @click="openModal">
+        </preload-image-loader>
       </div>
         <div class="thumblist">
           <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
@@ -60,10 +63,11 @@
   import MainLayout from '@/layouts/Main.vue'
   import AddToCart from '@/components/AddToCart'
   import ModalFade from '@/layouts/Modal.vue'
+  import PreloadImageLoader from '@/components/LoadImage'
 
   export default {
     components: {
-      MainLayout, AddToCart, ModalFade
+      MainLayout, AddToCart, ModalFade, PreloadImageLoader
     },
     data() {
       return {
@@ -151,6 +155,7 @@
     width: 100%;
     height: 370px;
     border: 1px solid #e7e7e7;
+    overflow: hidden;
   }
   .thumblist{
     display: flex;
