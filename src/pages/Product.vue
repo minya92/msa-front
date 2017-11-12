@@ -1,21 +1,13 @@
 <template>
   <main-layout>
-    <modal-fade v-if="showModal" @close="showModal=false">
-      <div class="main-image">
-        <img v-if="product.images" :src="loadFullImage(numCurrentImage)" @click="openModal">
-      </div>
-        <div class="modal__thumblist thumblist">
-          <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="selectImage($event,index)" ref="image.id"></a>
-        </div>
-      </div>
-    </modal-fade>
     <div class="content-fluid product__detail">
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
       <div class="product__detail__media">
       <div class="main-image">
-        <preload-image-loader v-if="product.images" 
-          :src="loadFullImage(numCurrentImage)"
-          @click="openModal">
+        <preload-image-loader v-if="product.images"
+          :src="loadFullImage"
+          :zoom="true"
+        >
         </preload-image-loader>
       </div>
         <div class="thumblist">
@@ -62,29 +54,30 @@
 <script>
   import MainLayout from '@/layouts/Main.vue'
   import AddToCart from '@/components/AddToCart'
-  import ModalFade from '@/layouts/Modal.vue'
   import PreloadImageLoader from '@/components/LoadImage'
 
   export default {
     components: {
-      MainLayout, AddToCart, ModalFade, PreloadImageLoader
+      MainLayout, AddToCart, PreloadImageLoader
     },
     data() {
       return {
         product: {},
         numCurrentImage: 0,
         imgDefault: 'img/default.jpg',
-        showCart: false,
-        showModal: false
+        showCart: false
       }
     },
+    computed:{
+      loadFullImage: function(){
+        if (this.product.images == null){
+          return ''
+        }
+        
+        return this.$SERVER_URL + this.product.images[this.numCurrentImage].full_image
+      }, 
+    },
     methods: {
-      openModal: function(){
-        this.showModal=true
-      },
-      close: function(){
-        this.showModal=false
-      },
       addToCart: function(product){
         this.product = product;
         this.$store.dispatch("addToCart", {product: product, quantity: 1})
@@ -97,13 +90,6 @@
 
         return this.$SERVER_URL + image
       },
-      loadFullImage: function(){
-        if (this.product.images.length == 0){
-          return this.imgDefault
-        }
-
-        return this.loadImage(this.product.images[this.numCurrentImage].full_image)
-      }, 
       selectImage: function(elem, index){
         let imageSrc = this.$SERVER_URL + this.product.images[index].full_image
         elem.target.offsetParent.getElementsByClassName("main-image")[0].firstChild.setAttribute("src",imageSrc)
@@ -144,7 +130,7 @@
     justify-content: center;
   }
   .thumblist a.active, .thumblist a:hover, .main-image:hover{
-    border-color: #801f25;
+    outline-color: #801f25;
     cursor: pointer;
   }
   .main-image img, .thumblist a img{
@@ -154,7 +140,7 @@
   .main-image{
     width: 100%;
     height: 370px;
-    border: 1px solid #e7e7e7;
+    outline: 1px solid #e7e7e7;
     overflow: hidden;
   }
   .thumblist{

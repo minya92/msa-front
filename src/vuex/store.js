@@ -35,8 +35,7 @@ const getters = {
     return state.loginInfo != null;
   },
   getName: state => {
-    console.log(state.loginInfo)
-    return state.loginInfo.f_name;
+    return state.loginInfo != null ? state.loginInfo.f_name : 'Профиль';
   },
   pathRedirectLogin: state => {
     return state.pathRedirectLogin;
