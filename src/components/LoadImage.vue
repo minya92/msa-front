@@ -1,6 +1,6 @@
 <template>
-  <div v-if="zoom" class='img-zoom-container'><img :src="imageSrc" /></div>
-  <img v-else :src="imageSrc" />
+  <div v-if="zoom" class='img-zoom-container'><img :src="imageSrc" ref="imgZoom"/></div>
+  <img v-else :src="imageSrc" ref="imgZoom"/>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
     created: function(){
       this.loadImage().then(r => {
         this.imageSrc = r.src;
-        this.addZoomImage(r);
+        if (this.zoom) this.addZoomImage(r);
       }).catch(err => {
         this.imageSrc = err;
       });
@@ -77,7 +77,8 @@ export default {
   },
   mounted(){
       this.created();
-      this.imgElement = document.getElementsByClassName('img-zoom-container')[0].firstChild; 
+      console.log(this.$refs.imgZoom)
+      this.imgElement = this.$refs.imgZoom;;//document.getElementsByClassName('img-zoom-container')[0].firstChild; 
   }
 }
 </script>
