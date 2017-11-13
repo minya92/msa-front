@@ -12,6 +12,11 @@ import Profile from '@/pages/profile/Profile'
 import HistoryBuy from '@/pages/profile/HistoryBuy'
 import Review from '@/pages/Review'
 import Information from '@/pages/Information'
+import FAQ from '@/pages/FAQ'
+import ContactUs from '@/pages/ContactUs'
+import Manufactures from '@/pages/Manufactures'
+import PaymentDelivery from '@/pages/PaymentDelivery'
+import About from '@/pages/About'
 
 import Cart from '@/pages/cart/Cart'
 import Checkout from '@/pages/cart/Checkout'
@@ -36,8 +41,13 @@ const routes = [
     { path: '/cart', component: Cart, meta: {breadcrumb: 'Корзина'} },
     { path: '/checkout', component: Checkout, meta: {breadcrumb: 'Оформление заказа'} },
     { path: '/cart/success', component: SuccessCheckout, meta: {breadcrumb: 'Оформление заказа'}, props: { name: 'world' }},
-    { path: '/review/', component: Review, meta: {breadcrumb: 'Отзывы', title: 'Отзывы'} },
-    { path: '/info/', component: Information, meta: {breadcrumb: 'Информация', title: 'Информация'} },
+    { path: '/review', component: Review, meta: {breadcrumb: 'Отзывы', title: 'Отзывы'} },
+    { path: '/faq', component: FAQ, name: 'FAQ', meta: {breadcrumb: 'Вопрос и ответ', title: 'Вопрос и ответ'} },
+    { path: '/info', component: Information, name: 'Information', meta: {breadcrumb: 'Информация', title: 'Информация'} },
+    { path: '/contact-us', component: ContactUs, name: 'ContactUs', meta: {breadcrumb: 'Напишите нам', title: 'Напишите нам'} },
+    { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
+    { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },
+    { path: '/about', component: About, name: 'About', meta: {breadcrumb: 'О магазине', title: 'О магазине'} },
     { path: "*", component: PageNotFound }
   ]
 

@@ -150,8 +150,8 @@
     methods: {
       vscChange: _.debounce(function (e) {
         let query = Object.assign({}, this.$route.query);
-        if (e[0] != 0)  query.min_cost = e[0];
-        if (e[1] != 0)  query.max_cost = e[1];
+        if (e[0] != 0)  query.cost_min = e[0];
+        if (e[1] != 0)  query.cost_max = e[1];
         if (e[0] != 0)   query.page = 1;
         
         this.$router.push({query: query})
@@ -171,7 +171,13 @@
         this.$router.push({query: query})
       },
       loadProducts: function(page){
-        let query = `?cost_min=${this.dataSlide.value[0]}&cost_max=${this.dataSlide.value[1]}`
+        let query = '?';
+        if (typeof this.$route.query.cost_min != 'undefined'){
+          query += `&cost_min=${this.$route.query.cost_min}`;
+        }
+        if (typeof this.$route.query.cost_max != 'undefined'){
+          query += `&cost_max=${this.$route.query.cost_max}`;
+        }
         if (typeof this.$route.params.types != 'undefined'){
           query += `&types=%5B${this.$route.params.types}%5D`;
         }
@@ -218,8 +224,8 @@
 
         this.$API.get('getItemsMaxMinCost'+query).then(r => {
           this.dataSlide.value = [
-            typeof this.$route.query.min_cost == 'undefined' ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.min_cost),
-            typeof this.$route.query.max_cost == 'undefined' ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.max_cost)
+            typeof this.$route.query.cost_min == 'undefined' ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.cost_min),
+            typeof this.$route.query.cost_max == 'undefined' ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.cost_max)
           ];
           
           this.dataSlide.min = r.data.data.min_cost

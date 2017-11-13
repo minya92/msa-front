@@ -1,5 +1,5 @@
 <template>
-  <div v-if="zoom" class='img-zoom-container'><img :src="imageSrc" ref="imgZoom"/></div>
+  <div v-if="zoom" class='img-zoom-container' ref="container"><img :src="imageSrc" ref="imgZoom"/></div>
   <img v-else :src="imageSrc" ref="imgZoom"/>
 </template>
 
@@ -20,11 +20,13 @@ export default {
   data: function () {
     return {
       imageSrc: 'img/dualring.svg',
-      imgElement: null
+      imgElement: null,
+      imageZoom: null
     }
   },
   watch: {
     src: function(){
+      this.initialize();
       this.imgElement.style.width = '48px';
       this.imgElement.style.height = '48px';
       this.imageSrc = 'img/dualring.svg';
@@ -54,14 +56,13 @@ export default {
       var container = document.getElementsByClassName('img-zoom-container')[0];
       let x = 0, y = 0;
       var containerParent = container.parentNode;
-      if (r.width > containerParent.offsetWidth || r.height >containerParent.offsetHeight){
-        if (containerParent.offsetWidth/r.width > containerParent.offsetHeight/r.height){
-          x = r.width * containerParent.offsetHeight/r.height;
+      if (r.naturalWidth > containerParent.offsetWidth || r.naturalHeight >containerParent.offsetHeight){
+        if (containerParent.offsetWidth/r.naturalWidth > containerParent.offsetHeight/r.naturalHeight){
+          x = r.naturalWidth * containerParent.offsetHeight/r.naturalHeight;
           y = containerParent.offsetHeight;
         } else {
-          
           x = containerParent.offsetWidth;
-          y = r.height * containerParent.offsetWidth/r.width;
+          y = r.naturalHeight * containerParent.offsetWidth/r.naturalWidth;
         }
       }
 
@@ -70,15 +71,23 @@ export default {
         width: x,
         height: y,
         zoomWidth: x,
-        offset: {vertical: 0, horizontal: 10}}
+        offset: {vertical: 0, horizontal: 10}
+      }
 
-      ImageZoom(container, options);
+      this.imageZoom = ImageZoom(container, options);
+    },
+    initialize: function(){
+      if (this.zoom) {
+        this.$refs.container.innerHTML = ''
+        this.imgElement = document.createElement('img');
+        this.imgElement.setAttribute('src', this.imageSrc);
+        this.$refs.container.appendChild(this.imgElement);
+      }
     }
   },
   mounted(){
       this.created();
-      console.log(this.$refs.imgZoom)
-      this.imgElement = this.$refs.imgZoom;;//document.getElementsByClassName('img-zoom-container')[0].firstChild; 
+      this.initialize();
   }
 }
 </script>

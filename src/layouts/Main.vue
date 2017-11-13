@@ -53,6 +53,7 @@
 		</div>
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
 		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
+		<order-status v-if="showOrderStatus" @close="showOrderStatus=false"></order-status>
 		<footer>
 			<div class="footer-top__ss">Наши каналы:
 				<a target="_blank" href="https://www.instagram.com/msa_moto/" class="footer-top__ssi">
@@ -124,10 +125,10 @@
 			<div class="footer-top">
 				<ul class="footer-top__menu container-fluid">
 					<li><router-link to="/review">Отзывы</router-link></li>
-					<li><a>Напишите нам</a></li>
-					<li><router-link to="/info">Информация</router-link></li>
-					<li><a>Вопрос и ответ</a></li>
-					<li><a>Статус заказа</a></li>
+					<li><router-link :to="{name: 'ContactUs'}">Напишите нам</router-link></li>
+					<li><router-link :to="{name: 'Information'}">Информация</router-link></li>
+					<li><router-link :to="{name: 'FAQ'}">Вопрос и ответ</router-link></li>
+					<li><a @click.prevent="showOrderStatus=true">Статус заказа</a></li>
 				</ul>
 			</div>
 			<div class="footer-bottom">
@@ -149,9 +150,9 @@
 						<div class="fbox-c-search"></div>
 						<searchForm></searchForm>
 						<div class="fbox-c-menu">
-							<a>Производители</a>
-							<a>Оплата и доставка</a>
-							<a>О магазине</a>
+							<router-link :to="{name: 'Manufactures'}">Производители</router-link>
+							<router-link :to="{name: 'PaymentDelivery'}">Оплата и доставка</router-link>
+							<router-link :to="{name: 'About'}">О магазине</router-link>
 						</ul>
 					</div>
 				</div>
@@ -172,14 +173,15 @@
 <script>
 	import findMoto from '@/components/FindMoto'
 	import searchForm from '@/components/Search'
-	import auth from '@/components/Auth'
-	import registry from '@/components/Registry'
+	import auth from '@/components/auth/Auth'
+	import registry from '@/components/auth/Registry'
 	import style from '@/assets/css/style.css'
 	import Breadcrumbs from '@/components/Breadcrumbs'
 	import minicart from '@/components/cart/Minicart'
+	import orderStatus from '@/components/orders/OrderStatus'
 	export default{
 		name: 'app',
-		components: {findMoto, searchForm, auth, registry, Breadcrumbs, minicart},
+		components: {findMoto, searchForm, auth, registry, Breadcrumbs, minicart, orderStatus},
 		data() {
 			return{
 				lang: {
@@ -188,6 +190,7 @@
 				},
 				showAuth: false,
 				showRegistry: false,
+				showOrderStatus: false,
 				copyright: "2017 MSA MOTO - все права защищены",
 				phoneHeader: ['+7 (914) 141-09-02'],
 				phoneFooter: ['+7 (914) 141-09-02']

@@ -1,7 +1,6 @@
 <template>
   <main-layout>
     <div class="top__slider__cc">
-      <div class="container-fluid">
         <swiper class="main-slider" :options="swiperOption">
           <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
             <div class="top-slider-text-content">
@@ -22,7 +21,6 @@
             </router-link>
           </div>
         </swiper>
-      </div>
     </div>
     
     <div class="container-fluid">

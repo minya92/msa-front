@@ -146,6 +146,7 @@ function ImageZoom(container, opts) {
         data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
         //data.zoomedImg.element.style.left = options.width + data.zoomedImgOffset.horizontal + 'px';
         data.zoomedImg.element.style.backgroundImage = 'url(' + data.sourceImg.element.src + ')';
+        console.log('url(' + data.sourceImg.element.src + ')')
         data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
         data.zoomedImg.element.style.display = 'none';
         container.addEventListener('mousemove', events, false);
