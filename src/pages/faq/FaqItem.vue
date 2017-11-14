@@ -1,10 +1,10 @@
 <template>
-  <main-layout>
+  <div>
     <div class="faq__question" @click="toggleItem">
       <span class="faq__question__text">{{faqItem.problem}}</span>            
     </div>
     <div class="faq__answer" v-show="toggled">{{faqItem.answer}}</div>
-  </main-layout>
+  </div>
 </template>
 
 <script>
@@ -34,6 +34,9 @@
   border-radius: 3px;
   padding: 10px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.faq__question:hover .faq__question__text{
+  cursor: pointer;
 }
 .faq__question__text{
   border-bottom: 1px dotted #801f25;

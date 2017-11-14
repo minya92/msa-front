@@ -14,7 +14,7 @@ body{
 	font-size: 14px;
 	line-height: 1.42857143;
 }
-h1{ font-size: 36px;}
+h1{ font-size: 34px; padding: 10px 0 15px;}
 button {
 	cursor: pointer;
 }

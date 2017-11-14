@@ -24,7 +24,7 @@
         textFromHeaderText: 'Введите номер заказа',
         idOrder: '',
         textError: "Заказ не найден",
-        showError: true
+        showError: false
       }
     },
     created() {
@@ -35,7 +35,7 @@
         if (this.idOrder.trim().length < 1) return;
         
         this.$API.get('getOrder/'+this.idOrder).then(r => {
-          this.router.push({name: 'HistoryBuy', params: {id: this.idOrder}});
+          this.$router.push({name: 'HistoryBuy', params: {id: this.idOrder}});
         }).catch(err => {
           this.showError = true;
         })

@@ -4,7 +4,6 @@ import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from 'axios';
-import yandexMap from 'vue-yandex-maps';
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 import 'vue-awesome/icons/flag'
@@ -15,7 +14,6 @@ import store from './vuex/store.js'
 
 Vue.component('icon', Icon)
 
-//Vue.use(yandexMap)
 Vue.use(VueAwesomeSwiper)
 Vue.use(router)
 

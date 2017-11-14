@@ -1,30 +1,55 @@
 <template>
   <main-layout>
-  <div class="contacts">
-    <div class="container-fluid">
-      <yandex-map :coords="[54.62896654088406, 39.731893822753904]"
-      zoom="12"
-      style="height: 400px;">
-
-      <ymap-marker marker-type="placemark"
-      :coords="[54.62896654088406, 39.731893822753904]"
-      hint-content="Hint content 1"
-      :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-      :icon="{color: 'green', glyph: '../assets/img/map_pin.svg'}">
-    </ymap-marker>
-  </yandex-map>
+    <div class="contacts">
+      <div class="container-fluid">
+        <yandex-map :coords="coord"
+          zoom="14"
+          style="height: 400px;"
+          :placemarks="placemarks"
+        >
+        </yandex-map>
+      </div>
+      <div>
+        <p><strong>Адрес: </strong>Забайкальск, ул. Полетная, 1</p>
+        <p><strong>Телефон: </strong>8 (914) 141 0902, 8 (914) 141 0838</p>      
+      </div>
     </div>
-  </div>
   </main-layout>
 </template>
 
 <script>
-import yandexMap from 'vue-yandex-maps';
-  import MainLayout from '../layouts/Main.vue'
+  import yandexMap from 'vue-yandex-maps';
+  import MainLayout from '@/layouts/Main.vue'
 
   export default {
     components: {
       MainLayout, yandexMap
+    },
+    data(){
+      return {
+        coord: [49.650584, 117.329040],
+        placemarks: [
+          {
+            coords: [49.650584, 117.329040],
+              markerType: 'placemark',
+              icon: {content: '../assets/img/map_pin.svg', color: 'green', glyph: '../assets/img/map_pin.svg'},
+            properties: {
+              hintContent: 'Забайкальск, ул. Полетная, 1',
+              markerType: 'placemark',
+              balloon: {header: 'header', body: 'body', footer: 'footer'},
+              icon: {content: '../assets/img/map_pin.svg', color: 'green', glyph: '../assets/img/map_pin.svg'}
+            }, 
+            options: {
+              layout: 'default#imageWithContent',
+              imageHref: '../assets/img/map_pin.svg',
+              imageSize: [43, 55],
+              imageOffset: [-22,-55]
+            }, 
+            clusterName: "1",
+            callbacks: { click: function() {} }
+          }
+        ]
+      }
     }
   }
 </script>
