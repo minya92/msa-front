@@ -40,7 +40,7 @@
             <div class="checkout-heading">Покупатель</div>
             <div class="row__customer_group" v-for="field in Object.keys(userFields)">
               <label :class="userFields[field].require ? 'require' : ''">{{userFields[field].name}}</label>
-              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 1111-11" />
+              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 111-11-11" />
               <input v-else v-model="userFields[field].value"  @blur="validateInput(field)" :class="userFields[field].error ? 'error-val' : ''"/>
             </div>
         </div>

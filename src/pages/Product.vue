@@ -1,12 +1,15 @@
 <template>
   <main-layout>
+    <image-sliders v-if="showImageSliders" :images="full_images" :current="numCurrentImage" @close="showImageSliders = false"></image-sliders>
+
     <div class="content-fluid product__detail">
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
       <div class="product__detail__media">
       <div class="main-image">
-        <preload-image-loader v-if="product.images"
+        <preload-image-loader v-if="product.images && product.images.length > 0"
           :src="loadFullImage"
           :zoom="true"
+          @click.native="showImageSliders = true"
         >
         </preload-image-loader>
       </div>
@@ -55,22 +58,25 @@
   import MainLayout from '@/layouts/Main.vue'
   import AddToCart from '@/components/AddToCart'
   import PreloadImageLoader from '@/components/LoadImage'
+  import ImageSliders from '@/components/SliderImage'
 
   export default {
     components: {
-      MainLayout, AddToCart, PreloadImageLoader
+      MainLayout, AddToCart, PreloadImageLoader, ImageSliders
     },
     data() {
       return {
         product: {},
         numCurrentImage: 0,
         imgDefault: 'img/default.jpg',
-        showCart: false
+        showCart: false,
+        showImageSliders: false,
+        full_images: []
       }
     },
     computed:{
       loadFullImage: function(){
-        if (this.product.images == null){
+        if (this.product.images.length == 0){
           return ''
         }
         
@@ -109,7 +115,8 @@
           compatibility: item.supported,
           chars: item.chars
         };
-
+        
+        this.full_images = item.images.map(x => this.$SERVER_URL + x.full_image);
         this.$store.dispatch("recentItem", this.product);
       })
     }
