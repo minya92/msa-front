@@ -22,7 +22,7 @@ import Cart from '@/pages/cart/Cart'
 import Checkout from '@/pages/cart/Checkout'
 import SuccessCheckout from '@/pages/cart/Success'
 
-import DoAuth from '@/components/auth/DoAuth'
+import DoAuth from '@/pages/DoAuth'
 
 // роуты приложения 
 const routes = [

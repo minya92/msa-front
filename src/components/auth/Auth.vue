@@ -30,6 +30,8 @@
 <script>
   import ModalFade from '@/layouts/Modal.vue'
   import SocialAuth from '@/components/Social.vue'
+  import { doAuth } from '@/components/auth/do-auth'
+
   export default {
     components: {ModalFade, SocialAuth},
     data() {
@@ -42,61 +44,26 @@
         textError: "Номер телефона или email не верно",
         showError: false
       },
-      password: { headerText: 'Пароль:',
-      value: '',
-      textError: "Номер телефона или email не верно",
-      showError: false
-    },
-    forgotPassword: 'Забыли пароль',
-    notRegistered: 'Еще не зарегистрированы?'
-  }
-},
-created() {
-  this.$store.dispatch('pathRedirectLogin', this.$route.path);
-},
-methods: {
-  submitForm: function(){
-    this.doAuth(this.email.value, this.password.value)
+      password: { 
+        headerText: 'Пароль:',
+        value: '',
+        textError: "Номер телефона или email не верно",
+        showError: false
+      },
+      forgotPassword: 'Забыли пароль',
+      notRegistered: 'Еще не зарегистрированы?'
+    }
   },
-  doAuth: function(login, pass) {
-    return new Promise(function(resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("get", '/auth', true);
-        xhr.onreadystatechange = function(evt) {
-            if (xhr.readyState == 4) {
-                resolve();
-            }
-        };
-        xhr.send();
-    }).then(function(urlParams) {
-        return new Promise(function(resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            var stage = 0;
-
-            var body = 'j_username=' + encodeURIComponent(login) +
-              '&j_password=' + encodeURIComponent(pass);
-
-            xhr.open("POST", 'api/j_security_check', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function(evt) {               
-                if (xhr.readyState == 4) {
-                    if (xhr.status != 302 && xhr.status != 404) {
-                        if (xhr.responseText.indexOf('"j_password" id="password"') == -1) {
-                            resolve();
-                        } else {
-                            xhr.abort();
-                            reject();
-                        }
-                    } else 
-                        resolve();
-                }
-            };
-
-            xhr.send(body);
-        });
-    });
-  }
+  created() {
+    this.$store.dispatch('pathRedirectLogin', this.$route.path);
+  },
+  methods: {
+    submitForm: function(){
+      let that = this;
+      doAuth(this.$route.query.login, this.$route.query.password).then(function(){
+        console.log('good auth');
+      });
+    },
   }
 }
 </script>

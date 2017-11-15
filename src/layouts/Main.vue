@@ -20,7 +20,7 @@
 							<a>{{$store.getters.getName | emptyName}}
 								<ul class="user-link_menu">
 									<li><router-link to="/profile">Профиль</router-link></li>
-									<li @click.prevent="logout()"><a>Выйти</a></li>
+									<li @click.prevent="logout"><a>Выйти</a></li>
 								</ul></a>
 							</router-link>
 						</div>
