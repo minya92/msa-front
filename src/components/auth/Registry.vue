@@ -80,12 +80,10 @@
           email: 'harcioger@gmail.com'//this.email
         }
         console.log(post);*/
-        var post = 'first_name=&last_name=&login=MrPropper&password='+md5(this.pass)+'&email=email@gmail.com&city=&phone=89999999999&birthday=null';
+        var post = `login=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(response => {
           console.log(response);
-        }).catch(e => {
-          console.log(e);
-        });
+        })
 
       },
       validate: function(){

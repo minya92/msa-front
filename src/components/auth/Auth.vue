@@ -76,7 +76,7 @@ methods: {
             var body = 'j_username=' + encodeURIComponent(login) +
               '&j_password=' + encodeURIComponent(pass);
 
-            xhr.open("POST", 'j_security_check', true);
+            xhr.open("POST", 'api/j_security_check', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.onreadystatechange = function(evt) {               
