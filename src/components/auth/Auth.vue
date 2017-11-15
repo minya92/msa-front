@@ -39,33 +39,34 @@
         headerText: 'Рады вас видеть снова',
         textFromHeaderText: 'Введите телефон или email чтобы продолжить. \n Возможно у вас накопились бонусы',
         orText: 'или',
-        email: { headerText: 'Номер телефона или email:',
-        value: '',
-        textError: "Номер телефона или email не верно",
-        showError: false
-      },
-      password: { 
-        headerText: 'Пароль:',
-        value: '',
-        textError: "Номер телефона или email не верно",
-        showError: false
-      },
-      forgotPassword: 'Забыли пароль',
-      notRegistered: 'Еще не зарегистрированы?'
-    }
-  },
-  created() {
-    this.$store.dispatch('pathRedirectLogin', this.$route.path);
-  },
-  methods: {
-    submitForm: function(){
-      let that = this;
-      doAuth(this.$route.query.login, this.$route.query.password).then(function(){
-        console.log('good auth');
-      });
+        email: { 
+          headerText: 'Номер телефона или email:',
+          value: '',
+          textError: "Номер телефона или email не верно",
+          showError: false
+        },
+        password: { 
+          headerText: 'Пароль:',
+          value: '',
+          textError: "Номер телефона или email не верно",
+          showError: false
+        },
+        forgotPassword: 'Забыли пароль',
+        notRegistered: 'Еще не зарегистрированы?'
+      }
     },
+    created() {
+      this.$store.dispatch('pathRedirectLogin', this.$route.path);
+    },
+    methods: {
+      submitForm: function(){
+        let that = this;
+        doAuth(this.email.value, this.password.value).then(r => {
+          console.log(r);
+        });
+      },
+    }
   }
-}
 </script>
 
 <style scoped>

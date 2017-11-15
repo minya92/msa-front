@@ -198,7 +198,9 @@
 		},
 		methods:{
 			logout: function(){
-				this.$store.dispatch('logout')
+				this.$API.get('?__type=18').then(r => {
+					this.$store.dispatch('logout')
+        });
 			}
 		},
 		filters: {
