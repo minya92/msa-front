@@ -25,7 +25,7 @@
 				</div>
         <template v-if="products.length > 0">
           <div class="sort-section">
-            Сортировать по: 
+            Сортировать по:
             <select v-model="selectedSort" @change="changePageFromSort">
               <option value="" selected>по добавлению</option>
               <option value="name">наименованию</option>
@@ -62,9 +62,9 @@
     <RecentView></RecentView>
   </div>
   <div class="container-fluid model-grey">
-    <router-link class="models-top-slider-item" v-for="imgModelGrey in imgModelsGrey" 
+    <router-link class="models-top-slider-item" v-for="imgModelGrey in imgModelsGrey"
       :key="imgModelGrey.marks_models_id"
-      :to="{name:'catalogSearch', params: {searchDetails: imgModelGrey.marks_models_id}}" 
+      :to="{name:'catalogSearch', params: {searchDetails: imgModelGrey.marks_models_id}}"
     >
       <img :src="imgModelGrey.full_image" :alt="imgModelGrey.mm_name" :title="imgModelGrey.mm_name">
     </router-link>
@@ -128,13 +128,13 @@
         selectedSort: '',
         blockActions: [
         {
-          headerText: 'Большой и длинный заголовок',
-          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
+          headerText: 'Более 5 лет на рынке',
+          footerText: 'Фирма MSA MOTO на протяжении многих лет занималась оптовой торговлей пластика ведущих мото брендов мира. Настало время выйти с предложениями на широкий рынок. Мы рады видеть Вас в нашем интернет магазине',
           image: 'img/article_1.png'
         },
         {
-          headerText: 'Большой и длинный заголовок',
-          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
+          headerText: 'Всегда в наличии большой ассортимент',
+          footerText: 'Даже если в магазине нет определенной расцветки для обтекателей Вашей мечты - задавайте вопросы, мы будем это для Вас подбирать через наших партнеров',
           image: 'img/article_2.png'
         }
         ],
@@ -153,21 +153,21 @@
         if (e[0] != 0)  query.cost_min = e[0];
         if (e[1] != 0)  query.cost_max = e[1];
         if (e[0] != 0)   query.page = 1;
-        
+
         this.$router.push({query: query})
       }, 1000),
       changePage: function(page){
         let query = Object.assign({}, this.$route.query);
         query.sort = this.selectedSort;
         query.page = page;
-        
+
         this.$router.push({query: query})
       },
       changePageFromSort: function(){
         let query = Object.assign({}, this.$route.query);
         query.sort = this.selectedSort;
         query.page = 1;
-        
+
         this.$router.push({query: query})
       },
       loadProducts: function(page){
@@ -190,19 +190,19 @@
         this.$API.get('getItemsCount'+query).then(r => {
           this.totalProducts = r.data.data
 
-          
+
           this.preloader.style.display = "block";
           this.$API.get("getItems"+query).then(response => {
             var products = [];
             for (var i = 0; i < response.data.data.length; i++){
               var item = response.data.data[i];
               products.push({
-                id: item.cost_id, 
-                name: item.item_name, 
-                article: item.artikul, 
-                description: item.item_description, 
-                price: item.item_cost, 
-                currency: item.currency, 
+                id: item.cost_id,
+                name: item.item_name,
+                article: item.artikul,
+                description: item.item_description,
+                price: item.item_cost,
+                currency: item.currency,
                 image: item.thumbnail
               });
             }
@@ -227,7 +227,7 @@
             typeof this.$route.query.cost_min == 'undefined' ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.cost_min),
             typeof this.$route.query.cost_max == 'undefined' ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.cost_max)
           ];
-          
+
           this.dataSlide.min = r.data.data.min_cost
           this.dataSlide.max = r.data.data.max_cost
         })
@@ -235,13 +235,13 @@
       loadCatalogs: function(){
         this.$API.get('getTypes').then(r => {
           var catalogs = [];
-          
+
           for (var i = 0; i < r.data.data.length; i++){
             var item = r.data.data[i];
             catalogs.push({
-              id: item.items_types_id, 
-              parentType: item.parent_type, 
-              name: item.type_description, 
+              id: item.items_types_id,
+              parentType: item.parent_type,
+              name: item.type_description,
               url: item.items_types_id
             });
           }
@@ -259,7 +259,7 @@
           if (min > this.products[i].price || min == 0) min = this.products[i].price;
           if (max < this.products[i].price) max = this.products[i].price;
         }
-        
+
         this.dataSlide.min = min;
         this.dataSlide.max = max;
       },
@@ -273,11 +273,11 @@
         this.dataSlide.max = 0
 
         this.loadCatalogs()
-        
+
         if (this.$route.query.page == undefined || !isNaN(this.$route.query.page)){
           this.$route.query.page == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.query.page);
           this.$route.query.sort != undefined ? this.selectedSort = this.$route.query.sort : this.selectedSort = '';
-          
+
           this.preloader = document.getElementById("page-preloader");
           this.getItemsMaxMinCost()
           this.loadProducts(this.currentPage)

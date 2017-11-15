@@ -3,36 +3,36 @@
     <div id="find_moto">
       <h2>{{lang.findParts}}</h2>
       <div class="moto-box-selection">
-        <div class="form-group">          
+        <div class="form-group">
           <div class="title-group">{{lang.selectMark}}</div>
           <div class="slider-marks">
-            <div :class="['slider-mark', currentMark === mark.marks_models_id ? 'current' : '']" 
-            v-for="(mark, index) in marks" 
+            <div :class="['slider-mark', currentMark === mark.marks_models_id ? 'current' : '']"
+            v-for="(mark, index) in marks"
             @click="selectMark(mark.marks_models_id)">
             <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
             <div v-else>{{mark.mm_name}}</div>
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="models.length">          
+      <div class="form-group" v-if="models.length">
         <div class="title-group">{{lang.selectModel}}</div>
         <div class="slider-marks">
-          <div :class="['slider-mark', currentModel === model.marks_models_id ? 'current' : '']" 
-          v-for="(model, index) in models" 
-          
+          <div :class="['slider-mark', currentModel === model.marks_models_id ? 'current' : '']"
+          v-for="(model, index) in models"
+
           @click="selectModel(model.marks_models_id)">
           <img v-if="model.thumbnail"  :src="model.thumbnail" :title="model.mm_name">
           <div v-else>{{model.mm_name}}</div>
         </div>
       </div>
     </div>
-    <div class="form-group" v-if="years.length">  
+    <div class="form-group" v-if="years.length">
       <div class="title-group">{{lang.selectYear}}</div>
-      <div class="years">        
+      <div class="years">
         <div v-for="year in years" :class="[currentYear === year ? 'current' : '']" @click="selectYear(year)">{{year.mm_name}}</div>
       </div>
     </div>
-    <div class="result-count">Всего запчастей: {{countDetail}}</div>
+    <div class="result-count">Выбрано: {{countDetail}}</div>
     <router-link class="btn_theme search-detail"  :to="'/catalog/search='+currentIdByQueryMark">{{lang.moreInfo}}</router-link>
   </div>
 </div>
@@ -85,10 +85,10 @@
         this.currentIdByQueryMark = marksModelsId
         this.years = []
         this.totalDetails(this.currentMark)
-        
+
         this.$API.get('/getModels/'+marksModelsId).then(response => {
           if (response.data.code != 0){ }
-          
+
           this.models = response.data.data
         })
       },
@@ -157,7 +157,7 @@
   #find_moto{
     position: absolute;
     width: 760px;
-    padding: 20px; 
+    padding: 20px;
     z-index: 100;
     background: #fff;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);

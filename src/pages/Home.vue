@@ -13,16 +13,16 @@
           <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
           <div class="swiper-button-next" slot="button-next" style="display:none"></div>
           <div class="models-top-slider">
-            <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels" 
+            <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels"
               :key="index"
-              :to="{name:'catalogSearch', params: {searchDetails: imgModel.marks_models_id}}" 
+              :to="{name:'catalogSearch', params: {searchDetails: imgModel.marks_models_id}}"
             >
               <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
             </router-link>
           </div>
         </swiper>
     </div>
-    
+
     <div class="container-fluid">
       <div class="category-menu">
         <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
@@ -37,7 +37,7 @@
     <div style="background: #771d22 url('img/bg_red_texture.jpg'); background-size:100% 100%">
       <div class="container-fluid">
         <div class="home-box-with-slider">
-          <h2>Найти запчасти по производителю</h2>
+          <h2>Поиск по бренду</h2>
 
           <swiper class="main-bot-slider" :options="swiperOptionModels">
             <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
@@ -78,9 +78,9 @@
         imgModels: [],
         imgModelsWhite: ['img/slider/ducati_white.png',
         'img/slider/kawasaki_white.png',
-        'img/slider/honda_white.png', 
+        'img/slider/honda_white.png',
         'img/slider/bmw_white.png',
-        'img/slider/suzuki_white.png',  
+        'img/slider/suzuki_white.png',
         'img/slider/yamaha_white.png',
         'img/slider/ktm_white.png'
         ],
@@ -119,7 +119,7 @@
           for (var i = 0; i < r.data.data.length; i++){
             var item = r.data.data[i];
             catalogs.push({
-              id: item.items_types_id, 
+              id: item.items_types_id,
               name: item.type_description
             });
           }
