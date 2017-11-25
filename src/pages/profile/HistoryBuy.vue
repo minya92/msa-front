@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import ProfileLayout from '../../layouts/Profile.vue'
+  import ProfileLayout from '@/layouts/Profile.vue'
 
   export default {
     components: {

@@ -1,18 +1,16 @@
 <template>
   <main-layout>
-    <div class="contacts">
-      <div class="container-fluid">
-        <yandex-map :coords="coord"
-          zoom="14"
-          style="height: 400px;"
-          :placemarks="placemarks"
-        >
-        </yandex-map>
-      </div>
-      <div>
-        <p><strong>Адрес: </strong>Забайкальск, ул. Полетная, 1</p>
-        <p><strong>Телефон: </strong>8 (914) 141 0902, 8 (914) 141 0838</p>      
-      </div>
+    <div class="container-fluid">
+      <h1>{{$route.meta.title}}</h1>
+      <yandex-map :coords="coord"
+        zoom="14"
+        style="height: 400px;"
+        :placemarks="placemarks"
+      >
+      </yandex-map>
+      
+      <p><strong>Адрес: </strong>Забайкальск, ул. Полетная, 1</p>
+      <p><strong>Телефон: </strong>8 (914) 141 0902, 8 (914) 141 0838</p>      
     </div>
   </main-layout>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="faq__question" @click="toggleItem">
-      <span class="faq__question__text">{{faqItem.problem}}</span>            
+      <span class="faq__question__text">{{faqItem.question}}</span>            
     </div>
     <div class="faq__answer" v-show="toggled">{{faqItem.answer}}</div>
   </div>

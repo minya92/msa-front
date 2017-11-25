@@ -42,7 +42,7 @@
 							</router-link>
 						</div>
 						<searchForm></searchForm>
-						<div style="width: 320px"></div>
+						<div class="need__future" style="width: 320px"></div>
 					</div>
 				</div>
 			</header>
@@ -124,7 +124,7 @@
 			</div>
 			<div class="footer-top">
 				<ul class="footer-top__menu container-fluid">
-					<li><router-link to="/review">Отзывы</router-link></li>
+					<li><router-link :to="{name: 'Review'}">Отзывы</router-link></li>
 					<li><router-link :to="{name: 'ContactUs'}">Напишите нам</router-link></li>
 					<li><router-link :to="{name: 'Information'}">Информация</router-link></li>
 					<li><router-link :to="{name: 'FAQ'}">Вопрос и ответ</router-link></li>
@@ -213,6 +213,268 @@
 	}
 </script>
 <style>
+header>div{
+	display: inline-block;
+}
+.header-top{
+	background: #000;
+	color: #fff;
+}
+.header-top a{
+	color: #fff;
+	text-decoration: none;
+}
+.header-top-section{
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+}
+.header-top-section .header-logo{
+	flex: 1;
+}
+
+.header-logo img{
+	max-height: 35px;
+}
+.header-top-section .header-top-section-menu{
+	flex: 2;
+	display: flex;
+	justify-content: center;
+}
+.header-top-section .hbox-phone{
+	flex: 2;
+}
+.header-top-section .login-section{
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+}
+.user-link_menu{
+	display: none;
+	min-width: 140px;
+	padding: 10px 18px;
+	list-style: none;
+	position: absolute;
+	right: 0px;
+	top: 100%;
+	z-index: 100;
+	text-align: right;
+	border-top: 4px solid #C4141E;
+	border-bottom: 4px solid #C4141E;
+	background: #fff;
+	box-shadow: 0px 7px 7px 0px #333;
+}
+.user-link_menu li{
+	margin: 5px 0;
+}
+.user-link_menu a{
+	color: #9B9B9B;
+}
+.user-link_menu a:hover{
+	color: #000;
+}
+.login-section>a:hover .user-link_menu{
+	display: block;
+}
+.header-top-section .mini-cart{
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+}
+.minicart__img{
+	position: relative;
+	margin-right: 10px;
+}
+.minicart__count{
+	position: absolute;
+	background: #801f25;
+	color: #fff;
+	border-radius: 50%;top: -4px;
+    right: -3px;
+    font-size: 10px;
+    min-width: 14px;
+    min-height: 14px;
+    z-index: 1;
+    text-align: center;
+}
+.header-top-section-menu a:hover, .hbox-phone a:hover{
+	font-weight: 600;
+}
+.header-top-section-menu a{
+	padding-right: 30px;
+}
+.hbox-phone a{
+	padding-right: 10px;
+}
+.hbox-phone .fa-icon{
+	vertical-align: middle;
+	margin-right: 5px;
+	width: 18px;
+	height: 18px;
+}
+.hbox-phone a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 16px;
+}
+.mini-cart img{
+	vertical-align: bottom;
+	margin-right: 5px;
+	width: 18px;
+	height: 18px;
+}
+.login-section a{
+	cursor: pointer;
+}
+.header-bottom{
+	height: 60px;
+	position: relative;
+}		
+.header-bottom-section{
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+	justify-content: space-between;
+}
+
+#footer {
+	flex: 0 0 auto;
+}
+.footer-bottom__content{
+	display: flex;
+}
+.footer-top__ss{
+	background: #801f25;
+	display: flex;
+	justify-content: center;
+	height: 68px;
+	align-items: center;
+	color: #fff;
+}
+.footer-top__ss a{
+	color: #fff;
+	text-decoration: none;
+}
+.footer-top__ssi{
+	display: flex;
+	align-items: center;
+	margin: 0 8px 0 12px;
+	cursor: pointer;
+}
+.footer-top__ss img, .footer-top__ss svg{
+	margin-right: 10px;
+}
+.footer-top{
+	background: #262626;
+	color: #9b9b9b;
+}
+.footer-top{
+	display: flex;
+	justify-content: center;
+	height: 68px;
+	align-items: center;
+}
+.footer-top ul{
+	display: flex;
+	width: 1160px;
+	margin: auto;
+	list-style: none;
+	font-size: 12px;
+}
+.footer-top ul li{
+	flex: 1;
+	text-align: center;
+}
+.footer-top ul li:before{
+	content: '';
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #9b9b9b;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	display: inline-block;
+	margin-right: 7px;
+}
+.footer-top a{
+	text-decoration: none;
+	color: inherit;
+}
+.footer-top li:hover a, .footer-top li:hover:before{
+	color: #ccc;
+	font-weight: 600;
+}
+.footer-bottom{
+	background: #000;
+	color: #787878;
+}
+.fbox-c {
+	flex: 2;
+	border-left: 1px solid #787878;
+	border-right: 1px solid #787878;
+	height: 100%;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.fbox-lr {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	font-size: 12px;
+	align-items: center;
+}
+.fbox-l-container{
+	display: flex;
+	width: 180px;
+	justify-content: space-around;
+	align-items: center;
+}
+.fbox-r-container{
+	width: 180px;
+}
+.fbox-r-container span{
+	clear: both;
+	display: block;
+	margin-top: 5px;
+}
+.copyright{
+	font-size: 12px;
+}
+.fbox-c-phone{
+	margin: 15px 0;
+}
+.fbox-c-phone .fa-icon{
+	vertical-align: middle;
+	margin-right: 5px;
+	width: 18px;
+	height: 18px;
+}
+.fbox-c-phone a{
+	color: #9b9b9b;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 16px;
+}
+.fbox-c-menu{
+	margin: 15px 0;
+}
+.fbox-c-menu a{
+	color: #9b9b9b;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 12px;
+	cursor: pointer;
+}
+.fbox-c a:hover{
+	color: #ccc;
+}
+footer #search_form input {
+	background: #ccc;
+}
 .footer-top__ssi svg{
 	cursor: pointer;
 }
@@ -228,5 +490,104 @@
 }
 .footer-top__ssi:hover svg path{
 	fill: #801f25;
+}
+
+@media (min-width: 769px) and (max-width: 960px){
+	.header-top-section .hbox-phone, .header-top-section .header-top-section-menu{
+		flex: none;
+	}
+}
+@media (min-width: 481px) and (max-width: 768px){
+	.header-top-section .hbox-phone, .header-top-section .header-top-section-menu{
+		flex: none;
+	}
+	.search_input input[type="text"]{
+		width: 100%;
+		min-width: 300px;
+	}
+	.need__future{
+		display: none;
+	}
+}
+
+@media (max-width: 480px){
+	.header-top{
+		height: auto;
+	}
+	.header-top-section{
+		display: block;
+	}
+	.header-top-section .mini-cart{
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	.hbox-phone{
+		display: flex;
+		justify-content: center;
+	}
+	.header-top-section-menu a, .hbox-phone a{
+		padding: 5px 10px;
+	}
+	.header-top-section .login-section {
+		justify-content: center;
+		padding: 10px;
+	}
+	.need__future{
+		display: none;
+	}
+	.footer-top{
+		height: auto;
+	}
+	.footer-top ul{
+		width: 100%;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+	.footer-top ul li{
+		margin: 8px 5px;
+		flex: auto;
+	}
+	.footer-top ul li:before{
+		width: 5px;
+		height: 5px;
+	}
+	.footer-top__ssi span{
+		display: none;
+	}
+	.fbox-c{
+		border: none;
+	}
+	.footer-bottom{
+		padding: 10px 0;
+	}
+	.footer-bottom .container-fluid{
+		flex-direction: column;
+		height: auto;
+	}
+	.fbox-c-menu{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.fbox-c-menu a{
+		padding: 5px 0;
+	}
+	
+	.search_input input[type="text"]{
+		width: 100%;
+	}
+}
+
+@media (max-width: 375px){
+	.header-bottom{
+		height: auto;
+	}
+	.header-bottom-section{
+		flex-direction: column;
+	}
+	.header-bottom-section>div{
+		padding: 5px 0;
+	}
 }
 </style>

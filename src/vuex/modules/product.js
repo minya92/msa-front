@@ -1,16 +1,13 @@
-import * as types from '../mutation-types'
+const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
 
-// initial state
 const state = {
   all: []
 }
 
-// getters
 const getters = {
   allProducts: state => state.all
 }
 
-// actions
 const actions = {
   getAllProducts ({ commit }) {
     /*shop.getProducts(products => {
@@ -18,15 +15,15 @@ const actions = {
     })*/
   },
   recentItem ({ commit }, product) {
-    commit(types.RECEIVE_PRODUCTS, product)
+    commit(RECEIVE_PRODUCTS, product);
   }
 }
 
-// mutations
 const mutations = {
-  [types.RECEIVE_PRODUCTS] (state, { id, name, description, price, currency, images, article}) {
-    console.log(images)
-    state.all.push({ 
+  [RECEIVE_PRODUCTS] (state, { id, name, description, price, currency, images, article}) {
+    state.all = state.all.filter(x => x.id != id);
+    
+    state.all.unshift({ 
       id, 
       name, 
       description, 
