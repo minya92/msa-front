@@ -2,23 +2,54 @@
   <main-layout>
     <div class="content-fluid">
       <h1>{{$route.meta.title}}</h1>
-      <div>Вы можете связаться с нами заполнив следующую форму</div>
-      <div class="form-group">
-        <label>{{name.headerText}}</label>
-        <input type="text" v-model="name.value">
-        <span v-if="name.showError" class="text-error">{{name.textError}}</span>
+      <div v-if="!isSendSuccess">
+        <div>Вы можете связаться с нами заполнив следующую форму</div>
+        <div class="form-group">
+          <label class="require">Имя</label>
+          <input type="text" 
+            maxlength="40"
+            v-validate="{ required: true, min: 4, max: 40 }" 
+            name="name" 
+            v-model="name"
+            data-vv-as="Не заполнено поле Имя"
+            placeholder="Имя" 
+            @keyup.enter="sendMessage"
+          />
+          <span v-if="errors.has('name')" class="text-error">{{errors.first('name')}}</span>
+        </div>
+        <div class="form-group">
+          <label class="require">Email</label>
+          <input type="text" 
+            maxlength="40"
+            v-validate="'required|email'" 
+            name="email" 
+            v-model="email"
+            @input="email = email.trim()"
+            data-vv-as="Не заполнено поле Email"
+            placeholder="Email" 
+            @keyup.enter="sendMessage"
+          />
+          <span v-if="errors.has('email')" class="text-error">{{errors.first('email')}}</span>
+        </div>
+        <div class="form-group">
+          <label class="require">Сообщение</label>
+          <textarea 
+            v-validate="'required|min:10'" 
+            name="message" 
+            v-model="message"
+            placeholder="Введите сообщение" 
+            data-vv-as="Не заполнено поле"
+            rows="5" 
+            resize="horizontal" 
+            maxlength="1000"
+          />
+          <span v-if="errors.has('message')" class="text-error">{{errors.first('message')}}</span>
+        </div>
+        <button @click="sendMessage" class="primary">Отправить</button>
       </div>
-      <div class="form-group">
-        <label>{{email.headerText}}</label>
-        <input type="text" v-model="email.value">
-        <span v-if="email.showError" class="text-error">{{email.textError}}</span>
+      <div v-else>
+        <p>Ваше сообщение успешно отправлено!</p>
       </div>
-      <div class="form-group">
-        <label>{{message.headerText}}</label>
-        <textarea placeholder="введите сообщение" rows="5" resize="horizontal" maxlength="1000" v-model="message.value"></textarea>
-        <span v-if="message.showError" class="text-error">{{message.textError}}</span>
-      </div>
-      <button @click="sendMessage" class="primary">Отправить</button>
     </div>
   </main-layout>
 </template>
@@ -32,38 +63,33 @@
     },
     data() {
       return {
-        name: { 
-          headerText: 'Имя',
-          value: '',
-          textError: "Введите имя",
-          showError: false
-        },
-        email: { 
-          headerText: 'Email',
-          value: '',
-          textError: "Введите email",
-          showError: false
-        },
-        message: { 
-          headerText: 'Сообщение',
-          value: '',
-          textError: "Введите сообщение",
-          showError: false
-        }
+        name: '',
+        email: '',
+        message: '',
+        isSendSuccess: false
       }
     },
     methods: {
       sendMessage: function(){
-        this.$API.post('feedback',
-          {
-            message_text: this.message.value, 
-            author_email: this.email.value, 
-            author_name: this.name.value
-          }
-        ).then(r => {
-              console.log(r.data)
+        this.$validator.validateAll()
+        if (!this.validate()) return;
+
+        let post = `message_text=${this.message}
+                    &author_email=${this.$store.getters.getEmail}
+                    &author_name=${this.$store.getters.getName}`;
+        this.$API.post('feedback', post).then(r => {
+          this.isSendSuccess = true;
         });
+      },
+      validate: function() {
+        return !Object.keys(this.$validator.flags).some(x => { 
+                return !this.$validator.flags[x].valid
+              })
       }
+    },
+    created(){
+      this.name = this.$store.getters.getName;
+      this.email = this.$store.getters.getEmail;
     }
   }
 </script>
@@ -76,6 +102,7 @@
 }
 .form-group input{
   width: 340px;
+  max-width: 100%;
   height: 30px;
   display: block;
   padding: 0 10px;

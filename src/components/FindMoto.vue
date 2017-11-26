@@ -289,10 +289,17 @@
     text-decoration: none;
     align-items: center;
   }
+  
+  @media screen and (max-width: 480px) {
+    #find_moto{
+      width: 450px;
+      padding: 10px;
+    }
+  }
   @media screen and (max-width: 375px) {
     #find_moto{
       width: 300px;
-      padding: 10px;
+      left: -10px;
     }
     #find_moto h2 {
       font-size: 24px;

@@ -50,6 +50,7 @@
   }
   .modal__order-status__content{
     width: 340px;
+    max-width: 100%;
   }
   @media screen and (max-width: 375px) {
     .modal__order-status__content{

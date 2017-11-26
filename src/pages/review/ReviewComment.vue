@@ -1,17 +1,23 @@
 <template>
-  <div class="block-review">
+  <div class="block-review" v-if="!isSendSuccess">
     <div class="block-review__title">Оставить отзыв </div>
     <div class="block-review__vote">
       <span>Оценка</span>
       <div class="reviewStars-input">
-        <label :class="review.rating >= 1 ? 'active' : ''"></label>
-        <label :class="review.rating >= 2 ? 'active' : ''"></label>
-        <label :class="review.rating >= 3 ? 'active' : ''"></label>
-        <label :class="review.rating >= 4 ? 'active' : ''"></label>
-        <label :class="review.rating >= 5 ? 'active' : ''"></label>
+        <label :class="rating >= 1 ? 'active' : ''" @mouseover="rating = 1"></label>
+        <label :class="rating >= 2 ? 'active' : ''" @mouseover="rating = 2"></label>
+        <label :class="rating >= 3 ? 'active' : ''" @mouseover="rating = 3"></label>
+        <label :class="rating >= 4 ? 'active' : ''" @mouseover="rating = 4"></label>
+        <label :class="rating >= 5 ? 'active' : ''" @mouseover="rating = 5"></label>
       </div>
     </div>
-    <textarea placeholder="введите отзыв" rows="5" resize="horizontal" maxlength="1000"></textarea>
+    <textarea 
+      placeholder="введите отзыв" 
+      rows="5" 
+      resize="horizontal" 
+      maxlength="1000" 
+      v-model="message"
+    ></textarea>
     <button  v-if='$store.getters.isAuthorized' @click="sendReview" class="primary">Отправить</button>
     <div v-else>
       <div>Авторизируйтесь, чтобы оставить отзыв.</div> 
@@ -19,21 +25,34 @@
       <button @click="sendReview" class="primary">Регистрироваться</button>
     </div>
   </div>
+  <div class="review__send-success" v-else>
+    Спасибо за Ваш отзыв!
+  </div>
 </template>
 
 <script>
   export default {
     data() {
       return {
-        review: {
-          text: '', 
-          rating: 5
-        }
+        message: '', 
+        rating: 5,
+        isSendSuccess: false
       }
     },
     methods: {
       sendReview: function() {
-
+        if (!this.validate()) return;
+        
+        let post = `message_text=${this.message}
+                    &author_email=${this.$store.getters.getEmail}
+                    &author_name=${this.$store.getters.getName}
+                    &rank=${this.rating}`;
+        this.$API.post('reviews', post).then(r => {
+          this.isSendSuccess = true;
+        });
+      },
+      validate: function() {
+        return this.message.length > 5 ? true : false
       }
     }
   }
@@ -107,5 +126,9 @@ textarea{
   }
   .block-review__vote span{
     margin-right: 10px;
+  }
+  .review__send-success{
+    font-weight: 600;
+    padding: 10px 0;
   }
 </style>

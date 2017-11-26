@@ -38,6 +38,11 @@ button {
 .bg__theme_two{
 	background: #801f25;
 }
+label.require:after{
+	content: '*';
+	color: red;
+	padding-left: 5px;
+}
 button.primary{
 	padding: 10px 20px;
 	outline: none;
@@ -457,6 +462,7 @@ height: 130px;
 	padding: 0 25px;
 	font-size: 14px;
 	width: 460px;
+	max-width: 100%;
 	border: 1px solid #000;
 	outline: none;
 }
@@ -592,6 +598,12 @@ height: 130px;
 		font-size: 12px;
 		line-height: 1.42857143;
 	}
+	h1 {
+		font-size: 18px;
+	}
+	h2 {
+		font-size: 16px;
+	}
 	.category-menu{
 		margin: 15px auto;
 	}
@@ -706,6 +718,16 @@ height: 130px;
 	}
 	.container-fluid.bottom-action{
 		padding: 0;
+	}
+	.product{   
+		padding-bottom: 70px;
+	}
+	.product .btns_product{
+		flex-wrap: wrap 
+	}
+	.product .btn_product{
+		margin-top: 5px; 
+		width: 100%;
 	}
 }
 

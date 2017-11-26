@@ -71,6 +71,7 @@
   }
   .modal-frame input, .modal-frame button{
     width: 340px;
+    max-width: 100%;
     height: 30px;
     display: block;
     padding: 0 10px;
@@ -100,11 +101,15 @@
   @media screen and (max-width: 375px) {
     .modal-content-section{
       padding: 10px;
-    max-height: 96%;
-    max-width: 90%;
+      max-height: 96%;
+      width: 90%;
     }
     .modal-frame input, .modal-frame button{
       width: 100%;
+    }
+    .modal-frame .head-text{
+      font-size: 18px;
+      padding: 10px 0;
     }
   }
 </style>

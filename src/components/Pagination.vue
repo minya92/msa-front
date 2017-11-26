@@ -155,4 +155,12 @@
     width: 65px;
     height: 21px;
   }
+  @media (max-width: 320px){
+    .pagination{
+      flex-wrap: wrap;
+    }
+    .upTop{
+      margin: 10px 0;
+    }
+  }
 </style>
