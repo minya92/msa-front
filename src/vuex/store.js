@@ -6,6 +6,7 @@ import {LOGIN_SUCCESS} from './mutation-types.js'
 import {LOGOUT} from './mutation-types.js'
 
 import {PATH_REDIRECT_LOGIN} from './mutation-types.js'
+import {SHOW_POPUP} from './mutation-types.js'
 
 import cart from './modules/cart.js'
 import recentProducts from './modules/product.js'
@@ -13,7 +14,7 @@ import recentProducts from './modules/product.js'
 Vue.use(Vuex)
 
 const state = {
-	loginInfo: null/*{
+	loginInfo: null,/*{
     "address": null,
     "birthday": null,
     "bonus_category": null,
@@ -36,9 +37,14 @@ const state = {
     "reg_date": null,
     "usr_name": null,
     "vk_user_id": 12640638
-  }*/,
+  },*/
 	pending: false,
-  pathRedirectLogin: '/'
+  pathRedirectLogin: '/',
+  popup: {
+    visible: false,
+    error: false,
+    message: ''
+  }
 }
 
 const mutations = {
@@ -50,6 +56,13 @@ const mutations = {
 	},
 	[PATH_REDIRECT_LOGIN](state, path) {
 		state.pathRedirectLogin = path;
+	},
+	[SHOW_POPUP](state, payload) {
+		state.popup = {
+      visible: payload.visible,
+      message: payload.message,
+      error: payload.error
+    };
 	},
 }
 
@@ -66,8 +79,14 @@ const getters = {
   getPhone: state => {
     return state.loginInfo != null ? state.loginInfo.phone : '';
   },
+  getCity: state => {
+    return state.loginInfo != null ? state.loginInfo.city : '';
+  },
   pathRedirectLogin: state => {
     return state.pathRedirectLogin;
+  },
+  popupState: state => {
+    return state.popup;
   }
 }
 
@@ -80,6 +99,21 @@ const actions = {
  },
  pathRedirectLogin({ commit }, path) {
    commit(PATH_REDIRECT_LOGIN, path);
+ },
+ showPopup({ commit }, payload) {
+    commit(SHOW_POPUP, {
+        visible: true, 
+        error: payload.error, 
+        message: payload.message
+      }
+    );
+    setTimeout(() => {
+      commit(SHOW_POPUP, {
+        visible: false, 
+        error: payload.error, 
+        message: payload.message
+      })
+    }, 5000)
  }
 }
 

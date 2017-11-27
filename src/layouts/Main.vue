@@ -458,14 +458,18 @@ header>div{
 	text-decoration: none;
 	margin: 0 15px;
 	font-size: 16px;
+	white-space: nowrap;
 }
 .fbox-c-menu{
 	margin: 15px 0;
+	display: flex;
+  flex-wrap: wrap;
+   justify-content: center;
 }
 .fbox-c-menu a{
 	color: #9b9b9b;
 	text-decoration: none;
-	margin: 0 15px;
+	margin: 5px 15px;
 	font-size: 12px;
 	cursor: pointer;
 }
@@ -492,6 +496,25 @@ footer #search_form input {
 	fill: #801f25;
 }
 
+.search_input{
+	position: relative;
+}
+.search_input label {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+.search_input input[type="text"]{
+	border-radius: 15px;
+	height: 30px;
+	padding: 0 25px;
+	font-size: 14px;
+	width: 460px;
+	max-width: 100%;
+	border: 1px solid #000;
+	outline: none;
+}
+
 @media (min-width: 769px) and (max-width: 960px){
 	.header-top-section .hbox-phone, .header-top-section .header-top-section-menu{
 		flex: none;
@@ -503,10 +526,12 @@ footer #search_form input {
 	}
 	.search_input input[type="text"]{
 		width: 100%;
-		min-width: 300px;
 	}
 	.need__future{
 		display: none;
+	}
+	.fbox-c-phone a{
+		font-size: 14px
 	}
 }
 

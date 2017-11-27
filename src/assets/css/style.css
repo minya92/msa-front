@@ -14,7 +14,7 @@ body{
 	font-size: 14px;
 	line-height: 1.42857143;
 }
-h1{ font-size: 34px; padding: 10px 0 15px;}
+h1{ font-size: 32px; padding: 5px 0 15px;}
 button {
 	cursor: pointer;
 }
@@ -224,7 +224,7 @@ aside{
 .aside__nav_vertical li{
 	list-style: none;
 	position: relative;
-	padding-left: 14px;
+	padding: 5px 0;
 }
 .aside__nav_vertical li ul{
 	display: none;
@@ -446,27 +446,6 @@ justify-content: center;
 align-items: center;
 height: 130px;
 }
-/*****/
-
-.search_input{
-	position: relative;
-}
-.search_input label {
-	position: absolute;
-	right: 10px;
-	top: 5px;
-}
-.search_input input[type="text"]{
-	border-radius: 15px;
-	height: 30px;
-	padding: 0 25px;
-	font-size: 14px;
-	width: 460px;
-	max-width: 100%;
-	border: 1px solid #000;
-	outline: none;
-}
-/****/
 /********* End Catalog ***********/
 
 .transbackground{

@@ -11,3 +11,5 @@ export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE'
 export const ORDER_ID = 'ORDER_ID'
 
 export const PATH_REDIRECT_LOGIN = 'PATH_REDIRECT_LOGIN'
+
+export const SHOW_POPUP = 'SHOW_POPUP'

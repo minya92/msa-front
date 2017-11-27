@@ -1,8 +1,16 @@
 <template>
 	<main-layout>
 		<div id="profile" class="content-fluid">
-			<aside v-if="false">
-				
+			<aside v-if="$store.getters.isAuthorized">
+				<h2>Личный кабинет</h2>
+				<ul class="aside__nav_vertical">
+					<li>
+						<router-link :to="{name: 'HistoryBuy'}">История заказов</router-link>
+					</li>
+					<li>
+						<router-link :to="{name: 'Profile'}">Профиль</router-link>
+					</li>
+				</ul>
 			</aside>
 			<aside v-else>
 				<button class="test btn_theme">авторизоваться</button>

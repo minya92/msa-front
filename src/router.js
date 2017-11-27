@@ -8,8 +8,11 @@ import Contacts from '@/pages/Contacts'
 import PageNotFound from '@/pages/404'
 import Catalog from '@/pages/catalog'
 import Product from '@/pages/product'
+
 import Profile from '@/pages/profile/Profile'
 import HistoryBuy from '@/pages/profile/HistoryBuy'
+import HistoryBuyId from '@/pages/profile/HistoryBuyId'
+
 import Review from '@/pages/review'
 import Information from '@/pages/Information'
 import FAQ from '@/pages/faq'
@@ -33,11 +36,11 @@ const routes = [
     { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/search=:searchDetails', name: 'catalogSearch', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },
-    { path: '/profile', component: Profile, meta: {breadcrumb: 'Личный кабинет'}},
-    { path: '/profile/historybuy/:id', name: 'HistoryBuy', component: HistoryBuy, meta: {breadcrumb: 'История заказов' }},
-    /*  children: [
-        { path: 'historybuy', name: 'HistoryBuy', component: HistoryBuy, meta: {breadcrumb: 'История заказов' }}
-      ] */ 
+
+    { path: '/profile', name: 'Profile', component: Profile, meta: {breadcrumb: 'Профиль пользователя', title: 'Профиль пользователя'}},
+    { path: '/profile/historybuy', name: 'HistoryBuy', component: HistoryBuy, meta: {breadcrumb: 'История заказов' }},
+    { path: '/profile/historybuy/:id', name: 'HistoryBuyId', component: HistoryBuyId, meta: {breadcrumb: 'История заказов' }},
+
     { path: '/cart', component: Cart, meta: {breadcrumb: 'Корзина'} },
     { path: '/checkout', component: Checkout, meta: {breadcrumb: 'Оформление заказа'} },
     { path: '/cart/success', component: SuccessCheckout, meta: {breadcrumb: 'Оформление заказа'}, props: { name: 'world' }},
