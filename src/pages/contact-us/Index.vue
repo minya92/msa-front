@@ -75,8 +75,8 @@
         if (!this.validate()) return;
 
         let post = `message_text=${this.message}
-                    &author_email=${this.$store.getters.getEmail}
-                    &author_name=${this.$store.getters.getName}`;
+                    &author_email=${this.email}
+                    &author_name=${this.name}`;
         this.$API.post('feedback', post).then(r => {
           this.isSendSuccess = true;
         });

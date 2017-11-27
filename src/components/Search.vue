@@ -1,7 +1,12 @@
 <template>
   <div id="search_form">
     <div class="search_input">
-      <input type="text" name="search" placeholder="Поиск запчастей">
+      <input 
+        type="text" 
+        v-model="searchText" 
+        placeholder="Поиск запчастей"
+        @keyup.enter="search"
+      />
       <label for="search">
         <icon name="search"></icon>
       </label>
@@ -20,7 +25,14 @@
         { id: '3', name: 'user 3', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'test@gmail.com', phone:'+919566565065', unread:'0' },
         { id: '4', name: 'user 4', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'sample@gmail.com', phone:'+916466004566', unread:'0' }
         ],
-        query: ''
+        searchText: ''
+      }
+    },
+    methods: {
+      search: function(){
+        this.$API.post('getItemsCount', `search_string=${this.searchText}`).then(r => {
+        console.log(r.data.data)
+        });
       }
     }
   }
