@@ -6,10 +6,11 @@ import {LOGIN_SUCCESS} from './mutation-types.js'
 import {LOGOUT} from './mutation-types.js'
 
 import {PATH_REDIRECT_LOGIN} from './mutation-types.js'
-import {SHOW_POPUP} from './mutation-types.js'
 
 import cart from './modules/cart.js'
 import recentProducts from './modules/product.js'
+import popupMessage from './modules/popupMessage.js'
+import loading from './modules/loading.js'
 
 Vue.use(Vuex)
 
@@ -39,12 +40,7 @@ const state = {
     "vk_user_id": 12640638
   },*/
 	pending: false,
-  pathRedirectLogin: '/',
-  popup: {
-    visible: false,
-    error: false,
-    message: ''
-  }
+  pathRedirectLogin: '/'
 }
 
 const mutations = {
@@ -56,14 +52,7 @@ const mutations = {
 	},
 	[PATH_REDIRECT_LOGIN](state, path) {
 		state.pathRedirectLogin = path;
-	},
-	[SHOW_POPUP](state, payload) {
-		state.popup = {
-      visible: payload.visible,
-      message: payload.message,
-      error: payload.error
-    };
-	},
+	}
 }
 
 const getters = {
@@ -84,9 +73,6 @@ const getters = {
   },
   pathRedirectLogin: state => {
     return state.pathRedirectLogin;
-  },
-  popupState: state => {
-    return state.popup;
   }
 }
 
@@ -99,21 +85,6 @@ const actions = {
  },
  pathRedirectLogin({ commit }, path) {
    commit(PATH_REDIRECT_LOGIN, path);
- },
- showPopup({ commit }, payload) {
-    commit(SHOW_POPUP, {
-        visible: true, 
-        error: payload.error, 
-        message: payload.message
-      }
-    );
-    setTimeout(() => {
-      commit(SHOW_POPUP, {
-        visible: false, 
-        error: payload.error, 
-        message: payload.message
-      })
-    }, 5000)
  }
 }
 
@@ -121,7 +92,9 @@ export default new Vuex.Store({
 	state,
   modules:{
     cart,
-    recentProducts
+    recentProducts,
+    popupMessage,
+    loading
   },
 	mutations,
 	getters,

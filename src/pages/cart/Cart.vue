@@ -4,8 +4,8 @@
       <table class="table__cart" cellpadding="5" cellspacing="0" border="0">
         <tbody>
           <tr class="table-header">
-            <th class="table__cart__picture">{{lang.picture}}</th>
-            <th>{{lang.description}}</th>
+            <th class="table__cart__picture">Изображение</th>
+            <th>Описание</th>
             <th class="table__cart__quantity">Количество</th>
             <th class="table__cart__price">Цена</th>
             <th></th>
@@ -13,15 +13,15 @@
           <tr v-for="(product, index) in products">
             <td class="table__cart__picture">
               <router-link :to="'product/'+product.id"><img :src="product.image"></router-link></td>
-            <td>
+            <td class="table__cart__description">
               <router-link class="table__cart__title-item" :to="'product/'+product.id">
               {{product.name}}</router-link>
-              <div>{{product.description}}</div>
+              <div class="table__cart__description-item">{{product.description}}</div>
             </td>
             <td class="table__cart__quantity">
-              <div class="quantity_minus" @click="quantityMinus(product)">-</div>
+              <button class="quantity_minus" @click="quantityMinus(product)">-</button>
               <input :value="product.quantity">
-              <div class="quantity_plus" @click="quantityPlus(product)">+</div>
+              <button class="quantity_plus" @click="quantityPlus(product)">+</button>
             </td>
             <td class="table__cart__price">{{product.price}}</td>
             <td class="table__cart__remove">
@@ -38,9 +38,9 @@
       <div class="cart-methods-section">
         <div class="simplecheckout-left-column">
             <div class="checkout-heading">Покупатель</div>
-            <div class="row__customer_group" v-for="field in Object.keys(userFields)">
+            <div class="row__customer_group" v-for="field in Object.keys(userFields)" :key="userFields[field].name">
               <label :class="userFields[field].require ? 'require' : ''">{{userFields[field].name}}</label>
-              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 111-11-11" />
+              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 111-11-11" :class="userFields[field].error ? 'error-val' : ''"/>
               <input v-else v-model="userFields[field].value"  @blur="validateInput(field)" :class="userFields[field].error ? 'error-val' : ''"/>
             </div>
         </div>
@@ -63,11 +63,16 @@
           </div>
         </div>
       </div>
-      <div>
-        <button class="btn_theme btn_cart" @click="sendOrder()">Оформить заказ</button>
+      <div class="cart__footer">
+        <button class="btn_theme_white btn_cart" @click="goCatalog">Продолжить покупки</button>
+        <button class="btn_theme btn_cart" @click="sendOrder">Оформить заказ</button>
+        <div>
+          Нажимая кнопку "Оформить заказ", Вы соглашаетесь c условиями 
+          <router-link :to="{name: 'PrivacyPolicy'}">политики конфиденциальности</router-link>
+        </div>
       </div>
     </div>
-    <div class="content-fluid" v-else>{{lang.emptyCart}}</div>
+    <div class="content-fluid" v-else>Корзина пустая</div>
   </main-layout>
 </template>
 
@@ -82,14 +87,8 @@
     data() {
       return {
         products: [],
-        selectDelivery: 0,
-        selectPayment: 0,
-        lang:{
-          emptyCart: 'Корзина пустая',
-          toCatalog: 'Перейти в каталог',
-          picture: 'Изображение',
-          description: 'Описание'
-        },
+        selectDelivery: 1,
+        selectPayment: 1,
         delivery: [],
         payments: [],
 
@@ -132,7 +131,6 @@
       },
       validateEmail: function() {
         var reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/
-        console.log(this.userFields)
         if (!this.userFields.email.value.match(reg)) {
           this.userFields.email.error = true;
           return;
@@ -173,6 +171,9 @@
         }
         return !error
       },
+      goCatalog: function(){
+        this.$router.push({name: 'catalog'});
+      },
       sendOrder: function(){
         if (!this.validateUser()) 
           return  
@@ -180,26 +181,31 @@
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
 
-        let post = `phone=${this.userFields['phone'].value}`+
-                    `&email=${this.userFields['email'].value}`+
-                    `&deliveryType=${this.selectDelivery}`+
-                    `&deliveryAddress=${this.userFields['address'].value}`+
-                    `&orderItems=${JSON.stringify(newJson)}`+
-                    `&payType=${this.selectPayment}`;
+        let post = `phone=${this.userFields['phone'].value}
+                    &email=${this.userFields['email'].value}
+                    &deliveryType=${this.selectDelivery}
+                    &deliveryAddress=${this.userFields['address'].value}
+                    &orderItems=${JSON.stringify(newJson)}
+                    &payType=${this.selectPayment}`;
                     
+        this.$store.dispatch('showLoading');
         this.$API.post('placeOrder/', post).then(r => {
           let orderId = r.data.data
+
           this.$API.get(`getOrder/${orderId}`).then(r => {
             this.$store.dispatch('successCheckout', {orderId: orderId}) 
+            this.$store.dispatch('hideLoading');
             this.$router.push({path: 'cart/success'})
           })
-        })
+        }).catch(err => {
+          this.$store.dispatch('hideLoading');
+        });
       }, 
       deliveryMehods: function(){
         this.$API.get('getDelivery').then(r => {
           this.delivery = r.data.data
         })
-      }, 
+      },
       paymentMehods: function(){
         this.$API.get('getPayTypes').then(response => {
           this.payments = response.data.data
@@ -223,6 +229,8 @@
       if (!this.$store.getters.cartProducts.length){
         return;
       }
+      
+      this.$store.dispatch('showLoading');
       this.deliveryMehods()
       this.paymentMehods()
 
@@ -240,6 +248,8 @@
       this.products = [];
       let $forBlock = this
       this.$API.get('getItems' + bodyPost).then(r => {
+        this.$store.dispatch('hideLoading');
+        
         r.data.data.forEach(function(item){
           $forBlock.products.push({
             id: item.cost_id, 
@@ -300,10 +310,10 @@
     background: #801f25;
     width: 22px;
     height: 22px;
-    display: inline-block;
     color: #fff;
     cursor: pointer; 
     text-align: center;
+    border: 0;
   }
   .cart-methods-section{
     display: flex;
@@ -332,8 +342,6 @@
   }
   .btn_cart{    
     margin: 5px 0 20px;
-    float: right;
-    overflow: hidden;
     font-size: 16px;
     padding: 10px 20px;
     border-radius: 3px;
@@ -353,25 +361,85 @@
     background: #ededed;
     padding: 10px;
     font-weight: 600;
+    width: 100%;
   }
   .row__customer_group{
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 20px 0 0;
+    width: 100%;
   }
   .row__customer_group label{
     margin-right: 10px;
+    min-width: 100px;
   }
   .row__customer_group input{
     border-radius: 3px;
-    width: 400px;
+    width: 100%;
     padding: 7px 5px;
     outline: none;
     border: 1px solid #ccc;
   }
   input.error-val{
     border: 1px solid red;
+  }
+  .cart__footer{
+    text-align: right;
+    font-size: 11px;
+  }
+  .table__cart__remove{
+    color: red;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 768px){
+    .simplecheckout-left-column, .simplecheckout-right-column{
+      width: 100%;
+    }
+    .cart-methods-section{
+      flex-direction: column;
+    }
+    .simplecheckout-left-column{
+      align-items: flex-start;
+    }
+    .table__cart__picture{
+      width: 130px;
+    }
+    .table__cart__price{
+      width: auto;
+    }
+  }
+  @media (max-width: 480px) {
+    .table__cart__description-item{
+      font-size: 10px;
+    }
+    .table__cart__picture {
+      width: 100px;
+    }
+    .table__cart__quantity input[data-v-414b8b7a] {
+      height: 22px;
+      width: 34px;
+    }
+    .table__cart tr{
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid;
+    }
+    .table__cart th{
+      display: none;
+    }
+    .table__cart td{
+      display: inline-block;
+      border-bottom: 0;
+      padding: 3px 5px;
+    }
+    .table__cart__picture{
+      width: 30%;
+    }
+    .table__cart__description{
+      width: 68%;
+    }
   }
   @media screen and (max-width: 375px) {
     .cart-methods-section{

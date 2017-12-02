@@ -52,9 +52,9 @@
                     &f_name=${this.userFields['fio'].value}
                     &city=${this.userFields['address'].value}`;
         this.$API.post('clients/update', post).then(r => {
-          this.$store.dispatch('showPopup', {error: false, message: 'Данные сохранены'});
+          this.$store.dispatch('showPopup', {status: false, message: 'Данные сохранены'});
         }).catch(err => {
-          this.$store.dispatch('showPopup', {error: true, message: 'Данные несохранены'});
+          this.$store.dispatch('showPopup', {status: true, message: 'Данные несохранены'});
         });
       }
     },

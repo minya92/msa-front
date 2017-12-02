@@ -24,7 +24,7 @@
             <div class="price">{{product.price}} {{product.currency}}</div>
             <div class="stock">{{product.stock}}</div>
           </div>
-          <div class="article">{{product.article}}</div>
+          <div class="article" v-if="product.article">артикул: {{product.article}}</div>
           <button @click="addToCart(product)"><img src="../../assets/img/cart_empty.svg">Вкорзину</button>
           <template v-if='product.chars'>
             <div class="characteristic-block">

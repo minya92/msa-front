@@ -10,8 +10,8 @@ import Catalog from '@/pages/catalog'
 import Product from '@/pages/product'
 
 import Profile from '@/pages/profile/Profile'
-import HistoryBuy from '@/pages/profile/HistoryBuy'
-import HistoryBuyId from '@/pages/profile/HistoryBuyId'
+import Order from '@/pages/profile/Order'
+import OrderId from '@/pages/profile/OrderId'
 
 import Review from '@/pages/review'
 import Information from '@/pages/Information'
@@ -24,6 +24,8 @@ import About from '@/pages/About'
 import Cart from '@/pages/cart/Cart'
 import Checkout from '@/pages/cart/Checkout'
 import SuccessCheckout from '@/pages/cart/Success'
+
+import PrivacyPolicy from '@/pages/PrivacyPolicy'
 
 import DoAuth from '@/pages/DoAuth'
 
@@ -38,8 +40,8 @@ const routes = [
     { path: '/product/:id', component: Product, meta: {breadcrumb: 'Продукт'} },
 
     { path: '/profile', name: 'Profile', component: Profile, meta: {breadcrumb: 'Профиль пользователя', title: 'Профиль пользователя'}},
-    { path: '/profile/historybuy', name: 'HistoryBuy', component: HistoryBuy, meta: {breadcrumb: 'История заказов' }},
-    { path: '/profile/historybuy/:id', name: 'HistoryBuyId', component: HistoryBuyId, meta: {breadcrumb: 'История заказов' }},
+    { path: '/profile/order', name: 'Order', component: Order, meta: {breadcrumb: 'История заказов' }},
+    { path: '/profile/order/:id', name: 'OrderId', component: OrderId, meta: {breadcrumb: 'История заказов' }},
 
     { path: '/cart', component: Cart, meta: {breadcrumb: 'Корзина'} },
     { path: '/checkout', component: Checkout, meta: {breadcrumb: 'Оформление заказа'} },
@@ -51,6 +53,7 @@ const routes = [
     { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
     { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },
     { path: '/about', component: About, name: 'About', meta: {breadcrumb: 'О магазине', title: 'О магазине'} },
+    { path: '/about', component: PrivacyPolicy, name: 'PrivacyPolicy', meta: {breadcrumb: 'Политика конфиденциальности', title: 'Политика конфиденциальности'} },    
     { path: "*", component: PageNotFound }
   ]
 

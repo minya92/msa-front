@@ -15,9 +15,9 @@
         </tr>
         <tr v-for="(product, index) in dataOrder.contents">
           <td class="table__items__picture">
-            <router-link :to="'product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
+            <router-link :to="'/product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
           <td>
-            <router-link class="table__items__title-item" :to="'product/'+product.item_cost_id">
+            <router-link class="table__items__title-item" :to="'/product/'+product.item_cost_id">
             {{product.item_name}}</router-link>
             <div>{{product.type_description}}</div>
           </td>

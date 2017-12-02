@@ -47,8 +47,13 @@
                     &author_email=${this.$store.getters.getEmail}
                     &author_name=${this.$store.getters.getName}
                     &rank=${this.rating}`;
+
+        this.$store.dispatch('showLoading');
         this.$API.post('reviews', post).then(r => {
           this.isSendSuccess = true;
+          this.$store.dispatch('hideLoading');
+        }).catch(err =>{
+          this.$store.dispatch('hideLoading');
         });
       },
       validate: function() {

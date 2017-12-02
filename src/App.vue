@@ -1,7 +1,15 @@
 <template>
 	<div id="app">
 		<router-view></router-view>
-		<div id="win_popup" v-if="visiblePopup" :class="statusPopup ? 'is-failed' : 'is-success'">{{messagePopup}}</div>
+		<div 
+			id="win_popup" 
+			v-if="$store.getters.getVisiblePopup" 
+			:class="$store.getters.getStatusPopup ? 'is-failed' : 'is-success'"
+		>{{$store.getters.getMessagePopup}}</div>
+		
+		<div id="page-preloader" v-if="$store.getters.isLoading">
+			<div class="page-preloader__loader"></div>
+		</div>
 	</div>
 </template>
 
@@ -14,17 +22,6 @@
 					this.$store.dispatch('login', r.data.data);
 				}
 			})
-		},
-		computed:{
-			visiblePopup: function(){
-				return this.$store.getters.popupState.visible;
-			},
-			statusPopup: function(){
-				return this.$store.getters.popupState.error;
-			},
-			messagePopup: function(){
-				return this.$store.getters.popupState.message;
-			}
 		}
 	}
 </script>

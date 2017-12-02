@@ -12,4 +12,10 @@ export const ORDER_ID = 'ORDER_ID'
 
 export const PATH_REDIRECT_LOGIN = 'PATH_REDIRECT_LOGIN'
 
-export const SHOW_POPUP = 'SHOW_POPUP'
+/* message popup */
+export const HIDE_POPUP_MESSAGE = 'HIDE_POPUP_MESSAGE';
+export const SHOW_POPUP_MESSAGE = 'SHOW_POPUP_MESSAGE';
+
+/* loading page */
+export const HIDE_LOADING = 'HIDE_LOADING';
+export const SHOW_LOADING = 'SHOW_LOADING';

@@ -143,9 +143,13 @@
 					</div>
 					<div class="fbox-c">
 						<div class="fbox-c-phone">
-							<template v-for="phone in phoneFooter">
-								<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
-							</template>
+							<a 
+								v-for="(phone, index) in phoneFooter" 
+								:href="'tel:' + phone" 
+								:key="index"
+							>
+								<icon name="phone"></icon>{{phone}}
+							</a>
 						</div>
 						<div class="fbox-c-search"></div>
 						<searchForm></searchForm>

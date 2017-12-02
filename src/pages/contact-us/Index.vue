@@ -77,8 +77,13 @@
         let post = `message_text=${this.message}
                     &author_email=${this.email}
                     &author_name=${this.name}`;
+
+        this.$store.dispatch('showLoading');
         this.$API.post('feedback', post).then(r => {
           this.isSendSuccess = true;
+          this.$store.dispatch('hideLoading');
+        }).catch(err => {
+          this.$store.dispatch('hideLoading');
         });
       },
       validate: function() {
