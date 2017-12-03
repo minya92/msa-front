@@ -17,7 +17,7 @@
 							</template>
 						</div>
 						<div class="login-section" v-if='$store.getters.isAuthorized'>
-							<a>{{$store.getters.getName | emptyName}}
+							<a>Личный кабинет
 								<ul class="user-link_menu">
 									<li><router-link to="/profile">Профиль</router-link></li>
 									<li @click.prevent="logout"><a>Выйти</a></li>

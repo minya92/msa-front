@@ -1,5 +1,5 @@
 <template>
-  <modal-fade @close="$emit('close')">
+  <modal-fade @close="closeForm">
     <div class="modal__auth__content">
       <div class="head-text">{{headerText}}</div>
       <div class="span-grey">{{textFromHeaderText}}</div>
@@ -62,9 +62,12 @@
       submitForm: function(){
         let that = this;
         doAuth(this.email.value, this.password.value).then(r => {
-          console.log(r);
+          this.closeForm();
         });
       },
+      closeForm: function(){
+        this.$emit('close');
+      }
     }
   }
 </script>

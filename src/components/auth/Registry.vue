@@ -1,5 +1,5 @@
 <template>
-  <modal-fade @close="$emit('close')">
+  <modal-fade @close="closeForm">
     <div class="head-text">Рады вас видеть снова</div>
     <div class="span-grey">Введите телефон или email чтобы продолжить<br>Возможно у вас накопились бонусы</div>
     <div class="form-group">
@@ -66,25 +66,15 @@
     methods: {
       registry: function(){
         if (this.validate()) return;
-
-        this.$store.dispatch('login',JSON.stringify({login: this.name.value}));
-        /*let post = {
-          first_name: '',
-          last_name: '',
-          login: 'harcioger',//this.name,
-          password:'password',// md5(this.pass),
-          city: '',
-          phone: '89999999999',//this.phone,
-          reg_date: '',
-          birthday: null,
-          email: 'harcioger@gmail.com'//this.email
-        }
-        console.log(post);*/
+        
         var post = `login=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(response => {
-          console.log(response);
+          this.closeForm();
         })
 
+      },
+      closeForm: function(){
+        this.$emit('close');
       },
       validate: function(){
         var error = false;
