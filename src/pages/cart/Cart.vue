@@ -243,10 +243,10 @@
 			this.$API.get("clients/current").then(r => {
 				if (r.data.data != null){
 					this.$store.dispatch('login', r.data.data);
-          this.user.value = this.$store.getters.getName;
-          this.email.value = this.$store.getters.getEmail;
-          this.phone.value = this.$store.getters.getPhone;
-          this.address.value = this.$store.getters.getCity;
+          this.userFields.user.value = this.$store.getters.getName;
+          this.userFields.email.value = this.$store.getters.getEmail;
+          this.userFields.phone.value = this.$store.getters.getPhone;
+          this.userFields.address.value = this.$store.getters.getCity;
 				}
 			})
 
