@@ -13,24 +13,30 @@
 				</ul>
 			</aside>
 			<aside v-else>
-				<button class="test btn_theme">авторизоваться</button>
-				<button class="test btn_theme">регистрироваться</button>
+				<button class="test btn_theme" @click="showAuth=true">авторизоваться</button>
+				<button class="test btn_theme" @click="showRegistry=true">регистрироваться</button>
 			</aside>
 			<div class="content-section">
 				<slot></slot>
 			</div>
 		</div>
+		<auth v-if="showAuth" @close="showAuth=false"></auth>
+		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
 	</main-layout>
 </template>
 
 <script>
 	import MainLayout from '@/layouts/Main'
+	import auth from '@/components/auth/Auth'
+	import registry from '@/components/auth/Registry'
 
 	export default{
 		name: 'profile',
-		components: {MainLayout},
+		components: {MainLayout, auth, registry},
 		data() {
 			return{
+				showAuth: false,
+				showRegistry: false,
 			}
 		},
 		created(){

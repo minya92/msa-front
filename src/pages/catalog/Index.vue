@@ -151,6 +151,9 @@
         if (typeof this.$route.params.searchDetails != 'undefined'){
           query += `&mark_model=${this.$route.params.searchDetails}`;
         }
+        if (typeof this.$route.query.search_string != 'undefined'){
+          query += `&search_string=${this.$route.query.search_string}`;
+        }
         query += `&page=${this.currentPage}&pageSize=${this.pageSize}`;
         query += `&order=${this.selectedSort}`;
 
@@ -248,8 +251,6 @@
           this.loadProducts(this.currentPage)
         }
       }
-    },
-    created: function(){
     },
     mounted() {
       this.loadPage()

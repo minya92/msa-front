@@ -5,35 +5,81 @@
         type="text" 
         v-model="searchText" 
         placeholder="Поиск запчастей"
-        @keyup.enter="search"
+        @keyup="searchItemsCount"
+        @keyup.enter="searchItems"
       />
-      <label for="search">
-        <icon name="search"></icon>
-      </label>
+      <label for="search" v-if="searchText.length == 0"><icon name="search"></icon></label>
+      <label 
+        v-else
+        for="search" 
+        style="color: #801f25"
+        @click="clear"><icon name="close"></icon></label>
+      <div 
+        class="search_input__result" 
+        v-if="totalSearch > 0 && searchText.length > 0"
+      >Найдено: {{totalSearch}}
+        <button class="btn_theme" @click="searchItems">Показать</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import lodash from 'lodash'
+
   export default {
     name: 'search_form',
     data() {
       return {
-        customers: [
-        { id: '1', name: 'user 1', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'ab@gmail.com', phone:'+91959657248', unread:'0' },
-        { id: '2', name: 'user 2', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'abcd@gmail.com', phone:'+919456664023', unread:'0' },
-        { id: '3', name: 'user 3', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'test@gmail.com', phone:'+919566565065', unread:'0' },
-        { id: '4', name: 'user 4', profile_pic: 'https://i.stack.imgur.com/CE5lz.png', email:'sample@gmail.com', phone:'+916466004566', unread:'0' }
-        ],
-        searchText: ''
+        searchText: '',
+        totalSearch: 0
       }
     },
     methods: {
-      search: function(){
+      searchItemsCount: _.debounce(function(){
+        if (this.searchText.length < 3) {
+          this.totalSearch = 0;
+          return;
+        }
+
         this.$API.post('getItemsCount', `search_string=${this.searchText}`).then(r => {
-        console.log(r.data.data)
+          this.totalSearch = r.data.data;
         });
+      }, 1000),
+      searchItems: function(){
+        if (this.searchText.length == 0) return;
+        
+        this.$router.push(
+          {
+            name: 'catalog', 
+            query:{
+              search_string: this.searchText
+            }
+          }
+        );
+      },
+      clear: function(){
+        this.searchText = '';
       }
     }
   }
 </script>
+
+<style scoped>
+.search_input__result{
+  position: absolute;
+  background: #fff;
+  left: 0;
+  width: 100%;
+  padding: 3px 10px;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search_input__result button{
+  padding: 3px 10px;
+  font-size: 12px;
+}
+</style>

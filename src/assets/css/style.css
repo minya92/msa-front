@@ -27,6 +27,7 @@ button {
 	color: #fff;
 	outline: none;
 	text-align: center;
+	text-decoration: none;
 }
 .btn_theme_white{
 	background: #fff;

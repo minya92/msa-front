@@ -106,6 +106,7 @@
           slidesPerView: 3,
           slidesPerColumn: 2,
           spaceBetween: 30,
+          slidesPerGroup: 1,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
           loop: true
