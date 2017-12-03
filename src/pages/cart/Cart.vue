@@ -240,6 +240,16 @@
       this.$set(this.userFields, 'email', {name: 'Email', value: '', require: true, error: false})
       this.$set(this.userFields, 'address', {name: 'Адрес', value: '', require: false, error: false})
 
+			this.$API.get("clients/current").then(r => {
+				if (r.data.data != null){
+					this.$store.dispatch('login', r.data.data);
+          this.user.value = this.$store.getters.getName;
+          this.email.value = this.$store.getters.getEmail;
+          this.phone.value = this.$store.getters.getPhone;
+          this.address.value = this.$store.getters.getCity;
+				}
+			})
+
       //запрос на получение данных корзины
       let post = []
       this.$store.getters.cartProducts.forEach(x=>post.push(x.id))

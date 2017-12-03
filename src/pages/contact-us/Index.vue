@@ -93,8 +93,13 @@
       }
     },
     created(){
-      this.name = this.$store.getters.getName;
-      this.email = this.$store.getters.getEmail;
+			this.$API.get("clients/current").then(r => {
+				if (r.data.data != null){
+					this.$store.dispatch('login', r.data.data);
+          this.name = this.$store.getters.getName;
+          this.email = this.$store.getters.getEmail;
+				}
+			})
     }
   }
 </script>

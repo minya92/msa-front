@@ -59,10 +59,15 @@
       }
     },
     created(){
-      this.userFields.fio.value = this.$store.getters.getName;
-      this.userFields.email.value = this.$store.getters.getEmail;
-      this.userFields.phone.value = this.$store.getters.getPhone;
-      this.userFields.address.value = this.$store.getters.getCity;
+			this.$API.get("clients/current").then(r => {
+				if (r.data.data != null){
+					this.$store.dispatch('login', r.data.data);
+          this.userFields.fio.value = this.$store.getters.getName;
+          this.userFields.email.value = this.$store.getters.getEmail;
+          this.userFields.phone.value = this.$store.getters.getPhone;
+          this.userFields.address.value = this.$store.getters.getCity;
+				}
+			})
     }
   }
 </script>

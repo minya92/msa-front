@@ -5,18 +5,7 @@
     </div>
     <div class="content-fluid catalog-section">
       <aside>
-        <div class="aside__v-menu__title">Каталог</div>
-        <ul class="aside__nav_vertical">
-          <li v-for="catalog in catalogs">
-            <!--<span v-if="catalog.child.length" class="arrow_down" @click="toggle"></span>-->
-            <router-link :to="`/catalog/types=${catalog.url}`">{{catalog.name}}</router-link>
-            <!--<ul>
-              <li v-for="childCatalog in catalog.child">
-                <router-link :to="catalog.url">{{childCatalog.name}}</router-link>
-              </li>
-            </ul>-->
-          </li>
-        </ul>
+        <categories></categories>
       </aside>
 
       <div class="content-section">
@@ -70,13 +59,14 @@
   import RecentView from './RecentView'
   import GreyMarks from './GreyMarks'
   import ActionBlocks from './ActionBlocks'
+  import Categories from './Categories'
   import AddToCart from '@/components/AddToCart'
   import lodash from 'lodash'
   import PreloadImageLoader from '@/components/LoadImage'
 
   export default {
     components: {
-      pagination, MainLayout, Vsc, RecentView, AddToCart, PreloadImageLoader, GreyMarks, ActionBlocks
+      pagination, MainLayout, Vsc, RecentView, AddToCart, PreloadImageLoader, GreyMarks, ActionBlocks, Categories
     },
     data() {
       return {
@@ -104,8 +94,7 @@
         currentPage: 1,
         selectProduct: {},
         products: [],
-        selectedSort: '',
-        catalogs: []
+        selectedSort: ''
       }
     },
     watch: {
@@ -201,22 +190,6 @@
           this.dataSlide.max = r.data.data.max_cost
         })
       },
-      loadCatalogs: function(){
-        this.$API.get('getTypes').then(r => {
-          var catalogs = [];
-
-          for (var i = 0; i < r.data.data.length; i++){
-            var item = r.data.data[i];
-            catalogs.push({
-              id: item.items_types_id,
-              parentType: item.parent_type,
-              name: item.type_description,
-              url: item.items_types_id
-            });
-          }
-            this.catalogs = catalogs;
-        })
-      },
       toggle: function(e){
         console.log(e.target.parentNode);
       },
@@ -240,8 +213,6 @@
       loadPage: function(){
         this.dataSlide.min = 0
         this.dataSlide.max = 0
-
-        this.loadCatalogs()
 
         if (this.$route.query.page == undefined || !isNaN(this.$route.query.page)){
           this.$route.query.page == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.query.page);

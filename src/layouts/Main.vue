@@ -12,9 +12,7 @@
 							<router-link to="/contacts">Контакты</router-link>
 						</div>
 						<div class="hbox-phone">
-							<template v-for="phone in phoneHeader">
-								<a :href="'tel:' + phone"><icon name="phone"></icon>{{phone}}</a>
-							</template>
+							<a v-for="phone in phoneHeader" :href="'tel:' + phone" :key="phone"><icon name="phone"></icon>{{phone}}</a>
 						</div>
 						<div class="login-section" v-if='$store.getters.isAuthorized'>
 							<a>Личный кабинет
