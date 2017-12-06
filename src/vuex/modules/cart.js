@@ -33,19 +33,26 @@ const actions = {
       products,
       () => commit(types.CHECKOUT_SUCCESS),
       () => commit(types.CHECKOUT_FAILURE, { savedCartItems })
-      )
+    );
   },
   addToCart ({ commit }, product) {
-    commit(types.ADD_TO_CART, product)
+    commit(types.ADD_TO_CART, product);
   },
-  removeCart ({ commit }, product) {
-    commit(types.REMOVE_CART, product)
+  removeCart ({ commit }, { id }) {
+    commit(types.REMOVE_CART, id);
   },
   updateCart ({ commit }, product) {
-    commit(types.UPDATE_CART, product)
+    commit(types.UPDATE_CART, product);
   },
   successCheckout ({ commit }, orderId) {
-    commit(types.CHECKOUT_REQUEST, orderId)
+    commit(types.CHECKOUT_REQUEST, orderId);
+  },
+  verificationCart({ commit }, ids) {
+    state.items.forEach(item => {
+      if (ids.indexOf(item.id) < 0) {
+        commit(types.REMOVE_CART, item.id)
+      }
+    }, this);
   }
 }
 
@@ -67,22 +74,23 @@ const mutations = {
 
     saveItems(state.items)
   },
-  [types.UPDATE_CART] (state, item ) {
-    const record = state.items.find(p => p.id === item.product.cost_id)
+  [types.UPDATE_CART] (state, item) {
+    console.log(item)
+    const record = state.items.find(p => p.id === item.cost_id)
     if (!record) {
       state.items.push({
-        id: item.product.cost_id,
+        id: item.cost_id,
         quantity: item.quantity,
-        price: item.product.price,
-        currency: item.product.currency
+        price: item.price,
+        currency: item.currency
       })
     } else {
-      record.quantity = quantity
+      record.quantity = item.quantity
     }
 
     saveItems(state.items)
   },
-  [types.REMOVE_CART] (state, {id} ) {
+  [types.REMOVE_CART] (state, id ) {
       state.items.splice(state.items.indexOf(id), 1)
       saveItems(state.items)
   },

@@ -1,7 +1,6 @@
 <template>
   <modal-fade @close="closeForm">
-    <div class="head-text">Рады вас видеть снова</div>
-    <div class="span-grey">Введите телефон или email чтобы продолжить<br>Возможно у вас накопились бонусы</div>
+    <div class="head-text">Регистрация</div>
     <div class="form-group">
       <label>Как вас зовут?</label>
       <input type="text" v-model="name.value">
@@ -24,17 +23,15 @@
     </div>
     <div class="form-group">
       <label>Tелефон:</label>
-      <masked-input v-model="phone.value" mask="\+\7 (111) 1111-11" />
+      <masked-input v-model="phone.value" mask="\+\7 (111) 111-11-11" />
       <span class="text-error" v-if="phone.error">{{phone.textError}}</span>
     </div>
+    <div class="form__error__message" v-if="errorAuth">{{errorText}}</div>
     <div class="form-group">
-      <button class="btn_theme" @click="registry">войти</button>
+      <button class="btn_theme" @click="registry">зарегистрироваться</button>
     </div>
     <div class="alt-registry">
       <SocialAuth></SocialAuth>
-      <div>
-        Забыли пароль / Еще не зарегистрированы?
-      </div>
     </div>
     <div class="moto-box-selection">
     </div>
@@ -58,6 +55,8 @@
         pass: {value: '', error: false, require: true, textError: 'Пароль должен содержать более 4 символов'},
         rpass: {value: '', error: false, require: true, textError: 'Пароли не совпадают'},
         email: {value: '', error: false, require: true, textError: 'Введите email'},
+        errorAuth: false,
+        errorText: 'Неправильный электронный адрес или пароль.'
       }
     },
     created() {
@@ -69,7 +68,12 @@
         
         var post = `login=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(response => {
-          this.closeForm();
+          if (r.data.data != null){
+            this.$store.dispatch('login', r.data.data);
+            this.closeForm();
+          }
+        }).catch(err => {
+          this.errorAuth = true;
         })
 
       },

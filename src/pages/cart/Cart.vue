@@ -1,6 +1,6 @@
 <template>
   <main-layout>
-    <div v-if="$store.getters.cartProducts.length" class="content-fluid">
+    <div v-if="$store.getters.cartProducts.length && products.length > 0" class="content-fluid">
       <table class="table__cart" cellpadding="5" cellspacing="0" border="0">
         <tbody>
           <tr class="table-header">
@@ -10,11 +10,11 @@
             <th class="table__cart__price">Цена</th>
             <th></th>
           </tr>
-          <tr v-for="(product, index) in products">
+          <tr v-for="(product, index) in products" :key="index">
             <td class="table__cart__picture">
-              <router-link :to="'product/'+product.id"><img :src="product.image"></router-link></td>
+              <router-link :to="'product/'+product.cost_id"><img :src="product.image"></router-link></td>
             <td class="table__cart__description">
-              <router-link class="table__cart__title-item" :to="'product/'+product.id">
+              <router-link class="table__cart__title-item" :to="'product/'+product.cost_id">
               {{product.name}}</router-link>
               <div class="table__cart__description-item">{{product.description}}</div>
             </td>
@@ -181,12 +181,12 @@
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
 
-        let post = `phone=${this.userFields['phone'].value}
-                    &email=${this.userFields['email'].value}
-                    &deliveryType=${this.selectDelivery}
-                    &deliveryAddress=${this.userFields['address'].value}
-                    &orderItems=${JSON.stringify(newJson)}
-                    &payType=${this.selectPayment}`;
+        let post = `phone=${this.userFields['phone'].value}`+
+                    `&email=${this.userFields['email'].value}`+
+                    `&deliveryType=${this.selectDelivery}`+
+                    `&deliveryAddress=${this.userFields['address'].value}`+
+                    `&orderItems=${JSON.stringify(newJson)}`+
+                    `&payType=${this.selectPayment}`;
                     
         this.$store.dispatch('showLoading');
         this.$API.post('placeOrder/', post).then(r => {
@@ -260,9 +260,13 @@
       this.$API.get('getItems' + bodyPost).then(r => {
         this.$store.dispatch('hideLoading');
         
+        let ids = [];
+
         r.data.data.forEach(function(item){
+          ids.push(item.cost_id);
+
           $forBlock.products.push({
-            id: item.cost_id, 
+            cost_id: item.cost_id, 
             name: item.item_name, 
             article: item.artikul, 
             description: item.item_description, 
@@ -271,8 +275,12 @@
             image: $forBlock.loadImage(item.thumbnail),
             quantity: $forBlock.$store.getters.cartProducts.filter((x) => {if (item.cost_id == x.id) {return x.quantity} })[0].quantity
           });
-        })
-      })
+        });
+
+        this.$store.dispatch('verificationCart', ids);
+      }).catch(err => {
+        this.$store.dispatch('hideLoading');
+      });
     }
   }
 </script>

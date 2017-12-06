@@ -252,6 +252,12 @@ header>div{
 	justify-content: flex-end;
 	position: relative;
 }
+.header-top-section .login-section a {
+	padding: 0 3px;
+}
+.header-top-section .login-section a:hover {
+	color: #ff0000;
+}
 .user-link_menu{
 	display: none;
 	min-width: 140px;
@@ -301,7 +307,7 @@ header>div{
     text-align: center;
 }
 .header-top-section-menu a:hover, .hbox-phone a:hover{
-	font-weight: 600;
+	color: #ff0000;
 }
 .header-top-section-menu a{
 	padding-right: 30px;

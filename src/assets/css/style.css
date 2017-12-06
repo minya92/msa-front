@@ -53,7 +53,7 @@ button.primary{
 	border-radius: 3px;
 	margin: 5px 0;
 }
-.text-error{
+.text-error, .form__error__message{
 	color: red;
 	font-size: 12px;
 }

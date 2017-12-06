@@ -5,21 +5,22 @@
       <div class="span-grey">{{textFromHeaderText}}</div>
       <div class="form-group">
         <label>{{email.headerText}}</label>
-        <input type="text" v-model="email.value">
+        <input type="text" v-model="email.value" @keyup.enter="submitForm()">
         <span v-if="email.showError" class="text-error">{{email.textError}}</span>
       </div>
       <div class="form-group">
         <label>{{password.headerText}}</label>
-        <input type="password" v-model="password.value">
+        <input type="password" v-model="password.value" @keyup.enter="submitForm()">
         <span v-if="password.showError" class="text-error">{{password.textError}}</span>
       </div>
+      <div class="form__error__message" v-if="errorAuth">{{errorText}}</div>
       <div class="form-group">
         <button class="btn_theme" @click="submitForm()">войти</button>
       </div>
       <div class="alt-auth">
         <SocialAuth></SocialAuth>
         <div>
-          {{forgotPassword}} / {{notRegistered}}
+          <a href="#" @click="forgotPassword">Забыли пароль? </a>
         </div>
       </div>
       <div class="moto-box-selection"></div>
@@ -51,8 +52,9 @@
           textError: "Номер телефона или email не верно",
           showError: false
         },
-        forgotPassword: 'Забыли пароль',
-        notRegistered: 'Еще не зарегистрированы?'
+        notRegistered: 'Еще не зарегистрированы?',
+        errorAuth: false,
+        errorText: 'Неправильный электронный адрес или пароль.'
       }
     },
     created() {
@@ -63,10 +65,15 @@
         let that = this;
         doAuth(this.email.value, this.password.value).then(r => {
           this.closeForm();
+        }).catch(err => {
+          this.errorAuth = true;
         });
       },
       closeForm: function(){
         this.$emit('close');
+      },
+      forgotPassword: function(){
+        
       }
     }
   }
