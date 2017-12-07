@@ -49,7 +49,7 @@
       saveProfile: function(){
         let post = `phone=${this.userFields['phone'].value}
                     &email=${this.userFields['email'].value}
-                    &f_name=${this.userFields['fio'].value}
+                    &first_name=${this.userFields['fio'].value}
                     &city=${this.userFields['address'].value}`;
         this.$API.post('clients/update', post).then(r => {
           this.$store.dispatch('showPopup', {status: false, message: 'Данные сохранены'});
@@ -73,24 +73,4 @@
 </script>
 
 <style scoped>
-.form-1{
-  max-width: 550px;
-}
-.form-1__field{
-  display: flex;
-  margin-bottom: 10px;
-  align-items: center;
-}
-.form-1 label{
-  width: 200px;
-  font-weight: 600;
-}
-.form-1 input{
-  width: 100%;
-  height: 30px;
-  display: block;
-  padding: 0 10px;
-  border: 2px solid #dbdfe4;
-  border-radius: 4px;
-}
 </style>

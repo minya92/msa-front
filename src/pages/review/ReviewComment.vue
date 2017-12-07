@@ -21,9 +21,11 @@
     <button  v-if='$store.getters.isAuthorized' @click="sendReview" class="primary">Отправить</button>
     <div v-else>
       <div>Авторизируйтесь, чтобы оставить отзыв.</div> 
-      <button @click="sendReview" class="primary">Авторизоваться</button>
-      <button @click="sendReview" class="primary">Регистрироваться</button>
+      <button @click="showAuth = true" class="primary">Авторизоваться</button>
+      <button @click="showRegistry = true" class="primary">Регистрироваться</button>
     </div>
+		<auth v-if="showAuth" @close="showAuth=false"></auth>
+		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
   </div>
   <div class="review__send-success" v-else>
     Спасибо за Ваш отзыв!
@@ -31,12 +33,19 @@
 </template>
 
 <script>
+	import auth from '@/components/auth/Auth'
+	import registry from '@/components/auth/Registry'
   export default {
+    components: {
+      auth, registry
+    },
     data() {
       return {
         message: '', 
         rating: 5,
-        isSendSuccess: false
+        isSendSuccess: false,
+				showAuth: false,
+				showRegistry: false
       }
     },
     methods: {

@@ -127,6 +127,28 @@ button.primary{
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
 }
+/*  */
+
+.form-1{
+  max-width: 550px;
+}
+.form-1__field{
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.form-1 label{
+  width: 200px;
+  font-weight: 600;
+}
+.form-1 input{
+  width: 100%;
+  height: 30px;
+  display: block;
+  padding: 0 10px;
+  border: 2px solid #dbdfe4;
+  border-radius: 4px;
+}
 /* */
 #catalog-menu .menu_icon, #show-modal-findmoto .menu_icon{
 	width: 20px;

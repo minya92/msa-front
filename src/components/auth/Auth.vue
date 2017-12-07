@@ -20,7 +20,7 @@
       <div class="alt-auth">
         <SocialAuth></SocialAuth>
         <div>
-          <a href="#" @click="forgotPassword">Забыли пароль? </a>
+          <router-link :to="{name: 'RestorePassword'}" @click="forgotPassword">Забыли пароль? </router-link>
         </div>
       </div>
       <div class="moto-box-selection"></div>

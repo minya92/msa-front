@@ -66,11 +66,13 @@
       registry: function(){
         if (this.validate()) return;
         
-        var post = `login=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
+        var post = `first_name=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(response => {
-          if (r.data.data != null){
-            this.$store.dispatch('login', r.data.data);
-            this.closeForm();
+          if (r.data != null){
+            this.$store.dispatch('login', r.data);
+            doAuth(this.email.value, this.pass.value).then(r => {
+              this.closeForm();
+            })
           }
         }).catch(err => {
           this.errorAuth = true;

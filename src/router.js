@@ -26,6 +26,7 @@ import Checkout from '@/pages/cart/Checkout'
 import SuccessCheckout from '@/pages/cart/Success'
 
 import PrivacyPolicy from '@/pages/PrivacyPolicy'
+import RestorePassword from '@/pages/RestorePassword'
 
 import DoAuth from '@/pages/DoAuth'
 
@@ -53,7 +54,8 @@ const routes = [
     { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
     { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },
     { path: '/about', component: About, name: 'About', meta: {breadcrumb: 'О магазине', title: 'О магазине'} },
-    { path: '/about', component: PrivacyPolicy, name: 'PrivacyPolicy', meta: {breadcrumb: 'Политика конфиденциальности', title: 'Политика конфиденциальности'} },    
+    { path: '/privacy_policy', component: PrivacyPolicy, name: 'PrivacyPolicy', meta: {breadcrumb: 'Политика конфиденциальности', title: 'Политика конфиденциальности'} }, 
+    { path: '/restore_password', component: RestorePassword, name: 'RestorePassword', meta: {breadcrumb: 'Восстановление пароля', title: 'Восстановление пароля'} },   
     { path: "*", component: PageNotFound }
   ]
 
