@@ -14,6 +14,7 @@
 
 <script>
   import ProfileLayout from '@/layouts/Profile.vue'
+  import MaskedInput from 'vue-masked-input'
 
   export default {
     components: {

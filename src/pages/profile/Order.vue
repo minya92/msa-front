@@ -68,7 +68,7 @@
     methods: {
       getOrderInfoById: function(){
         this.$API.get('getOrderHistory').then(r => {
-          this.dataOrder = r.data.data;
+          this.dataOrders = r.data.data;
         }).catch(err => {
           this.notFound = true;
         })

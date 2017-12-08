@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
       <label>Пароль:</label>
-      <input type="password" v-model="pass.value">
+      <div style="position: relative"><input type="password" v-model="pass.value"><div class="icon_eyel" @click="showPassword"></div></div>
       <span class="text-error" v-if="pass.error">{{pass.textError}}</span>
     </div>
     <div class="form-group">
@@ -93,6 +93,9 @@
       },
       closeForm: function(){
         this.$emit('close');
+      },
+      showPassword: function(){
+        //event.target.parentNode.childNodes[0].setAttribute('type','text')
       },
       validate: function(){
         var error = false;
