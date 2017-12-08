@@ -3,7 +3,7 @@
     <div v-for="dataOrder in dataOrders">
       <div class="head-strip">
         <span>Заказ №{{dataOrder.order_id}}</span>
-        <span>{{statusName}}</span>
+        <span>{{statusName(dataOrder)}}</span>
       </div>
       <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="typeof dataOrder.contents != 'undefined'">
         <tbody>
@@ -61,8 +61,8 @@
       }
     },
     computed: {
-      statusName: function(){
-        return typeof this.dataOrder.status != 'undefined' ? this.dataOrder.status.status_name : '';
+      statusName: function(dataOrder){
+        return typeof dataOrder.status != 'undefined' ? dataOrder.status.status_name : '';
       }
     },
     methods: {
