@@ -12,11 +12,13 @@ export default {
   created() {
     let that = this;
     doAuth(this.$route.query.login, this.$route.query.password).then(function(){
+
         that.$router.push({path: that.$store.getters.pathRedirectLogin});
+
     });
   },
   methods: {
-    
+
   }
 }
 </script>

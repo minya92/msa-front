@@ -44,7 +44,7 @@
           textError: "email введен не верно",
           showError: false
         },
-        password: { 
+        password: {
           headerText: 'Пароль:',
           value: '',
           textError: "Пароль не верный",
@@ -63,6 +63,7 @@
         let that = this;
         doAuth(this.email.value, this.password.value).then(r => {
           this.closeForm();
+          window.location.reload();
         }).catch(err => {
           this.errorAuth = true;
         });
@@ -71,7 +72,7 @@
         this.$emit('close');
       },
       forgotPassword: function(){
-        
+
       }
     }
   }

@@ -27,13 +27,15 @@ import SuccessCheckout from '@/pages/cart/Success'
 
 import PrivacyPolicy from '@/pages/PrivacyPolicy'
 import RestorePassword from '@/pages/RestorePassword'
+import ConfirmMail from '@/pages/ConfirmMail'
 
 import DoAuth from '@/pages/DoAuth'
 
-// роуты приложения 
+// роуты приложения
 const routes = [
     { path: '/', component: Home },
     { path: '/doAuth', component: DoAuth },
+    { path: '/confirmMail/:confirmation', component: ConfirmMail, meta: {breadcrumb: 'Подтверждение адреса e-mail', title: 'Подтверждение адреса e-mail'} },
     { path: '/contacts', component: Contacts, name: 'Contacts', meta: {breadcrumb: 'Контакты', title: 'Контакты'}  },
     { path: '/catalog', name: 'catalog', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
     { path: '/catalog/types=:types', component: Catalog, meta: {breadcrumb: 'Каталог товаров'}},
@@ -54,16 +56,16 @@ const routes = [
     { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
     { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },
     { path: '/about', component: About, name: 'About', meta: {breadcrumb: 'О магазине', title: 'О магазине'} },
-    { path: '/privacy_policy', component: PrivacyPolicy, name: 'PrivacyPolicy', meta: {breadcrumb: 'Политика конфиденциальности', title: 'Политика конфиденциальности'} }, 
-    { path: '/restore_password', component: RestorePassword, name: 'RestorePassword', meta: {breadcrumb: 'Восстановление пароля', title: 'Восстановление пароля'} },   
+    { path: '/privacy_policy', component: PrivacyPolicy, name: 'PrivacyPolicy', meta: {breadcrumb: 'Политика конфиденциальности', title: 'Политика конфиденциальности'} },
+    { path: '/restore_password', component: RestorePassword, name: 'RestorePassword', meta: {breadcrumb: 'Восстановление пароля', title: 'Восстановление пароля'} },
     { path: "*", component: PageNotFound }
   ]
 
 
-// экспорт роутера 
-export default new Router({ 
+// экспорт роутера
+export default new Router({
   //mode: 'history',
   base: __dirname,
-  routes, 
-  linkActiveClass: 'current' 
+  routes,
+  linkActiveClass: 'current'
 })
