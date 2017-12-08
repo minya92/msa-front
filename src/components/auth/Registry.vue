@@ -44,7 +44,7 @@
   import md5 from 'md5'
   import axios from 'axios'
   import SocialAuth from '@/components/Social.vue'
-
+  import { doAuth } from '@/components/auth/do-auth'
 
   export default {
     components: {MaskedInput, ModalFade, SocialAuth},
@@ -67,9 +67,9 @@
         if (this.validate()) return;
         
         var post = `first_name=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
-        this.$API.post('clients/', post).then(response => {
-          if (r.data != null){
-            this.$store.dispatch('login', r.data);
+        this.$API.post('clients/', post).then(r => {
+          if (r.data.data != null){
+            this.$store.dispatch('login', r.data.data);
             doAuth(this.email.value, this.pass.value).then(r => {
               this.closeForm();
             })
