@@ -1,39 +1,41 @@
 <template>
   <profile-layout v-if="!notFound">
-    <div class="head-strip">
-      <span>Заказ №{{dataOrder.order_id}}</span>
-      <span>{{statusName}}</span>
+    <div v-for="dataOrder in dataOrders">
+      <div class="head-strip">
+        <span>Заказ №{{dataOrder.order_id}}</span>
+        <span>{{statusName}}</span>
+      </div>
+      <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="typeof dataOrder.contents != 'undefined'">
+        <tbody>
+          <tr class="table-header">
+            <th class="table__items__picture">Изображение</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+          </tr>
+          <tr v-for="(product, index) in dataOrder.contents">
+            <td class="table__items__picture">
+              <router-link :to="'product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
+            <td>
+              <router-link class="table__items__title-item" :to="'product/'+product.item_cost_id">
+              {{product.item_name}}</router-link>
+              <div>{{product.type_description}}</div>
+            </td>
+            <td class="txtcenter">{{product.item_cost}}</td>
+            <td class="txtcenter">{{product.items_count}}</td>
+            <td class="txtcenter">{{product.final_cost}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <ul class="history-list">
+        <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{history.s_date | getDate}} - {{history.status_name}}</li>
+      </ul>
     </div>
-    <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="typeof dataOrder.contents != 'undefined'">
-      <tbody>
-        <tr class="table-header">
-          <th class="table__items__picture">Изображение</th>
-          <th>Описание</th>
-          <th>Цена</th>
-          <th>Количество</th>
-          <th>Сумма</th>
-        </tr>
-        <tr v-for="(product, index) in dataOrder.contents">
-          <td class="table__items__picture">
-            <router-link :to="'product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
-          <td>
-            <router-link class="table__items__title-item" :to="'product/'+product.item_cost_id">
-            {{product.item_name}}</router-link>
-            <div>{{product.type_description}}</div>
-          </td>
-          <td class="txtcenter">{{product.item_cost}}</td>
-          <td class="txtcenter">{{product.items_count}}</td>
-          <td class="txtcenter">{{product.final_cost}}</td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <ul class="history-list">
-      <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{history.s_date | getDate}} - {{history.status_name}}</li>
-    </ul>
   </profile-layout>
   <profile-layout v-else>
-    Заказ не найден.
+    Заказы не найдены.
   </profile-layout>
 </template>
 
@@ -46,7 +48,7 @@
     },
     data() {
       return {
-        dataOrder: {},
+        dataOrders: [],
         notFound: false
       }
     },
@@ -65,7 +67,7 @@
     },
     methods: {
       getOrderInfoById: function(){
-        this.$API.get('getOrder/'+this.$route.params.id).then(r => {
+        this.$API.get('getOrderHistory').then(r => {
           this.dataOrder = r.data.data;
         }).catch(err => {
           this.notFound = true;

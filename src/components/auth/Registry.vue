@@ -2,9 +2,19 @@
   <modal-fade @close="closeForm">
     <div class="head-text">Регистрация</div>
     <div class="form-group">
-      <label>Как вас зовут?</label>
-      <input type="text" v-model="name.value">
-      <span class="text-error" v-if="name.error">{{name.textError}}</span>
+      <label>Введите имя</label>
+      <input type="text" v-model="firstName.value">
+      <span class="text-error" v-if="firstName.error">{{firstName.textError}}</span>
+    </div>
+    <div class="form-group">
+      <label>Введите фамилию</label>
+      <input type="text" v-model="lastName.value">
+      <span class="text-error" v-if="lastName.error">{{lastName.textError}}</span>
+    </div>
+    <div class="form-group">
+      <label>Введите отчество</label>
+      <input type="text" v-model="middleName.value">
+      <span class="text-error" v-if="middleName.error">{{middleName.textError}}</span>
     </div>
     <div class="form-group">
       <label>Пароль:</label>
@@ -50,7 +60,9 @@
     components: {MaskedInput, ModalFade, SocialAuth},
     data() {
       return {
-        name: {value: '', error: false, require: true, textError: 'Введите ФИО'},
+        firstName: {value: '', error: false, require: true, textError: 'Введите имя'},
+        lastName: {value: '', error: false, require: true, textError: 'Введите фамилию'},
+        middleName: {value: '', error: false, require: true, textError: 'Введите отчество'},
         phone: {value: '', error: false, require: true, textError: 'Введите номер телефона'},
         pass: {value: '', error: false, require: true, textError: 'Пароль должен содержать более 4 символов'},
         rpass: {value: '', error: false, require: true, textError: 'Пароли не совпадают'},
@@ -66,7 +78,7 @@
       registry: function(){
         if (this.validate()) return;
         
-        var post = `first_name=${this.name.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
+        var post = `first_name=${this.firstName.value}&last_name=${this.lastName.value}&middle_name=${this.middleName.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(r => {
           if (r.data.data != null){
             this.$store.dispatch('login', r.data.data);
@@ -84,11 +96,11 @@
       },
       validate: function(){
         var error = false;
-        if (this.name.require && !this.name.value){
-          this.name.error = true;
+        if (this.firstName.require && !this.firstName.value){
+          this.firstName.error = true;
           error = true;
         } else {
-          this.name.error = false;
+          this.firstName.error = false;
         }
 
         if (this.phone.require && !this.phone.value){

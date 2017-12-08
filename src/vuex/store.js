@@ -62,6 +62,15 @@ const getters = {
   getName: state => {
     return state.loginInfo != null ? state.loginInfo.f_name : '';
   },
+  getFirstName: state => {
+    return state.loginInfo != null ? state.loginInfo.first_name : '';
+  },
+  getLastName: state => {
+    return state.loginInfo != null ? state.loginInfo.last_name : '';
+  },
+  getMiddleName: state => {
+    return state.loginInfo != null ? state.loginInfo.middle_name : '';
+  },
   getEmail: state => {
     return state.loginInfo != null ? state.loginInfo.email : '';
   },

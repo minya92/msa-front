@@ -5,7 +5,7 @@
 				<h2>Личный кабинет</h2>
 				<ul class="aside__nav_vertical">
 					<li>
-						<router-link :to="{name: 'HistoryBuy'}">История заказов</router-link>
+						<router-link :to="{name: 'Order'}">История заказов</router-link>
 					</li>
 					<li>
 						<router-link :to="{name: 'Profile'}">Профиль</router-link>

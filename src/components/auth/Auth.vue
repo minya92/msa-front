@@ -2,7 +2,6 @@
   <modal-fade @close="closeForm">
     <div class="modal__auth__content">
       <div class="head-text">{{headerText}}</div>
-      <div class="span-grey">{{textFromHeaderText}}</div>
       <div class="form-group">
         <label>{{email.headerText}}</label>
         <input type="text" v-model="email.value" @keyup.enter="submitForm()">
@@ -38,18 +37,17 @@
     data() {
       return {
         headerText: 'Рады вас видеть снова',
-        textFromHeaderText: 'Введите телефон или email чтобы продолжить. \n Возможно у вас накопились бонусы',
         orText: 'или',
         email: { 
-          headerText: 'Номер телефона или email:',
+          headerText: 'email:',
           value: '',
-          textError: "Номер телефона или email не верно",
+          textError: "email введен не верно",
           showError: false
         },
         password: { 
           headerText: 'Пароль:',
           value: '',
-          textError: "Номер телефона или email не верно",
+          textError: "Пароль не верный",
           showError: false
         },
         notRegistered: 'Еще не зарегистрированы?',

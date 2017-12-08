@@ -22,8 +22,18 @@
     data() {
       return {
         userFields: {
-          fio: {
-            label: 'ФИО',
+          firstName: {
+            label: 'Имя',
+            value: '',
+            require: true
+          },
+          lastName: {
+            label: 'Фамилия',
+            value: '',
+            require: true
+          },
+          middleName: {
+            label: 'Отчество',
             value: '',
             require: true
           },
@@ -47,10 +57,12 @@
     },
     methods: {
       saveProfile: function(){
-        let post = `phone=${this.userFields['phone'].value}
-                    &email=${this.userFields['email'].value}
-                    &first_name=${this.userFields['fio'].value}
-                    &city=${this.userFields['address'].value}`;
+        let post = `phone=${this.userFields['phone'].value}`+
+                    `&email=${this.userFields['email'].value}`+
+                    `&last_name=${this.userFields['lastName'].value}`+
+                    `&middle_name=${this.userFields['middleName'].value}`+
+                    `&first_name=${this.userFields['firstName'].value}`+
+                    `&city=${this.userFields['address'].value}`;
         this.$API.post('clients/update', post).then(r => {
           this.$store.dispatch('showPopup', {status: false, message: 'Данные сохранены'});
         }).catch(err => {
@@ -62,7 +74,9 @@
 			this.$API.get("clients/current").then(r => {
 				if (r.data.data != null){
 					this.$store.dispatch('login', r.data.data);
-          this.userFields.fio.value = this.$store.getters.getName;
+          this.userFields.firstName.value = this.$store.getters.getFirstName;
+          this.userFields.lastName.value = this.$store.getters.getLastName;
+          this.userFields.middleName.value = this.$store.getters.getMiddleName;
           this.userFields.email.value = this.$store.getters.getEmail;
           this.userFields.phone.value = this.$store.getters.getPhone;
           this.userFields.address.value = this.$store.getters.getCity;
