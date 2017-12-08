@@ -2,7 +2,7 @@
   <main-layout>
     <div class="content-fluid">
       <h1>{{$route.meta.title}}</h1>
-      
+
       <div v-if="isSuccessSendRestorePassText">
         Сообщение с восстановлением пароля отправлено на указанную почту
       </div>
@@ -16,7 +16,7 @@
           <label class="require">Повторите пароль</label>
           <input type="password" v-model="rpassword" />
         </div>
-        
+
         <button @click="setNewPass" class="primary">Сохранить</button>
       </div>
 
@@ -25,7 +25,7 @@
           <label class="require">Email</label>
           <input type="text" v-model="email" />
         </div>
-        
+
         <button @click="restorePass" class="primary">Восстановить пароль</button>
       </div>
     </div>
@@ -51,8 +51,8 @@
     methods: {
       restorePass: function(){
         if (!this.email) return;
-        
-        this.$API.post('clients/restore', `email=${this.email}`).then(r => {
+
+        this.$API.post('clients/restoreRequest', `email=${this.email}`).then(r => {
           this.isSuccessSendRestorePassText = true;
         }).catch(err => {
           this.$store.dispatch('showPopup', {status: false, message: err.response.data.error});

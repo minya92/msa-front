@@ -38,8 +38,8 @@
       return {
         headerText: 'Рады вас видеть снова',
         orText: 'или',
-        email: { 
-          headerText: 'email:',
+        email: {
+          headerText: 'Ваш e-mail:',
           value: '',
           textError: "email введен не верно",
           showError: false
