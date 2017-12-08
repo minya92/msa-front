@@ -35,7 +35,7 @@
         if (this.idOrder.trim().length < 1) return;
         
         this.$API.get('getOrder/'+this.idOrder).then(r => {
-          this.$router.push({name: 'Order', params: {id: this.idOrder}});
+          this.$router.push({name: 'OrderId', params: {id: this.idOrder}});
         }).catch(err => {
           this.showError = true;
         })

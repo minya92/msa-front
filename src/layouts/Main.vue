@@ -8,7 +8,7 @@
 							<img src="../assets/img/logo_header.png">
 						</router-link>
 						<div class="header-top-section-menu">
-							<router-link v-if='$store.getters.isAuthorized' to="/profile/historybuy">История покупок</router-link>
+							<router-link v-if='$store.getters.isAuthorized' :to="{name: 'Order'}">История покупок</router-link>
 							<router-link to="/contacts">Контакты</router-link>
 						</div>
 						<div class="hbox-phone">
