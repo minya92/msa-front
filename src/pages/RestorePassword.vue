@@ -3,7 +3,11 @@
     <div class="content-fluid">
       <h1>{{$route.meta.title}}</h1>
       
-      <div class="form-1" v-if="$route.query.code">
+      <div v-if="isSuccessSendRestorePassText">
+        Сообщение с восстановлением пароля отправлено на указанную почту
+      </div>
+
+      <div class="form-1" v-else-if="$route.query.code">
         <div class="form-1__field">
           <label class="require">Пароль</label>
           <input type="text" v-model="password" />
@@ -18,7 +22,7 @@
 
       <div class="form-1" v-else>
         <div class="form-1__field">
-          <label class="require">Email или телефон</label>
+          <label class="require">Email</label>
           <input type="text" v-model="email" />
         </div>
         
@@ -30,29 +34,41 @@
 
 <script>
   import MainLayout from '@/layouts/Main.vue'
+  import { doAuth } from '@/components/auth/do-auth'
 
   export default {
     components: {
       MainLayout
     },
-    data: () => ({
-      password: '',
-      rpassword: '',
-      email: ''
-    }),
+    data() {
+      return {
+        password: '',
+        rpassword: '',
+        email: '',
+        isSuccessSendRestorePassText: false
+      }
+    },
     methods: {
       restorePass: function(){
         if (!this.email) return;
-
-        this.$API.post('clients/restore', { }).then({
-          
+        
+        this.$API.post('clients/restore', `email=${this.email}`).then(r => {
+          this.isSuccessSendRestorePassText = true;
+        }).catch(err => {
+          this.$store.dispatch('showPopup', {status: false, message: err.response.data.error});
         });
       },
       setNewPass: function(){
         if (this.password != this.rpassword && this.password.length < 2) return;
 
-        this.$API.post('clients/restorePassword', { }).then({
-          
+        this.$API.post('clients/restorePassword', `email=${this.email}&code=${this.$route.query.code}`).then(r => {
+          this.$store.dispatch('showPopup', {status: true, message: 'Пароль успешно изменнен'});
+
+          doAuth(r.data, this.password).then(function(){
+              this.$router.push({path: '/'});
+          });
+        }).catch(err => {
+          this.$store.dispatch('showPopup', {status: false, message: err.response.data.error});
         });
       }
     }

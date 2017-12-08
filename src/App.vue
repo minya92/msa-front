@@ -4,7 +4,7 @@
 		<div 
 			id="win_popup" 
 			v-if="$store.getters.getVisiblePopup" 
-			:class="$store.getters.getStatusPopup ? 'is-failed' : 'is-success'"
+			:class="$store.getters.getStatusPopup ? 'is-success' : 'is-failed'"
 		>{{$store.getters.getMessagePopup}}</div>
 		
 		<div id="page-preloader" v-if="$store.getters.isLoading">

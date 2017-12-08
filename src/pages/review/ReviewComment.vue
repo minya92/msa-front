@@ -52,10 +52,10 @@
       sendReview: function() {
         if (!this.validate()) return;
         
-        let post = `message_text=${this.message}
-                    &author_email=${this.$store.getters.getEmail}
-                    &author_name=${this.$store.getters.getName}
-                    &rank=${this.rating}`;
+        let post = `message_text=${this.message}`+
+                    `&author_email=${this.$store.getters.getEmail}`+
+                    `&author_name=${this.$store.getters.getName}`+
+                    `&rank=${this.rating}`;
 
         this.$store.dispatch('showLoading');
         this.$API.post('reviews', post).then(r => {
