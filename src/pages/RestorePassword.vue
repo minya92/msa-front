@@ -10,11 +10,11 @@
       <div class="form-1" v-else-if="$route.query.code">
         <div class="form-1__field">
           <label class="require">Пароль</label>
-          <input type="text" v-model="password" />
+          <input type="password" v-model="password" />
         </div>
         <div class="form-1__field">
           <label class="require">Повторите пароль</label>
-          <input type="text" v-model="rpassword" />
+          <input type="password" v-model="rpassword" />
         </div>
         
         <button @click="setNewPass" class="primary">Сохранить</button>
@@ -61,7 +61,7 @@
       setNewPass: function(){
         if (this.password != this.rpassword && this.password.length < 2) return;
 
-        this.$API.post('clients/restorePassword', `email=${this.email}&code=${this.$route.query.code}`).then(r => {
+        this.$API.post('clients/restorePassword', `email=${this.password}&code=${this.$route.query.code}`).then(r => {
           this.$store.dispatch('showPopup', {status: true, message: 'Пароль успешно изменнен'});
 
           doAuth(r.data, this.password).then(function(){
