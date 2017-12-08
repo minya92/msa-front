@@ -4,8 +4,8 @@
     <div class="social-block">
       <a class="vk" @click="vkAuth()"></a>
       <a class="fb" @click="fbAuth()"></a>
-      <a class="ok" @click="okAuth()"></a>
-      <a class="in" @click="instAuth()"></a>
+      <!--a class="ok" @click="okAuth()"></a>
+      <a class="in" @click="instAuth()"></a-->
     </div>
   </div>
 </template>
