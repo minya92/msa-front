@@ -61,7 +61,7 @@
       setNewPass: function(){
         if (this.password != this.rpassword && this.password.length < 2) return;
 
-        this.$API.post('clients/restorePassword', `email=${this.password}&code=${this.$route.query.code}`).then(r => {
+        this.$API.post('clients/restorePassword', `password=${this.password}&code=${this.$route.query.code}`).then(r => {
           this.$store.dispatch('showPopup', {status: true, message: 'Пароль успешно изменнен'});
 
           doAuth(r.data, this.password).then(function(){
