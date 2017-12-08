@@ -2,10 +2,9 @@
   <main-layout>
     <div class="content-fluid">
       <h1>{{$route.meta.title}}</h1>
-      <div v-html="res"></div>
+      <div>{{res}}</div>
     </div>
   </main-layout>
-  <h1>{{res}}</h1>
 </template>
 
 <script>
@@ -17,24 +16,22 @@
     },
     data() {
       return {
-        res: "Подождите"
+        res: ""
       }
     },
     created() {
-      let that = this;
+      this.$store.dispatch('showLoading');
+
       this.$API.get('confirmEmail/'+this.$route.params.confirmation).then(r => {
-        console.log('1');
         var result = r.data;
         if (result) {
           this.res = 'Спасибо за подтверждение электронной почты!';
         }
+        this.$store.dispatch('hideLoading');
       }).catch(err => {
-        console.log(err);
-        this.res = 'Ошибка, возможно, Ваш адрес уже подтвержден';
+        this.res = err.response.data.error;
+        this.$store.dispatch('hideLoading');
       });
-    },
-    methods: {
-
     }
   }
 </script>
