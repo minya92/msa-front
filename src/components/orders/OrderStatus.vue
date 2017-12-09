@@ -1,10 +1,10 @@
 <template>
-  <modal-fade @close="$emit('close')">
+  <modal-fade @close="closeForm">
     <div class="modal__order-status__content">
       <div class="head-text">{{headerText}}</div>
       <div class="span-grey">{{textFromHeaderText}}</div>
       <div class="form-group">
-        <input type="text" v-model="idOrder">
+        <input type="text" v-model="idOrder" @keyup.enter="getOrderInfoById">
         <span v-if="showError" class="text-error">{{textError}}</span>
       </div>
       <div class="form-group">
@@ -27,19 +27,20 @@
         showError: false
       }
     },
-    created() {
-      
-    },
     methods: {
       getOrderInfoById: function(){
         if (this.idOrder.trim().length < 1) return;
         
         this.$API.get('getOrder/'+this.idOrder).then(r => {
+          this.closeForm();
           this.$router.push({name: 'OrderId', params: {id: this.idOrder}});
         }).catch(err => {
           this.showError = true;
         })
-      }
+      },
+      closeForm: function(){
+        this.$emit('close');
+      },
     }
   }
 </script>

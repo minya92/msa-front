@@ -72,6 +72,9 @@
         })
       }
     }, 
+    watch: {
+      $route: function() { this.getOrderInfoById() }
+    },
     created(){
       this.getOrderInfoById();
     }

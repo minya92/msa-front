@@ -10,6 +10,10 @@
       <button @click="saveProfile" class="primary">Сохранить</button>
     </div>
   </profile-layout>
+  
+  <profile-layout  v-else>
+    <h1>{{$route.meta.title}}</h1>
+  </profile-layout>
 </template>
 
 <script>

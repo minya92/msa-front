@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import axios from 'axios';
 
-//
+const baseURL = (process.env.NODE_ENV === 'development')
+? 'http://msa.4rp.org'
+: 'http://' + window.location.host;
+
 export const API = axios.create({
-	baseURL: 'http://' + window.location.host + '/api',
+	baseURL: baseURL + '/api',
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
   }
 });
 export const AUTH_URL = axios.create({
-	baseURL: 'http://' + window.location.host + '/auth',
-	//baseURL: 'http://' + window.location.hostname + '/auth',
+	baseURL: baseURL + '/auth',
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -28,7 +30,7 @@ API.install = function(){
 Vue.use(API);
 
 //
-Vue.prototype.$SERVER_URL = 'http://' + window.location.host + '/';
+Vue.prototype.$SERVER_URL = baseURL + '/';
 
 export default {
 	check: function(context) {

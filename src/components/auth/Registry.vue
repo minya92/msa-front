@@ -92,6 +92,7 @@
             })
           }
         }).catch(err => {
+          this.errorText = err.response.data.error;
           this.errorAuth = true;
         })
 

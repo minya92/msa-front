@@ -3,7 +3,7 @@
     <div v-for="dataOrder in dataOrders">
       <div class="head-strip">
         <span>Заказ №{{dataOrder.order_id}}</span>
-        <span>{{statusName(dataOrder)}}</span>
+        <span>{{dataOrder.status.status_name}}</span>
       </div>
       <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="typeof dataOrder.contents != 'undefined'">
         <tbody>
@@ -58,11 +58,6 @@
         if (date) return `${("0" + date.getDate()).slice(-2)}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()} ${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
 
         return ''
-      }
-    },
-    computed: {
-      statusName: function(dataOrder){
-        return typeof dataOrder.status != 'undefined' ? dataOrder.status.status_name : '';
       }
     },
     methods: {
