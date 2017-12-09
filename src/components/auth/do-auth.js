@@ -1,4 +1,5 @@
 export const doAuth = (login, pass) => {
+  console.log('login='+login + ', pass='+pass);
   return new Promise(function(resolve, reject) {
       var newUrl = '/auth?rand=' + +(new Date());
       var xhr = new XMLHttpRequest();

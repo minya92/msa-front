@@ -2,11 +2,11 @@
   <modal-fade @close="closeForm">
     <div class="head-text">Регистрация</div>
     <div class="form-group">
-      <label>Введите имя</label>
+      <label>Ваше имя</label>
       <input type="text" v-model="firstName.value">
       <span class="text-error" v-if="firstName.error">{{firstName.textError}}</span>
     </div>
-    <div class="form-group">
+    <!--div class="form-group">
       <label>Введите фамилию</label>
       <input type="text" v-model="lastName.value">
       <span class="text-error" v-if="lastName.error">{{lastName.textError}}</span>
@@ -15,6 +15,16 @@
       <label>Введите отчество</label>
       <input type="text" v-model="middleName.value">
       <span class="text-error" v-if="middleName.error">{{middleName.textError}}</span>
+    </div-->
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="text" v-model="email.value">
+      <span class="text-error" v-if="email.error">{{email.textError}}</span>
+    </div>
+    <div class="form-group">
+      <label>Tелефон:</label>
+      <masked-input v-model="phone.value" mask="\+\7 (111) 111-11-11" />
+      <span class="text-error" v-if="phone.error">{{phone.textError}}</span>
     </div>
     <div class="form-group">
       <label>Пароль:</label>
@@ -25,16 +35,6 @@
       <label>Пароль повторно:</label>
       <input type="password" v-model="rpass.value">
       <span class="text-error" v-if="rpass.error">{{rpass.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="text" v-model="email.value">
-      <span class="text-error" v-if="email.error">{{email.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Tелефон:</label>
-      <masked-input v-model="phone.value" mask="\+\7 (111) 111-11-11" />
-      <span class="text-error" v-if="phone.error">{{phone.textError}}</span>
     </div>
     <div class="form__error__message" v-if="errorAuth">{{errorText}}</div>
     <div class="form-group">
@@ -61,8 +61,8 @@
     data() {
       return {
         firstName: {value: '', error: false, require: true, textError: 'Введите имя'},
-        lastName: {value: '', error: false, require: true, textError: 'Введите фамилию'},
-        middleName: {value: '', error: false, require: true, textError: 'Введите отчество'},
+//        lastName: {value: '', error: false, require: true, textError: 'Введите фамилию'},
+//        middleName: {value: '', error: false, require: true, textError: 'Введите отчество'},
         phone: {value: '', error: false, require: true, textError: 'Введите номер телефона'},
         pass: {value: '', error: false, require: true, textError: 'Пароль должен содержать более 4 символов'},
         rpass: {value: '', error: false, require: true, textError: 'Пароли не совпадают'},
@@ -77,13 +77,18 @@
     methods: {
       registry: function(){
         if (this.validate()) return;
-        
-        var post = `first_name=${this.firstName.value}&last_name=${this.lastName.value}&middle_name=${this.middleName.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
+
+        var post = `first_name=${this.firstName.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
+//        var post = `first_name=${this.firstName.value}&last_name=${this.lastName.value}&middle_name=${this.middleName.value}&password=${md5(this.pass.value)}&email=${this.email.value}&phone=${this.phone.value}`;
         this.$API.post('clients/', post).then(r => {
           if (r.data.data != null){
             this.$store.dispatch('login', r.data.data);
             doAuth(this.email.value, this.pass.value).then(r => {
-              this.closeForm();
+//              TODO alert Спасибо за регистрацию, проверьте почту и подтвердите ваш адрес
+              this.$router.go({
+                path: this.$route.path,
+                force: true
+              });
             })
           }
         }).catch(err => {

@@ -60,10 +60,12 @@
     },
     methods: {
       submitForm: function(){
-        let that = this;
         doAuth(this.email.value, this.password.value).then(r => {
+          this.$router.go({
+            path: this.$route.path,
+            force: true
+          });
           this.closeForm();
-          window.location.reload();
         }).catch(err => {
           this.errorAuth = true;
         });

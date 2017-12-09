@@ -59,16 +59,21 @@
         });
       },
       setNewPass: function(){
+        let that = this;
         if (this.password != this.rpassword && this.password.length < 2) return;
 
         this.$API.post('clients/restorePassword', `password=${this.password}&code=${this.$route.query.code}`).then(r => {
-          this.$store.dispatch('showPopup', {status: true, message: 'Пароль успешно изменнен'});
+          that.$store.dispatch('showPopup', {status: true, message: 'Пароль успешно изменнен'});
 
-          doAuth(r.data, this.password).then(function(){
-              this.$router.push({path: '/'});
+          doAuth(r.data.data, that.password).then(function(){
+//            TODO go to home page
+            that.$router.go({
+                path: '/',
+                force: true
+              });
           });
         }).catch(err => {
-          this.$store.dispatch('showPopup', {status: false, message: err.response.data.error});
+          that.$store.dispatch('showPopup', {status: false, message: err.response.data.error});
         });
       }
     }
