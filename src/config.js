@@ -3,14 +3,14 @@ import axios from 'axios';
 
 //
 export const API = axios.create({
-	baseURL: 'http://msa.4rp.org/api',
+	baseURL: 'http://' + window.location.host + '/api',
   withCredentials: true,
   headers: {
   	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
   }
 });
 export const AUTH_URL = axios.create({
-	baseURL: 'http://msa.4rp.org/auth',
+	baseURL: 'http://' + window.location.host + '/auth',
 	//baseURL: 'http://' + window.location.hostname + '/auth',
   withCredentials: true,
   headers: {
@@ -28,7 +28,7 @@ API.install = function(){
 Vue.use(API);
 
 //
-Vue.prototype.$SERVER_URL = 'http://msa.4rp.org/';
+Vue.prototype.$SERVER_URL = 'http://' + window.location.host + '/';
 
 export default {
 	check: function(context) {
