@@ -77,6 +77,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
 }
 .search_input__result button{
   padding: 3px 10px;
