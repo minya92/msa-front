@@ -116,7 +116,7 @@
         })
       },
       getMarksBannerTop: function(){
-        getMarksForBaner(2).then(r => {
+        getMarksForBaner(1).then(r => {
           this.imgModels = r;
         });
       },
