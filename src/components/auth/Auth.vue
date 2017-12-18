@@ -1,23 +1,23 @@
 <template>
   <modal-fade @close="closeForm">
     <div class="modal__auth__content">
-      <div class="head-text">{{headerText}}</div>
+      <div class="head-text">{{ headerText }}</div>
       <div class="form-group">
-        <label>{{email.headerText}}</label>
+        <label>{{ email.headerText }}</label>
         <input type="text" v-model="email.value" @keyup.enter="submitForm()">
-        <span v-if="email.showError" class="text-error">{{email.textError}}</span>
+        <span v-if="email.showError" class="text-error">{{ email.textError }}</span>
       </div>
       <div class="form-group">
-        <label>{{password.headerText}}</label>
-        <input type="password" v-model="password.value" @keyup.enter="submitForm()">
-        <span v-if="password.showError" class="text-error">{{password.textError}}</span>
+        <label>{{ password.headerText }}</label>
+        <toogle-password v-model="password.value" @keyup.enter="submitForm()" />
+        <span v-if="password.showError" class="text-error">{{ password.textError }}</span>
       </div>
-      <div class="form__error__message" v-if="errorAuth">{{errorText}}</div>
+      <div class="form__error__message" v-if="errorAuth">{{ errorText }}</div>
       <div class="form-group">
         <button class="btn_theme" @click="submitForm()">войти</button>
       </div>
       <div class="alt-auth">
-        <SocialAuth></SocialAuth>
+        <SocialAuth />
         <div>
           <router-link :to="{name: 'RestorePassword'}" @click="forgotPassword">Забыли пароль? </router-link>
         </div>
@@ -31,9 +31,10 @@
   import ModalFade from '@/layouts/Modal.vue'
   import SocialAuth from '@/components/Social.vue'
   import { doAuth } from '@/components/auth/do-auth'
+  import TooglePassword from '@/components/input_components/password'
 
   export default {
-    components: {ModalFade, SocialAuth},
+    components: {ModalFade, SocialAuth, TooglePassword},
     data() {
       return {
         headerText: 'Рады вас видеть снова',

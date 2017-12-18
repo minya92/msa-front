@@ -1,49 +1,50 @@
 <template>
   <modal-fade @close="closeForm">
-    <div class="head-text">Регистрация</div>
-    <div class="form-group">
-      <label>Ваше имя</label>
-      <input type="text" v-model="firstName.value">
-      <span class="text-error" v-if="firstName.error">{{firstName.textError}}</span>
-    </div>
-    <!--div class="form-group">
-      <label>Введите фамилию</label>
-      <input type="text" v-model="lastName.value">
-      <span class="text-error" v-if="lastName.error">{{lastName.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Введите отчество</label>
-      <input type="text" v-model="middleName.value">
-      <span class="text-error" v-if="middleName.error">{{middleName.textError}}</span>
-    </div-->
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="text" v-model="email.value">
-      <span class="text-error" v-if="email.error">{{email.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Tелефон:</label>
-      <masked-input v-model="phone.value" mask="\+\7 (111) 111-11-11" />
-      <span class="text-error" v-if="phone.error">{{phone.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Пароль:</label>
-      <div style="position: relative"><input type="password" v-model="pass.value"><div class="icon_eyel" @click="showPassword"></div></div>
-      <span class="text-error" v-if="pass.error">{{pass.textError}}</span>
-    </div>
-    <div class="form-group">
-      <label>Пароль повторно:</label>
-      <input type="password" v-model="rpass.value">
-      <span class="text-error" v-if="rpass.error">{{rpass.textError}}</span>
-    </div>
-    <div class="form__error__message" v-if="errorAuth">{{errorText}}</div>
-    <div class="form-group">
-      <button class="btn_theme" @click="registry">зарегистрироваться</button>
-    </div>
-    <div class="alt-registry">
-      <SocialAuth></SocialAuth>
-    </div>
-    <div class="moto-box-selection">
+    <div class="popup_registry">
+      <div class="head-text">Регистрация</div>
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" v-model="firstName.value">
+        <span class="text-error" v-if="firstName.error">{{ firstName.textError }}</span>
+      </div>
+      <!--div class="form-group">
+        <label>Введите фамилию</label>
+        <input type="text" v-model="lastName.value">
+        <span class="text-error" v-if="lastName.error">{{lastName.textError}}</span>
+      </div>
+      <div class="form-group">
+        <label>Введите отчество</label>
+        <input type="text" v-model="middleName.value">
+        <span class="text-error" v-if="middleName.error">{{middleName.textError}}</span>
+      </div-->
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="text" v-model="email.value">
+        <span class="text-error" v-if="email.error">{{ email.textError }}</span>
+      </div>
+      <div class="form-group">
+        <label>Tелефон:</label>
+        <masked-input v-model="phone.value" mask="\+\7 (111) 111-11-11" />
+        <span class="text-error" v-if="phone.error">{{ phone.textError }}</span>
+      </div>
+      <div class="form-group">
+        <label>Пароль:</label>
+        <toogle-password v-model="pass.value"></toogle-password>
+        <span class="text-error" v-if="pass.error">{{ pass.textError }}</span>
+      </div>
+      <div class="form-group">
+        <label>Пароль повторно:</label>
+        <toogle-password v-model="rpass.value"></toogle-password>
+        <span class="text-error" v-if="rpass.error">{{ rpass.textError }}</span>
+      </div>
+      <div class="form__error__message" v-if="errorAuth">{{ errorText }}</div>
+      <div class="form-group">
+        <button class="btn_theme" @click="registry">зарегистрироваться</button>
+      </div>
+      <div class="alt-registry">
+        <SocialAuth/>
+      </div>
+      <div class="moto-box-selection"></div>
     </div>
   </modal-fade>
 </template>
@@ -55,9 +56,10 @@
   import axios from 'axios'
   import SocialAuth from '@/components/Social.vue'
   import { doAuth } from '@/components/auth/do-auth'
+  import TooglePassword from '@/components/input_components/password'
 
   export default {
-    components: {MaskedInput, ModalFade, SocialAuth},
+    components: {MaskedInput, ModalFade, SocialAuth, TooglePassword},
     data() {
       return {
         firstName: {value: '', error: false, require: true, textError: 'Введите имя'},
@@ -144,7 +146,16 @@
 </script>
 
 <style scoped>
+  .popup_registry{
+    width: 340px;
+  }
   .alt-registry{
     text-align: center;
+  }
+  
+  @media screen and (max-width: 375px) {
+    .popup_registry{
+      max-width: 100%;
+    }
   }
 </style>

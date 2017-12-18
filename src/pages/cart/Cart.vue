@@ -1,7 +1,15 @@
 <template>
   <main-layout>
-    <div v-if="$store.getters.cartProducts.length && products.length > 0" class="content-fluid">
-      <table class="table__cart" cellpadding="5" cellspacing="0" border="0">
+    <div 
+      v-if="$store.getters.cartProducts.length && products.length > 0" 
+      class="content-fluid"
+    >
+      <table 
+        class="table__cart" 
+        cellpadding="5" 
+        cellspacing="0" 
+        border="0"
+      >
         <tbody>
           <tr class="table-header">
             <th class="table__cart__picture">Изображение</th>
@@ -15,53 +23,52 @@
               <router-link :to="'product/'+product.cost_id"><img :src="product.image"></router-link></td>
             <td class="table__cart__description">
               <router-link class="table__cart__title-item" :to="'product/'+product.cost_id">
-              {{product.name}}</router-link>
-              <div class="table__cart__description-item">{{product.description}}</div>
+                {{ product.name }}
+              </router-link>
+              <div class="table__cart__description-item">{{ product.description }}</div>
             </td>
             <td class="table__cart__quantity">
               <button class="quantity_minus" @click="quantityMinus(product)">-</button>
               <input :value="product.quantity">
               <button class="quantity_plus" @click="quantityPlus(product)">+</button>
             </td>
-            <td class="table__cart__price">{{product.price}}</td>
+            <td class="table__cart__price">{{ product.price }}</td>
             <td class="table__cart__remove">
-              <div class="" @click="removeItem(product)">x</div>
+              <div class="table__cart__remove_btn" @click="removeItem(product)">x</div>
             </td>
           </tr>
         </tbody>
       </table>
       <div class="result__cart__table">
-        <div>{{selectDeliveryMethods}}</div>
-        <div>{{selectPaymentMethods}}</div>
-        <div>Сумма: {{total}}</div>
+        <div>{{ selectDeliveryMethods }}</div>
+        <div>{{ selectPaymentMethods }}</div>
+        <div>Сумма: {{ total }}</div>
       </div>
       <div class="cart-methods-section">
         <div class="simplecheckout-left-column">
             <div class="checkout-heading">Покупатель</div>
             <div class="row__customer_group" v-for="field in Object.keys(userFields)" :key="userFields[field].name">
-              <label :class="userFields[field].require ? 'require' : ''">{{userFields[field].name}}</label>
+              <label :class="userFields[field].require ? 'require' : ''">{{ userFields[field].name }}</label>
               <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 111-11-11" :class="userFields[field].error ? 'error-val' : ''"/>
               <input v-else v-model="userFields[field].value"  @blur="validateInput(field)" :class="userFields[field].error ? 'error-val' : ''"/>
             </div>
         </div>
         <div class="simplecheckout-right-column">
-          <div class="delivery-section">
-            <div class="checkout-heading">Способ получения заказа</div>
-            <div class="delivery-block" v-for="deliv in delivery" v-if="total >= deliv.minOrderSum">
-              <input type="radio" :value="deliv.id" v-model="selectDelivery">
-              <label class="delivery-block__title" :for="deliv.id">{{deliv.deliveryName}}</label>
-              <div class="delivery-block__description">{{deliv.deliveryDefinition}}</div>
-            </div>
-          </div>
-          <div class="payment-section">
-            <div class="checkout-heading">Способ оплаты</div>
-            <div class="delivery-block" v-for="payment in payments" v-if="total >= payment.minOrderSum">
-              <input type="radio" :value="payment.id" v-model="selectPayment">
-              <label class="delivery-block__title" :for="payment.id">{{payment.payName}}</label>
-              <div class="delivery-block__description">{{payment.payDefinition}}</div>
-            </div>
-          </div>
+          <payment-methods 
+            :payments="payments" 
+            v-model="selectPayment" 
+            :total="total"
+          />
+          <shipping-methods 
+            :delivery="delivery" 
+            v-model="selectDelivery" 
+            :total="total"
+          />
         </div>
+      </div>
+      <div class="cart-comment">
+        <div class="cart-comment__title">Комментарий к заказу</div>
+        <textarea v-model="orderDetails"/>
       </div>
       <div class="cart__footer">
         <button class="btn_theme_white btn_cart" @click="goCatalog">Продолжить покупки</button>
@@ -78,11 +85,13 @@
 
 <script>
   import MainLayout from '@/layouts/Main'
+  import PaymentMethods from './PaymentMethods'
+  import ShippingMethods from './ShippingMethods'
   import MaskedInput from 'vue-masked-input'
 
   export default {
     components: {
-      MainLayout, MaskedInput
+      MainLayout, MaskedInput, PaymentMethods, ShippingMethods
     },
     data() {
       return {
@@ -91,8 +100,8 @@
         selectPayment: 1,
         delivery: [],
         payments: [],
-
-        userFields: []
+        userFields: [],
+        orderDetails: ''
       }
     },
     computed: {
@@ -107,17 +116,19 @@
         }, 0)
       },
       selectPaymentMethods(){
-        var payments = this.payments.find(p => p.id === this.selectPayment)
+        var payments = this.payments.find(p => p.id == this.selectPayment);
+
         if (!payments){
-          return ''
+          return '';
         }
 
         return payments.payName
       },
       selectDeliveryMethods(){
-        var delivery = this.delivery.find(p => p.id === this.selectDelivery)
+        let delivery = this.delivery.find(p => p.id == this.selectDelivery);
+
         if (!delivery){
-          return ''
+          return '';
         }
         const deliverCost = delivery.deliverCost ? delivery.deliverCost : 0
         return delivery.deliveryName + ': ' + deliverCost
@@ -186,7 +197,8 @@
                     `&deliveryType=${this.selectDelivery}`+
                     `&deliveryAddress=${this.userFields['address'].value}`+
                     `&orderItems=${JSON.stringify(newJson)}`+
-                    `&payType=${this.selectPayment}`;
+                    `&payType=${this.selectPayment}`+
+                    `&orderDetails=${this.orderDetails}`;
                     
         this.$store.dispatch('showLoading');
         this.$API.post('placeOrder/', post).then(r => {
@@ -238,7 +250,7 @@
       this.$set(this.userFields, 'user', {name: 'ФИО', value: '', require: true, error: false})
       this.$set(this.userFields, 'phone', {name: 'Телефон', value: '', require: true, error: false})
       this.$set(this.userFields, 'email', {name: 'Email', value: '', require: true, error: false})
-      this.$set(this.userFields, 'address', {name: 'Адрес', value: '', require: false, error: false})
+      this.$set(this.userFields, 'address', {name: 'Адрес', value: '', require: true, error: false})
 
 			this.$API.get("clients/current").then(r => {
 				if (r.data.data != null){
@@ -285,7 +297,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .table__cart{
     width: 100%;
   }
@@ -336,7 +348,7 @@
   .cart-methods-section{
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 10px 0;
   }
   .delivery-section, .payment-section, .data-info-section{
     margin-bottom: 10px;
@@ -409,6 +421,19 @@
   .table__cart__remove{
     color: red;
     font-weight: 600;
+  }
+  .table__cart__remove_btn{
+    cursor: pointer;
+  }
+  .cart-comment__title{
+    font-weight: 600;
+    padding: 5px 0 10px;
+  }
+  .cart-comment textarea{
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    max-height: 100px;
   }
   
   @media (max-width: 768px){

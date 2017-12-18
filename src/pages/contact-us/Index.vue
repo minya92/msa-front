@@ -1,35 +1,36 @@
 <template>
   <main-layout>
     <div class="content-fluid">
-      <h1>{{$route.meta.title}}</h1>
+      <h1>{{ $route.meta.title }}</h1>
       <div v-if="!isSendSuccess">
         <div>Вы можете связаться с нами заполнив следующую форму</div>
         <div class="form-group">
           <label class="require">Имя</label>
-          <input type="text" 
+          <input 
+            type="text" 
             maxlength="40"
             v-validate="{ required: true, min: 4, max: 40 }" 
             name="name" 
             v-model="name"
-            data-vv-as="Не заполнено поле Имя"
+            data-vv-as="Имя"
             placeholder="Имя" 
             @keyup.enter="sendMessage"
-          />
-          <span v-if="errors.has('name')" class="text-error">{{errors.first('name')}}</span>
+          >
+          <span v-if="errors.has('name')" class="text-error">{{ errors.first('name') }}</span>
         </div>
         <div class="form-group">
           <label class="require">Email</label>
-          <input type="text" 
+          <input
+            type="text" 
             maxlength="40"
             v-validate="'required|email'" 
             name="email" 
             v-model="email"
             @input="email = email.trim()"
-            data-vv-as="Не заполнено поле Email"
             placeholder="Email" 
             @keyup.enter="sendMessage"
-          />
-          <span v-if="errors.has('email')" class="text-error">{{errors.first('email')}}</span>
+          >
+          <span v-if="errors.has('email')" class="text-error">{{ errors.first('email') }}</span>
         </div>
         <div class="form-group">
           <label class="require">Сообщение</label>
@@ -38,12 +39,12 @@
             name="message" 
             v-model="message"
             placeholder="Введите сообщение" 
-            data-vv-as="Не заполнено поле"
+            data-vv-as="Сообщение"
             rows="5" 
             resize="horizontal" 
             maxlength="1000"
           />
-          <span v-if="errors.has('message')" class="text-error">{{errors.first('message')}}</span>
+          <span v-if="errors.has('message')" class="text-error">{{ errors.first('message') }}</span>
         </div>
         <button @click="sendMessage" class="primary">Отправить</button>
       </div>

@@ -10,11 +10,11 @@
       <div class="form-1" v-else-if="$route.query.code">
         <div class="form-1__field">
           <label class="require">Пароль</label>
-          <input type="password" v-model="password" />
+          <toogle-password v-model="password"></toogle-password>
         </div>
         <div class="form-1__field">
           <label class="require">Повторите пароль</label>
-          <input type="password" v-model="rpassword" />
+          <toogle-password v-model="rpassword"></toogle-password>
         </div>
 
         <button @click="setNewPass" class="primary">Сохранить</button>
@@ -35,10 +35,11 @@
 <script>
   import MainLayout from '@/layouts/Main.vue'
   import { doAuth } from '@/components/auth/do-auth'
+  import TooglePassword from '@/components/input_components/password'
 
   export default {
     components: {
-      MainLayout
+      MainLayout, TooglePassword
     },
     data() {
       return {

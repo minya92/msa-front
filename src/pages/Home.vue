@@ -4,8 +4,8 @@
         <swiper class="main-slider" :options="swiperOption">
           <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
             <div class="top-slider-text-content">
-              <h2>{{topSlider.headerText}}</h2>
-              <span>{{topSlider.footerText}}</span>
+              <h2>{{ topSlider.headerText }}</h2>
+              <span>{{ topSlider.footerText }}</span>
             </div>
             <div class="transbackground"></div>
             <img :src='topSlider.img'>
@@ -27,8 +27,8 @@
       <div class="category-menu">
         <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
           <router-link :to="`/catalog/types=${catalog.id}`">
-            <img :src="catalog.img" />
-            <h2>{{catalog.name}}</h2>
+            <img :src="catalog.img">
+            <h2>{{ catalog.name }}</h2>
           </router-link>
         </div>
       </div>
@@ -56,34 +56,18 @@
 
 <script>
   import MainLayout from '@/layouts/Main.vue'
-
+  import 'swiper/dist/css/swiper.css'
+  const { swiper, swiperSlide } = require('vue-awesome-swiper').VueAwesomeSwiper
+  
   export default {
     components: {
-      MainLayout
+      MainLayout, swiper, swiperSlide
     },
     data() {
       return {
-        catalogs: [
-          {
-            id: 149996868299000,
-            name: 'Комплекты пластика',
-            img: 'img/motoplast.png'
-          },
-          {
-            id: 150581197408400,
-            name: 'Свет',
-            img: 'img/lamp.png'
-          }
-        ],
+        catalogs: [],
         imgModels: [],
-        imgModelsWhite: ['img/slider/ducati_white.png',
-        'img/slider/kawasaki_white.png',
-        'img/slider/honda_white.png',
-        'img/slider/bmw_white.png',
-        'img/slider/suzuki_white.png',
-        'img/slider/yamaha_white.png',
-        'img/slider/ktm_white.png'
-        ],
+        imgModelsWhite: [],
         topSliders: [
         {
           headerText: 'Мотопластик',
@@ -101,7 +85,9 @@
           loop: true,
         },
         swiperOptionModels: {
-          autoplay: 3000,
+          autoplay: {
+            delay: 5000,
+          },
           grabCursor : true,
           slidesPerView: 3,
           slidesPerColumn: 2,
@@ -109,7 +95,7 @@
           slidesPerGroup: 1,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
-          loop: true
+          //loop: true,
         }
       }
     },
@@ -121,10 +107,11 @@
             var item = r.data.data[i];
             catalogs.push({
               id: item.items_types_id,
-              name: item.type_description
+              name: item.type_description,
+              img: item.full_image
             });
           }
-            this.catalogs = catalogs;
+          this.catalogs = catalogs;
         })
       },
       getMarksBannerTop: function(){
@@ -141,7 +128,7 @@
     created() {
       this.getMarksBannerTop();
       this.getMarksBannerBottom();
-      //this.getCatalogs();
+      this.getCatalogs();
     }
   }
 </script>

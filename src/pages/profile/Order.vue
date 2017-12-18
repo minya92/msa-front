@@ -5,7 +5,7 @@
         <span>Заказ №{{dataOrder.order_id}}</span>
         <span>{{dataOrder.status.status_name}}</span>
       </div>
-      <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="typeof dataOrder.contents != 'undefined'">
+      <table class="table__items" cellpadding="5" cellspacing="0" border="0" v-if="dataOrder.hasOwnProperty(contents)">
         <tbody>
           <tr class="table-header">
             <th class="table__items__picture">Изображение</th>
