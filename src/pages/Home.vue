@@ -58,6 +58,7 @@
   import MainLayout from '@/layouts/Main.vue'
   import 'swiper/dist/css/swiper.css'
   const { swiper, swiperSlide } = require('vue-awesome-swiper').VueAwesomeSwiper
+  import { getMarksForBaner } from '@/api/modules/types'
   
   export default {
     components: {
@@ -115,13 +116,13 @@
         })
       },
       getMarksBannerTop: function(){
-        this.$API.get('getMarksForBaner/1').then(r => {
-          this.imgModels = r.data.data;
+        getMarksForBaner(2).then(r => {
+          this.imgModels = r;
         });
       },
       getMarksBannerBottom: function(){
-        this.$API.get('getMarksForBaner/2').then(r => {
-          this.imgModelsWhite = r.data.data;
+        getMarksForBaner(2).then(r => {
+          this.imgModelsWhite = r;
         });
       }
     },
