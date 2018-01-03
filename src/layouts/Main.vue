@@ -74,7 +74,7 @@
 					catalog: 'Каталог',
 				},
 				showAuth: false,
-				phoneHeader: ['+7 (914) 141-09-02'],
+				phoneHeader: ['+7 (914) 471-67-76'],
 				showRegistry: false
 			}
 		},
@@ -218,7 +218,7 @@ header>div{
 .header-bottom{
 	height: 60px;
 	position: relative;
-}		
+}
 .header-bottom-section{
 	display: flex;
 	align-items: center;
@@ -287,7 +287,7 @@ header .search_input input[type="text"]{
 	}
 	.need__future{
 		display: none;
-	}	
+	}
 	header .search_input input[type="text"]{
 		width: 100%;
 	}
