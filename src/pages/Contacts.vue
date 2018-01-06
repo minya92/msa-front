@@ -8,9 +8,9 @@
         :placemarks="placemarks"
       >
       </yandex-map>
-      
+
       <p><strong>Адрес: </strong>Забайкальск, ул. Полетная, 1</p>
-      <p><strong>Телефон: </strong>8 (914) 141 0902, 8 (914) 141 0838</p>      
+      <p><strong>Телефон: </strong>8 (914) 471 67 76</p>
     </div>
   </main-layout>
 </template>
@@ -36,13 +36,13 @@
               markerType: 'placemark',
               balloon: {header: 'header', body: 'body', footer: 'footer'},
               icon: {content: '../assets/img/map_pin.svg', color: 'green', glyph: '../assets/img/map_pin.svg'}
-            }, 
+            },
             options: {
               layout: 'default#imageWithContent',
               imageHref: '../assets/img/map_pin.svg',
               imageSize: [43, 55],
               imageOffset: [-22,-55]
-            }, 
+            },
             clusterName: "1",
             callbacks: { click: function() {} }
           }
