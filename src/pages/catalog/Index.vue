@@ -1,11 +1,11 @@
 <template>
   <main-layout>
     <div class="content-fluid filter-section">
-      <span style="margin-right: 25px;">Цена:</span> <vsc ref="vsc" class="vsc" @callback="vscChange" v-bind="dataSlide" v-model="dataSlide.value" v-show="dataSlide.max && dataSlide.min"></vsc>
+      <filter-price />
     </div>
     <div class="content-fluid catalog-section">
       <aside>
-        <categories></categories>
+        <categories />
       </aside>
 
       <div class="content-section">
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="content-fluid">
-    <RecentView></RecentView>
+    <RecentView />
   </div>
   <grey-marks class="container-fluid"></grey-marks>
   <action-blocks class="container-fluid"></action-blocks>
@@ -55,37 +55,21 @@
 <script>
   import pagination from '@/components/Pagination'
   import MainLayout from '@/layouts/Main'
-  import Vsc from 'vue-slider-component'
   import RecentView from './RecentView'
   import GreyMarks from './GreyMarks'
   import ActionBlocks from './ActionBlocks'
   import Categories from './Categories'
+  import FilterPrice from './FilterPrice'
   import AddToCart from '@/components/AddToCart'
-  import lodash from 'lodash'
   import PreloadImageLoader from '@/components/LoadImage'
 
   export default {
     components: {
-      pagination, MainLayout, Vsc, RecentView, AddToCart, PreloadImageLoader, GreyMarks, ActionBlocks, Categories
+      pagination, MainLayout, RecentView, AddToCart, PreloadImageLoader, GreyMarks, ActionBlocks, Categories, FilterPrice
     },
     data() {
       return {
         showCart: false,
-        dataSlide:{
-          value: [ 0, 0 ],
-          width: "100%",
-          height: 2,
-          dotSize: 10,
-          min: 0,
-          max: 0,
-          interval: 1,
-          tooltip: "always",
-          formatter: "{value} руб.",
-          bgStyle: { "backgroundColor": "#e7e7e7" },
-          sliderStyle: { "backgroundColor": "#801f25" },
-          tooltipStyle: { "backgroundColor": "#fff", 'color': '#000', 'border': '0'},
-          processStyle: { "backgroundColor": "#801f25" }
-        },
         lang: {
           textEmptyProducts: 'В данной категории нет товаров.'
         },
@@ -104,14 +88,6 @@
       }
     },
     methods: {
-      vscChange: _.debounce(function (e) {
-        let query = Object.assign({}, this.$route.query);
-        if (e[0] != 0)  query.cost_min = e[0];
-        if (e[1] != 0)  query.cost_max = e[1];
-        if (e[0] != 0)   query.page = 1;
-
-        this.$router.push({query: query})
-      }, 1000),
       changePage: function(page){
         let query = Object.assign({}, this.$route.query);
         query.sort = this.selectedSort;
@@ -166,44 +142,11 @@
             }
 
             this.products = products;
-            this.filterPrice();
             this.$store.dispatch('hideLoading');
           })
         }).catch(err => {
           this.$store.dispatch('hideLoading');
         })
-      },
-      getItemsMaxMinCost: function(){
-        let query = ''
-
-        if (typeof this.$route.params.types != 'undefined'){
-          query += `?types=%5B${this.$route.params.types}%5D`
-        }
-
-        this.$API.get('getItemsMaxMinCost'+query).then(r => {
-          this.dataSlide.value = [
-            typeof this.$route.query.cost_min == 'undefined' ? this.dataSlide.min = r.data.data.min_cost : this.dataSlide.min = Number(this.$route.query.cost_min),
-            typeof this.$route.query.cost_max == 'undefined' ? this.dataSlide.max = r.data.data.max_cost : this.dataSlide.max = Number(this.$route.query.cost_max)
-          ];
-
-          this.dataSlide.min = r.data.data.min_cost
-          this.dataSlide.max = r.data.data.max_cost
-        })
-      },
-      toggle: function(e){
-        console.log(e.target.parentNode);
-      },
-      filterPrice: function(){
-        var min = this.dataSlide.min;
-        var max = this.dataSlide.max;
-
-        for(var i=0; i < this.products.length; i++){
-          if (min > this.products[i].price || min == 0) min = this.products[i].price;
-          if (max < this.products[i].price) max = this.products[i].price;
-        }
-
-        this.dataSlide.min = min;
-        this.dataSlide.max = max;
       },
       addToCart: function(product){
         this.product = product;
@@ -211,14 +154,10 @@
         this.showCart=true;
       },
       loadPage: function(){
-        this.dataSlide.min = 0
-        this.dataSlide.max = 0
-
         if (this.$route.query.page == undefined || !isNaN(this.$route.query.page)){
           this.$route.query.page == undefined ? this.currentPage = 1 : this.currentPage = Number(this.$route.query.page);
           this.$route.query.sort != undefined ? this.selectedSort = this.$route.query.sort : this.selectedSort = '';
 
-          this.getItemsMaxMinCost()
           this.loadProducts(this.currentPage)
         }
       }
@@ -228,16 +167,3 @@
     }
   }
 </script>
-
-<style>
-.filter-section .vsc{
-  margin-right: 40px;
-  max-width: 560px;
-}
-.vue-slider-tooltip-wrap{
-  top: 0 !important;
-}
-.vue-slider-tooltip:before{
-  display: none !important;
-}
-</style>
