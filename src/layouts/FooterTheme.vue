@@ -1,7 +1,7 @@
 <template>
   <footer>
 			<div class="footer-top__ss">Наши каналы:
-				<a target="_blank" href="https://www.instagram.com/msa_moto_plastik/" class="footer-top__ssi">
+				<a target="_blank" href="https://www.instagram.com/msa_moto/" class="footer-top__ssi">
 					<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<defs>
 								<rect id="ing-path-1" x="0" y="0" width="28" height="28" rx="1"></rect>
@@ -82,7 +82,7 @@
 						<div class="fbox-l-container">
 							<a target="_blank" href="https://www.facebook.com/msa.moto.3"><img src="../assets/img/fb_grey.svg"></a>
               <a target="_blank" href="https://www.youtube.com/channel/UCAqrLCG9-BwvSQPqpyvqSqQ"><img src="../assets/img/youtube_grey.svg"></a>
-              <a target="_blank" href="https://www.instagram.com/msa_moto_plastik/"><img src="../assets/img/instagram_grey.svg"></a>
+              <a target="_blank" href="https://www.instagram.com/msa_moto/"><img src="../assets/img/instagram_grey.svg"></a>
 							<!--img src="../assets/img/ok_grey.svg"-->
 						</div>
 					</div>
@@ -130,7 +130,7 @@
 			return{
 				showOrderStatus: false,
 				copyright: "2017 MSA MOTO - все права защищены",
-				phoneFooter: ['+7 (914) 141-09-02']
+				phoneFooter: ['+7 (914) 471-67-76']
 			}
 		}
 	}
