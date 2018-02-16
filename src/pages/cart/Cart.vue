@@ -268,27 +268,29 @@
       const bodyPost = `?items_list=[${post.join(',')}]`
       
       this.products = [];
-      let $forBlock = this
       this.$API.get('getItems' + bodyPost).then(r => {
         this.$store.dispatch('hideLoading');
         
         let ids = [];
 
-        r.data.data.forEach(function(item){
+        r.data.data.forEach(item => {
           ids.push(item.cost_id);
+          let tempQuantity = this.$store.getters.cartProducts.filter((x) => { if (item.cost_id == x.id) {return x.quantity} });
 
-          $forBlock.products.push({
-            cost_id: item.cost_id, 
-            name: item.item_name, 
-            article: item.artikul, 
-            description: item.item_description, 
-            price: item.item_cost, 
-            currency: item.currency, 
-            image: $forBlock.loadImage(item.thumbnail),
-            quantity: $forBlock.$store.getters.cartProducts.filter((x) => {if (item.cost_id == x.id) {return x.quantity} })[0].quantity
-          });
+          if (tempQuantity.length > 0) {
+            this.products.push({
+              cost_id: item.cost_id, 
+              name: item.item_name, 
+              article: item.artikul, 
+              description: item.item_description, 
+              price: item.item_cost, 
+              currency: item.currency, 
+              image: this.loadImage(item.thumbnail),
+              quantity: this.$store.getters.cartProducts.filter((x) => {if (item.cost_id == x.id) {return x.quantity} })[0].quantity
+            });
+          }
         });
-
+        
         this.$store.dispatch('verificationCart', ids);
       }).catch(err => {
         this.$store.dispatch('hideLoading');
