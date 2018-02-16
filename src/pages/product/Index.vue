@@ -1,6 +1,6 @@
 <template>
   <main-layout>
-    <image-sliders v-if="showImageSliders" :images="full_images" :current="numCurrentImage" @close="showImageSliders = false"></image-sliders>
+    <image-sliders v-if="showImageSliders" :images="full_images" :currentImg="numCurrentImage" @close="showImageSliders = false"></image-sliders>
 
     <div class="content-fluid">
       <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
