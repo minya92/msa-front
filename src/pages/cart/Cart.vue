@@ -192,7 +192,7 @@
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
 
-        let post = `phone=${this.userFields['phone'].value}`+
+        let post = `fio=${this.userFields['user'].value}&phone=${this.userFields['phone'].value}`+
                     `&email=${this.userFields['email'].value}`+
                     `&deliveryType=${this.selectDelivery}`+
                     `&deliveryAddress=${this.userFields['address'].value}`+
