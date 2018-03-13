@@ -13,6 +13,10 @@ import store from './vuex/store.js'
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
+import 'es6-promise/auto'
+import "babel-core/register"
+import 'babel-polyfill'
+
 import 'vue-awesome/icons/flag'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -23,7 +27,7 @@ Vue.config.productionTip = false
 import { Validator } from 'vee-validate';
 Validator.extend('latalpha_num', {
   getMessage: field => 'Поле ' + field + ' может содержать только цифры и латинские буквы.',
-  validate: (value, [testProp]) => {      
+  validate: (value, [testProp]) => {
     return /^([a-z0-9]+)$/gi.test(value);
   }
 });
