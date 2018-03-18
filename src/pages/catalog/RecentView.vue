@@ -11,7 +11,7 @@
           <div class="product__image">
             <img :src="product.image">
           </div>
-          <div class="">
+          <div class="product-data">
             <div class="product-name">{{product.name}}</div>
             <div class="product-article">{{product.article}}</div>
             <div class="product-description">{{product.description}}</div>

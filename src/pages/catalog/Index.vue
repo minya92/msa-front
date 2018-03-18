@@ -26,7 +26,7 @@
                 <router-link :to="/product/ + product.id" class="product__image">
                 <preload-image-loader :src="product.image"></preload-image-loader>
                 </router-link>
-                <div class="">
+                <div class="product-data">
                   <div class="product-name">{{product.name}}</div>
                   <div class="product-article" v-if="product.article">артикул: {{product.article}}</div>
                   <div class="product-description">{{product.description}}</div>
