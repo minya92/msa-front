@@ -104,6 +104,7 @@
       },
       loadProducts: function(page){
         let query = '?';
+        window.scrollTo(0,0);
         if (typeof this.$route.query.cost_min != 'undefined'){
           query += `&cost_min=${this.$route.query.cost_min}`;
         }
