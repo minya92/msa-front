@@ -71,7 +71,7 @@
 				<ul class="footer-top__menu container-fluid">
 					<li><router-link :to="{name: 'Review'}">Отзывы</router-link></li>
 					<li><router-link :to="{name: 'ContactUs'}">Напишите нам</router-link></li>
-					<li><router-link :to="{name: 'Information'}">Информация</router-link></li>
+					<li><router-link :to="{name: 'Information'}">Правила магазина</router-link></li>
 					<li><router-link :to="{name: 'FAQ'}">Вопрос и ответ</router-link></li>
 					<li><a @click.prevent="showOrderStatus=true">Статус заказа</a></li>
 				</ul>
@@ -100,8 +100,8 @@
 						<searchForm></searchForm>
 						<div class="fbox-c-menu">
 							<router-link :to="{name: 'Manufactures'}">Производители</router-link>
-							<router-link :to="{name: 'PaymentDelivery'}">Оплата и доставка</router-link>
-							<router-link :to="{name: 'About'}">О магазине</router-link>
+							<router-link :to="{name: 'Information'}">Оплата и доставка</router-link>
+							<router-link :to="{name: 'Information'}">О магазине</router-link>
 						</ul>
 					</div>
 				</div>

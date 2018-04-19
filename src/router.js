@@ -51,7 +51,7 @@ const routes = [
     { path: '/cart/success', component: SuccessCheckout, meta: {breadcrumb: 'Оформление заказа'}, props: { name: 'world' }},
     { path: '/review', component: Review, name: 'Review', meta: {breadcrumb: 'Отзывы', title: 'Отзывы'} },
     { path: '/faq', component: FAQ, name: 'FAQ', meta: {breadcrumb: 'Вопрос и ответ', title: 'Вопрос и ответ'} },
-    { path: '/info', component: Information, name: 'Information', meta: {breadcrumb: 'Информация', title: 'Информация'} },
+    { path: '/info', component: Information, name: 'Information', meta: {breadcrumb: 'Правила работы с сайтом MSAmoto', title: 'Правила работы с сайтом MSAmoto'} },
     { path: '/contact-us', component: ContactUs, name: 'ContactUs', meta: {breadcrumb: 'Напишите нам', title: 'Напишите нам'} },
     { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
     { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },

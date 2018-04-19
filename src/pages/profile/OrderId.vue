@@ -19,7 +19,7 @@
           <td>
             <router-link class="table__items__title-item" :to="'/product/'+product.item_cost_id">
             {{product.item_name}}</router-link>
-            <div>{{product.type_description}}</div>
+            <!--div>{{product.type_description}}</div-->
           </td>
           <td class="txtcenter">{{product.item_cost}}</td>
           <td class="txtcenter">{{product.items_count}}</td>
@@ -27,7 +27,7 @@
         </tr>
       </tbody>
     </table>
-    
+
     <ul class="history-list">
       <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{history.s_date | getDate}} - {{history.status_name}}</li>
     </ul>
@@ -71,7 +71,7 @@
           this.notFound = true;
         })
       }
-    }, 
+    },
     watch: {
       $route: function() { this.getOrderInfoById() }
     },

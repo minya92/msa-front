@@ -1,13 +1,13 @@
 <template>
   <main-layout>
-    <div 
-      v-if="$store.getters.cartProducts.length && products.length > 0" 
+    <div
+      v-if="$store.getters.cartProducts.length && products.length > 0"
       class="content-fluid"
     >
-      <table 
-        class="table__cart" 
-        cellpadding="5" 
-        cellspacing="0" 
+      <table
+        class="table__cart"
+        cellpadding="5"
+        cellspacing="0"
         border="0"
       >
         <tbody>
@@ -25,7 +25,7 @@
               <router-link class="table__cart__title-item" :to="'product/'+product.cost_id">
                 {{ product.name }}
               </router-link>
-              <div class="table__cart__description-item">{{ product.description }}</div>
+              <!--div class="table__cart__description-item">{{ product.description }}</div-->
             </td>
             <td class="table__cart__quantity">
               <button class="quantity_minus" @click="quantityMinus(product)">-</button>
@@ -54,14 +54,14 @@
             </div>
         </div>
         <div class="simplecheckout-right-column">
-          <payment-methods 
-            :payments="payments" 
-            v-model="selectPayment" 
+          <payment-methods
+            :payments="payments"
+            v-model="selectPayment"
             :total="total"
           />
-          <shipping-methods 
-            :delivery="delivery" 
-            v-model="selectDelivery" 
+          <shipping-methods
+            :delivery="delivery"
+            v-model="selectDelivery"
             :total="total"
           />
         </div>
@@ -74,7 +74,7 @@
         <button class="btn_theme_white btn_cart" @click="goCatalog">Продолжить покупки</button>
         <button class="btn_theme btn_cart" @click="sendOrder">Оформить заказ</button>
         <div>
-          Нажимая кнопку "Оформить заказ", Вы соглашаетесь c условиями 
+          Нажимая кнопку "Оформить заказ", Вы соглашаетесь c условиями
           <router-link :to="{name: 'PrivacyPolicy'}">политики конфиденциальности</router-link>
         </div>
       </div>
@@ -176,7 +176,7 @@
             if (this.userFields[field].value.length > 3) {
               this.userFields[field].error = false
             } else {
-              this.userFields[field].error = true; error = true; 
+              this.userFields[field].error = true; error = true;
             }
           }
         }
@@ -186,9 +186,9 @@
         this.$router.push({name: 'catalog'});
       },
       sendOrder: function(){
-        if (!this.validateUser()) 
-          return  
-          
+        if (!this.validateUser())
+          return
+
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
 
@@ -199,20 +199,20 @@
                     `&orderItems=${JSON.stringify(newJson)}`+
                     `&payType=${this.selectPayment}`+
                     `&orderDetails=${this.orderDetails}`;
-                    
+
         this.$store.dispatch('showLoading');
         this.$API.post('placeOrder/', post).then(r => {
           let orderId = r.data.data
 
           this.$API.get(`getOrder/${orderId}`).then(r => {
-            this.$store.dispatch('successCheckout', {orderId: orderId}) 
+            this.$store.dispatch('successCheckout', {orderId: orderId})
             this.$store.dispatch('hideLoading');
             this.$router.push({path: 'cart/success'})
           })
         }).catch(err => {
           this.$store.dispatch('hideLoading');
         });
-      }, 
+      },
       deliveryMehods: function(){
         this.$API.get('getDelivery').then(r => {
           this.delivery = r.data.data
@@ -241,7 +241,7 @@
       if (!this.$store.getters.cartProducts.length){
         return;
       }
-      
+
       this.$store.dispatch('showLoading');
       this.deliveryMehods()
       this.paymentMehods()
@@ -266,11 +266,11 @@
       let post = []
       this.$store.getters.cartProducts.forEach(x=>post.push(x.id))
       const bodyPost = `?items_list=[${post.join(',')}]`
-      
+
       this.products = [];
       this.$API.get('getItems' + bodyPost).then(r => {
         this.$store.dispatch('hideLoading');
-        
+
         let ids = [];
 
         r.data.data.forEach(item => {
@@ -279,18 +279,18 @@
 
           if (tempQuantity.length > 0) {
             this.products.push({
-              cost_id: item.cost_id, 
-              name: item.item_name, 
-              article: item.artikul, 
-              description: item.item_description, 
-              price: item.item_cost, 
-              currency: item.currency, 
+              cost_id: item.cost_id,
+              name: item.item_name,
+              article: item.artikul,
+              description: item.item_description,
+              price: item.item_cost,
+              currency: item.currency,
               image: this.loadImage(item.thumbnail),
               quantity: this.$store.getters.cartProducts.filter((x) => {if (item.cost_id == x.id) {return x.quantity} })[0].quantity
             });
           }
         });
-        
+
         this.$store.dispatch('verificationCart', ids);
       }).catch(err => {
         this.$store.dispatch('hideLoading');
@@ -343,7 +343,7 @@
     width: 22px;
     height: 22px;
     color: #fff;
-    cursor: pointer; 
+    cursor: pointer;
     text-align: center;
     border: 0;
   }
@@ -372,7 +372,7 @@
   .result__cart__table{
     text-align: right;
   }
-  .btn_cart{    
+  .btn_cart{
     margin: 5px 0 20px;
     font-size: 16px;
     padding: 10px 20px;
@@ -437,7 +437,7 @@
     min-height: 60px;
     max-height: 100px;
   }
-  
+
   @media (max-width: 768px){
     .simplecheckout-left-column, .simplecheckout-right-column{
       width: 100%;

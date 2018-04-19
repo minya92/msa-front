@@ -5,11 +5,11 @@
         <span>Заказ №{{ dataOrder.order_id }}</span>
         <span>{{ dataOrder.status.status_name }}</span>
       </div>
-      <table 
-        class="table__items" 
-        cellpadding="5" 
-        cellspacing="0" 
-        border="0" 
+      <table
+        class="table__items"
+        cellpadding="5"
+        cellspacing="0"
+        border="0"
         v-if="dataOrder.hasOwnProperty('contents')"
       >
         <tbody>
@@ -24,13 +24,13 @@
             <td class="table__items__picture">
               <router-link :to="'product/'+product.item_cost_id"><img :src="product.thumbnail"></router-link></td>
             <td>
-              <router-link 
-                class="table__items__title-item" 
+              <router-link
+                class="table__items__title-item"
                 :to="'product/'+product.item_cost_id"
               >
                 {{ product.item_name }}
               </router-link>
-              <div>{{ product.type_description }}</div>
+              <!--div>{{ product.type_description }}</div-->
             </td>
             <td class="txtcenter">{{product.item_cost}}</td>
             <td class="txtcenter">{{product.items_count}}</td>
@@ -38,7 +38,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <ul class="history-list">
         <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{ history.s_date | getDate }} - {{ history.status_name }}</li>
       </ul>
@@ -78,7 +78,7 @@
           this.notFound = true;
         })
       }
-    }, 
+    },
     created(){
       this.getOrderInfoById();
     }
