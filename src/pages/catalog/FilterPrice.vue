@@ -6,7 +6,7 @@
       @callback="vscChange" 
       v-bind="dataSlide" 
       v-model="dataSlide.value" 
-      v-show="dataSlide.max && dataSlide.min" 
+      v-show="dataSlide.max" 
     />
   </div>
 </template>
