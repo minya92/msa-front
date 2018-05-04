@@ -35,9 +35,9 @@
 								<span><div class="menu_icon"></div>{{lang.find_menu}}</span>
 								<findMoto></findMoto>
 							</div>
-							<router-link to="/catalog" id="catalog-menu">
+							<!--router-link to="/catalog" id="catalog-menu">
 								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
-							</router-link>
+							</router-link-->
 						</div>
 						<searchForm></searchForm>
 						<div class="need__future" style="width: 320px"></div>
@@ -70,7 +70,7 @@
 		data() {
 			return{
 				lang: {
-					find_menu: 'Поиск запчастей',
+					find_menu: 'Каталог запчастей',
 					catalog: 'Каталог',
 				},
 				showAuth: false,
