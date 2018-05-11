@@ -22,9 +22,9 @@
 								</ul></a>
 							</router-link>
 						</div>
-						<div class="login-section" v-else>
+						<!--div class="login-section" v-else>
 							<a @click.prevent='showAuth=true'>Вход</a> / <a @click.prevent='showRegistry=true'>Регистрация</a>
-						</div>
+						</div-->
 						<minicart></minicart>
 					</div>
 				</div>
@@ -49,8 +49,8 @@
 			</div>
 			<slot></slot>
 		</div>
-		<auth v-if="showAuth" @close="showAuth=false"></auth>
-		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
+		<!--auth v-if="showAuth" @close="showAuth=false"></auth-->
+		<!--registry v-if="showRegistry" @close="showRegistry=false"></registry-->
 		<footer-theme></footer-theme>
 </div>
 </template>

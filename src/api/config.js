@@ -2,8 +2,8 @@ import Vue from 'vue'
 import axios from 'axios';
 
 const baseURL = (process.env.NODE_ENV === 'development')
-? 'http://msa.4rp.org'
-: 'http://' + window.location.host;
+? 'https://msa.4rp.org'
+: 'https://' + window.location.host;
 
 export const api = axios.create({
 	baseURL: baseURL + '/api',

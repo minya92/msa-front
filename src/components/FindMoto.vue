@@ -54,11 +54,11 @@
         endDate: '1990',
         findResultParts: 0,
         lang: {
-          findParts: 'Поиск запчастей',
+          findParts: 'Подбор запчастей по каталогу',
           selectMark: 'Выберите марку:',
           selectModel: 'Выберите модель:',
           selectYear: 'Выберите год:',
-          moreInfo: "Подробнее"
+          moreInfo: "Открыть"
         },
         paramNextPrev: {
           totalProducts: 0,
