@@ -59,7 +59,7 @@
   import 'swiper/dist/css/swiper.css'
   const { swiper, swiperSlide } = require('vue-awesome-swiper').VueAwesomeSwiper
   import { getMarksForBaner } from '@/api/modules/types'
-  
+
   export default {
     components: {
       MainLayout, swiper, swiperSlide
@@ -72,7 +72,7 @@
         topSliders: [
         {
           headerText: 'Мотопластик',
-          footerText: 'В наличии и под заказ обтекатели для вашего мотоцикла. Продажа оптом и розница. Бесплатная доставка. Цены Вас равнодушными не оставят ))',
+          footerText: 'Широкий выбор мотопластика от протестированных нами лично китайских производителей. Доступные цены и быстрая доставка до Вашего города.',
           img: 'img/slider/slider_pic.jpg'
         }
         ],
