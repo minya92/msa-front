@@ -84,11 +84,12 @@ button.primary{
 }
 #catalog-menu > span, #show-modal-findmoto > span{
 	height: 50px;
-	margin: 10px 20px 0 0;
+	margin: 10px 20px 10px 0;
 	padding: 0 10px;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+  font-size: 18px;
 }
 #catalog-menu{
 	text-decoration: none;
@@ -98,7 +99,7 @@ button.primary{
 	background: url(../img/menu.svg);
 }
 #show-modal-findmoto .menu_icon{
-	background: url(../img/parts.svg);
+	background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png);
 }
 /*  */
 .icon_eye{
@@ -167,13 +168,14 @@ input, textarea{
 }
 /* */
 #catalog-menu .menu_icon, #show-modal-findmoto .menu_icon{
-	width: 20px;
-	height: 20px;
+	width: 40px;
+	height: 40px;
 	display: inline-block;
 	margin-right: 10px;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
+  font-size: 18px;
 }
 #catalog-menu:hover > span, #show-modal-findmoto:hover > span{
 	background: #C3151C;

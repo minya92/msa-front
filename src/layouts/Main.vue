@@ -70,7 +70,7 @@
 		data() {
 			return{
 				lang: {
-					find_menu: 'Каталог запчастей',
+					find_menu: 'Подбор по мото',
 					catalog: 'Каталог',
 				},
 				showAuth: false,
