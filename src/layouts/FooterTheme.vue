@@ -100,8 +100,8 @@
 						<searchForm></searchForm>
 						<div class="fbox-c-menu">
 							<router-link :to="{name: 'Manufactures'}">Производители</router-link>
-							<router-link :to="{name: 'Information'}">Оплата и доставка</router-link>
-							<router-link :to="{name: 'Information'}">О магазине</router-link>
+							<router-link :to="{name: 'PaymentDelivery'}">Оплата и доставка</router-link>
+							<router-link :to="{name: 'About'}">О магазине</router-link>
 						</ul>
 					</div>
 				</div>
