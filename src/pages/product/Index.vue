@@ -33,7 +33,6 @@
             </div>
           </template>
           <div>
-            <div>Доставка осуществляется в течении 10-14 дней, при наличии на складе производителя</div>
             <div>Мы принимаем электронные платежи</div>
           </div>
         </div>
@@ -81,9 +80,9 @@
         if (this.product.images.length == 0){
           return ''
         }
-        
+
         return this.$SERVER_URL + this.product.images[this.numCurrentImage].full_image
-      }, 
+      },
     },
     methods: {
       addToCart: function(product){
@@ -107,17 +106,17 @@
       this.$API.get('getItem/'+this.$route.params.id).then(r => {
         var item = r.data.data;
         this.product = {
-          id: item.cost_id, 
-          name: item.item_name, 
-          article: item.artikul, 
-          description: item.item_description, 
-          price: item.item_cost, 
-          currency: item.currency, 
+          id: item.cost_id,
+          name: item.item_name,
+          article: item.artikul,
+          description: item.item_description,
+          price: item.item_cost,
+          currency: item.currency,
           images: item.images,
           compatibility: item.supported,
           chars: item.chars
         };
-        
+
         this.full_images = item.images.map(x => this.$SERVER_URL + x.full_image);
         this.$store.dispatch("recentItem", this.product);
       })
@@ -239,7 +238,7 @@
     width: 48px;
     height: 48px;
   }
-  
+
   @media (max-width: 768px){
     .product__detail__description h1{
       font-size: 24px;
@@ -264,7 +263,7 @@
       height: 280px;
     }
   }
-  
+
   @media (max-width: 480px){
     .product__detail{
       flex-wrap: wrap;
