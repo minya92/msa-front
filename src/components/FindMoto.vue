@@ -50,9 +50,6 @@
         years: [],
         marks: [],
         models: [],
-        startDate: '2017',
-        endDate: '1990',
-        findResultParts: 0,
         lang: {
           findParts: 'Подбор запчастей по каталогу',
           selectMark: 'Выберите марку:',
@@ -135,9 +132,6 @@
       },
       showMore: function(index){
         return index >= this.paramNextPrev.currentItems && index < this.paramNextPrev.perItems*this.paramNextPrev.indexResultItems;
-      },
-      moreBtn: function(){
-        alert("more");
       }
     }
   }

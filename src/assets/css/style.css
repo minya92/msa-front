@@ -21,6 +21,9 @@ button {
 .txtcenter{
 	text-align: center
 }
+.color--primary {
+	color: #801f25
+}
 .btn_theme{
 	background: #801f25;
 	border: 1px solid #801f25;
@@ -46,10 +49,6 @@ label.require:after{
 }
 button.primary{
 	padding: 10px 20px;
-	outline: none;
-	background: #801f25;
-	border: none;
-	color: #fff;
 	border-radius: 3px;
 	margin: 5px 0;
 }

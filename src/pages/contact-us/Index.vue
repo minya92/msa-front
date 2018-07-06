@@ -46,7 +46,7 @@
           />
           <span v-if="errors.has('message')" class="text-error">{{ errors.first('message') }}</span>
         </div>
-        <button @click="sendMessage" class="primary">Отправить</button>
+        <button @click="sendMessage" class="primary btn_theme">Отправить</button>
       </div>
       <div v-else>
         <p>Ваше сообщение успешно отправлено!</p>

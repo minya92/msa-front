@@ -1,11 +1,9 @@
 <template>
   <main-layout>
-    <div class="content-fluid filter-section">
-      <filter-price />
-    </div>
     <div class="content-fluid catalog-section">
       <aside>
         <categories />
+        <filter-model></filter-model>
       </aside>
 
       <div class="content-section">
@@ -62,10 +60,20 @@
   import FilterPrice from './FilterPrice'
   import AddToCart from '@/components/AddToCart'
   import PreloadImageLoader from '@/components/LoadImage'
+  import FilterModel from '@/components/catalog/Filter'
 
   export default {
     components: {
-      pagination, MainLayout, RecentView, AddToCart, PreloadImageLoader, GreyMarks, ActionBlocks, Categories, FilterPrice
+      pagination, 
+      MainLayout, 
+      RecentView, 
+      AddToCart, 
+      PreloadImageLoader, 
+      GreyMarks, 
+      ActionBlocks, 
+      Categories, 
+      FilterPrice,
+      FilterModel
     },
     data() {
       return {

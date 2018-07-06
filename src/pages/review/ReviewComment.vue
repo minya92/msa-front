@@ -18,11 +18,11 @@
       maxlength="1000" 
       v-model="message"
     ></textarea>
-    <button  v-if='$store.getters.isAuthorized' @click="sendReview" class="primary">Отправить</button>
+    <button  v-if='$store.getters.isAuthorized' @click="sendReview" class="primary btn_theme">Отправить</button>
     <div v-else>
       <div>Авторизируйтесь, чтобы оставить отзыв.</div> 
-      <button @click="showAuth = true" class="primary">Авторизоваться</button>
-      <button @click="showRegistry = true" class="primary">Регистрироваться</button>
+      <button @click="showAuth = true" class="primary btn_theme">Авторизоваться</button>
+      <button @click="showRegistry = true" class="primary btn_theme">Регистрироваться</button>
     </div>
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
 		<registry v-if="showRegistry" @close="showRegistry=false"></registry>

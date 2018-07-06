@@ -7,7 +7,7 @@
         <input type="text" v-model="field.value" />
       </div>
       
-      <button @click="saveProfile" class="primary">Сохранить</button>
+      <button @click="saveProfile" class="primary btn_theme">Сохранить</button>
     </div>
   </profile-layout>
   

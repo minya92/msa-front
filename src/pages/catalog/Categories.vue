@@ -47,6 +47,9 @@ export default {
 </script>
 
 <style scoped>
+.category__nav_vertical {
+  margin-bottom: 20px;
+}
 .category__nav_vertical li{
 	list-style: none;
 	position: relative;

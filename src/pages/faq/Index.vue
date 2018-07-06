@@ -7,7 +7,7 @@
           <faq-item :faqItem="faq"></faq-item>
         </div>
         
-        <button @click="$router.push({name: 'ContactUs'})" class="primary">Задать вопрос</button>
+        <button @click="$router.push({name: 'ContactUs'})" class="primary btn_theme">Задать вопрос</button>
       </div>
     </div>
   </main-layout>

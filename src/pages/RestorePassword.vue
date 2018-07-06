@@ -17,7 +17,7 @@
           <toogle-password v-model="rpassword"></toogle-password>
         </div>
 
-        <button @click="setNewPass" class="primary">Сохранить</button>
+        <button @click="setNewPass" class="primary btn_theme">Сохранить</button>
       </div>
 
       <div class="form-1" v-else>
@@ -26,7 +26,7 @@
           <input type="text" v-model="email" />
         </div>
 
-        <button @click="restorePass" class="primary">Восстановить пароль</button>
+        <button @click="restorePass" class="primary btn_theme">Восстановить пароль</button>
       </div>
     </div>
   </main-layout>
