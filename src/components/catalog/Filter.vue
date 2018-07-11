@@ -19,7 +19,7 @@
 
     <div class="filter-row">
       <label>Марка</label>
-      <select v-model="currentMark">
+      <select v-model="currentMark" @change="clearYear()">
         <option selected disabled value="">Выберите марку</option>
         <option 
           v-for="mark in marks" 
@@ -30,7 +30,7 @@
       </select>
     </div>
     
-    <div class="filter-row" v-if="currentMark">
+    <div class="filter-row" v-if="models">
       <label>Модель</label>
       <select v-model="currentModel">
         <option selected disabled value="">Выберите модель</option>
@@ -43,13 +43,12 @@
       </select>
     </div>
     
-    <div class="filter-row" v-if="currentModel">
+    <div class="filter-row" v-if="years && years.length > 0">
       <label>Год</label>
       <select v-model="currentYear">
         <option selected disabled value="">Выберите год</option>
         <option 
           v-for="year in years" 
-          v-if="year.active"
           :value="year.marks_models_id"
           :key="year.marks_models_id"
         >{{ year.mm_name }}</option>
@@ -136,20 +135,38 @@ export default {
       this.currentModel = null;
       this.currentYear = null;
     },
+    clearYear() {
+      this.years = null;
+      this.currentYear = null;
+    },
     showMore() {
+      let query = Object.assign({}, this.$route.query);
+      query.year = this.currentYear;
+      query.model = this.currentModel;
+      query.mark = this.currentMark;
+
       this.$router.push({
-        path: `/catalog/search=${this.currentYear || this.currentModel || this.currentMark}`, 
-        query: this.$route.query
+        path: `/catalog`, 
+        query: query
       })
     }
   },
   watch: {
-    '$route' (to, from) {
+    '$route.query' (to, from) {
       this.getItemsMaxMinCost();
+    this.$route.query.year || this.$route.query.model || this.$route.query.mark
+    
+    this.currentMark = this.$route.query.mark || null;
+    this.currentModel = this.$route.query.model || null;
+    this.currentYear = this.$route.query.year || null;
+
+    this.$API.get('/getMarks').then(response => {
+      if (!response.data.data) return;
+      
+      this.marks = response.data.data;
+    })
     },
     currentMark(val) {
-      this.years = null;
-      this.currentYear = null;
       this.totalDetails(val)
 
       this.$API.get('/getModels/'+val).then(response => {
@@ -159,8 +176,6 @@ export default {
     currentModel(val) {
       if (!val) return;
 
-      this.years = null;
-      this.currentYear = null;
       this.totalDetails(val);
 
       this.$API.get('/getYears/'+val).then(response => {
@@ -175,6 +190,12 @@ export default {
   },
   mounted() {
     this.getItemsMaxMinCost();
+    this.$route.query.year || this.$route.query.model || this.$route.query.mark
+    
+    this.currentMark = this.$route.query.mark || null;
+    this.currentModel = this.$route.query.model || null;
+    this.currentYear = this.$route.query.year || null;
+
     this.$API.get('/getMarks').then(response => {
       if (!response.data.data) return;
       

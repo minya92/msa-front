@@ -14,13 +14,12 @@
 							<a v-for="phone in phoneHeader" :href="'tel:' + phone" :key="phone"><icon name="phone"></icon>{{phone}}</a>
 						</div>
 						<div class="login-section" v-if='$store.getters.isAuthorized'>
-							<a><router-link to="/profile">Личный кабинет</router-link>
+							<router-link to="/profile">Личный кабинет</router-link>
 								<ul class="user-link_menu">
 									<li><router-link to="/profile">Профиль</router-link></li>
 									<li><router-link :to="{name: 'Order'}">История покупок</router-link></li>
 									<li @click.prevent="logout"><a>Выйти</a></li>
-								</ul></a>
-							</router-link>
+								</ul>
 						</div>
 						<!--div class="login-section" v-else>
 							<a @click.prevent='showAuth=true'>Вход</a> / <a @click.prevent='showRegistry=true'>Регистрация</a>
@@ -31,9 +30,9 @@
 				<div class="header-bottom flex-vc">
 					<div class="container-fluid header-bottom-section">
 						<div style="display: flex; align-items: baseline;">
-							<div id="show-modal-findmoto">
+							<div id="show-modal-findmoto"  @click="showFinderMoto = true">
 								<span><div class="menu_icon"></div>{{lang.find_menu}}</span>
-								<findMoto></findMoto>
+								<findMoto v-if="showFinderMoto" @close="showFinderMoto = false"></findMoto>
 							</div>
 							<!--router-link to="/catalog" id="catalog-menu">
 								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
@@ -66,7 +65,15 @@
 	import footerTheme from './FooterTheme'
 	export default{
 		name: 'app',
-		components: {findMoto, searchForm, auth, registry, Breadcrumbs, minicart, footerTheme},
+		components: {
+			findMoto, 
+			searchForm, 
+			auth, 
+			registry, 
+			Breadcrumbs, 
+			minicart, 
+			footerTheme
+		},
 		data() {
 			return{
 				lang: {
@@ -75,7 +82,8 @@
 				},
 				showAuth: false,
 				phoneHeader: ['+7 (910) 684-44-88'],
-				showRegistry: false
+				showRegistry: false,
+				showFinderMoto: false
 			}
 		},
 		methods:{

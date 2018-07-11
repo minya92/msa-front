@@ -122,9 +122,12 @@
         if (typeof this.$route.params.types != 'undefined'){
           query += `&types=%5B${this.$route.params.types}%5D`;
         }
-        if (typeof this.$route.params.searchDetails != 'undefined'){
-          query += `&mark_model=${this.$route.params.searchDetails}`;
+        //запрос по id года, модели и марки
+        let idModel = this.$route.query.year || this.$route.query.model || this.$route.query.mark;
+        if (!!idModel){
+          query += `&mark_model=${idModel}`;
         }
+
         if (typeof this.$route.query.search_string != 'undefined'){
           query += `&search_string=${this.$route.query.search_string}`;
         }

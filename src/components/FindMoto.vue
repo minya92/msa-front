@@ -1,42 +1,56 @@
 <template>
   <transition name="find-fade">
     <div id="find_moto">
-      <h2>{{lang.findParts}}</h2>
-      <div class="moto-box-selection">
-        <div class="form-group">
-          <div class="title-group">{{lang.selectMark}}</div>
+      <div class="find-moto__header">
+        <button class="find-moto__close" @click.stop="$emit('close')"></button>
+        <div class="find-moto__title">Подбор запчастей по каталогу</div>
+      </div>
+      <div class="find-moto__content">
+        <div class="moto-box-selection">
+          <div class="form-group">
+            <div class="title-group">Выберите марку:</div>
+            <div class="slider-marks">
+              <div :class="['slider-mark', currentMark == mark.marks_models_id ? 'current' : '']"
+                v-for="mark in marks"
+                @click="clearYear(); currentMark = mark.marks_models_id"
+                :key="mark.marks_models_id"
+              >
+              <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
+              <div v-else>{{mark.mm_name}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" v-if="models">
+          <div class="title-group">Выберите модель:</div>
           <div class="slider-marks">
-            <div :class="['slider-mark', currentMark === mark.marks_models_id ? 'current' : '']"
-            v-for="(mark, index) in marks"
-            @click="selectMark(mark.marks_models_id)">
-            <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
-            <div v-else>{{mark.mm_name}}</div>
+            <div v-for="model in models"
+              :class="['slider-mark', currentModel == model.marks_models_id ? 'current' : '']"
+              @click="clearYear(); currentModel = model.marks_models_id"
+              :key="model.marks_models_id"
+            >
+            <img v-if="model.thumbnail"  :src="model.thumbnail" :title="model.mm_name">
+            <div v-else>{{model.mm_name}}</div>
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="models.length">
-        <div class="title-group">{{lang.selectModel}}</div>
-        <div class="slider-marks">
-          <div :class="['slider-mark', currentModel === model.marks_models_id ? 'current' : '']"
-          v-for="(model, index) in models"
 
-          @click="selectModel(model.marks_models_id)">
-          <img v-if="model.thumbnail"  :src="model.thumbnail" :title="model.mm_name">
-          <div v-else>{{model.mm_name}}</div>
+      <div class="form-group" v-if="years && years.length > 0">
+        <div class="title-group">Выберите год:</div>
+        <div class="years slider-marks">
+          <div v-for="year in years" 
+            :class="['slider-mark', currentYear == year.marks_models_id ? 'current' : '']" 
+            @click="currentYear = year.marks_models_id"
+            :key="year.marks_models_id"
+          >{{year.mm_name}}</div>
         </div>
       </div>
+      <div class="result-count">Выбрано: {{countDetail}}</div>
+      <button class="primary btn_theme search-detail" v-if="currentMark" @click.stop="showMore()">Показать</button>
     </div>
-    <div class="form-group" v-if="years.length">
-      <div class="title-group">{{lang.selectYear}}</div>
-      <div class="years">
-        <div v-for="year in years" :class="[currentYear === year ? 'current' : '']" @click="selectYear(year)">{{year.mm_name}}</div>
-      </div>
-    </div>
-    <div class="result-count">Выбрано: {{countDetail}}</div>
-    <router-link class="btn_theme search-detail"  :to="'/catalog/search='+currentIdByQueryMark">{{lang.moreInfo}}</router-link>
   </div>
 </div>
-</transition>
+  </transition>
 </template>
 
 <script>
@@ -47,16 +61,9 @@
         currentMark: '',
         currentModel: '',
         currentYear: '',
-        years: [],
-        marks: [],
-        models: [],
-        lang: {
-          findParts: 'Подбор запчастей по каталогу',
-          selectMark: 'Выберите марку:',
-          selectModel: 'Выберите модель:',
-          selectYear: 'Выберите год:',
-          moreInfo: "Открыть"
-        },
+        years: null,
+        marks: null,
+        models: null,
         paramNextPrev: {
           totalProducts: 0,
           perItems: 6,
@@ -67,44 +74,51 @@
         currentIdByQueryMark: ''
       }
     },
-    created() {
+    mounted() {    
+      this.currentMark = this.$route.query.mark || null;
+      this.currentModel = this.$route.query.model || null;
+      this.currentYear = this.$route.query.year || null;
+
       this.$API.get('/getMarks').then(response => {
         if (response.data.code != 0){ }
           this.marks = response.data.data;
 
-        this.paramNextPrev.totalProducts = this.marks.length;
+        this.paramNextPrev.totalProducts = this.marks ? this.marks.length : 0;
         //this.NextIsActive();
       })
     },
-    methods: {
-      selectMark: function(marksModelsId) {
-        this.currentMark = marksModelsId
-        this.currentIdByQueryMark = marksModelsId
-        this.years = []
-        this.totalDetails(this.currentMark)
-
-        this.$API.get('/getModels/'+marksModelsId).then(response => {
-          if (response.data.code != 0){ }
-
-          this.models = response.data.data
-        })
+    watch: {
+      '$route' (to, from) {
+        this.getItemsMaxMinCost();
       },
-      selectModel: function(marksModelsId) {
-        this.currentModel = marksModelsId
-        this.currentIdByQueryMark = marksModelsId
-        this.totalDetails(this.currentModel)
+      currentMark(val) {
+        if (!val) return;
 
-        this.$API.get('/getYears/'+marksModelsId).then(response => {
-          if (response.data.code != 0){ }
+        this.totalDetails(val)
 
+        this.$API.get('/getModels/'+val).then(response => {
+          this.models = response.data.data;
+        });
+      },
+      currentModel(val) {
+        if (!val) return;
+
+        this.totalDetails(val);
+
+        this.$API.get('/getYears/'+val).then(response => {
           this.years = response.data.data;
-        })
+        });
       },
-      selectYear: function(item) {
-        this.currentYear = item;
-        this.currentIdByQueryMark = item.marks_models_id
+      currentYear(val) {
+        if (!val) return;
 
-        this.totalDetails(this.currentIdByQueryMark)
+        this.totalDetails(val)
+      }
+    },
+    methods: {
+      clearYear() {
+        this.years = null;
+        this.currentYear = null;
       },
       totalDetails: function(param){
         this.$API.get(`getItemsCount?mark_model=${param}`).then(r => {
@@ -130,51 +144,62 @@
           this.paramNextPrev.indexResultItems--;
         }
       },
-      showMore: function(index){
-        return index >= this.paramNextPrev.currentItems && index < this.paramNextPrev.perItems*this.paramNextPrev.indexResultItems;
+      // showMore: function(index){
+      //   return index >= this.paramNextPrev.currentItems && index < this.paramNextPrev.perItems*this.paramNextPrev.indexResultItems;
+      // }
+      showMore() {
+        let query = Object.assign({}, this.$route.query);
+        query.year = this.currentYear;
+        query.model = this.currentModel;
+        query.mark = this.currentMark;
+        
+          this.$router.push({
+          path: `/catalog`, 
+          query: query
+        });
+        
+        this.$emit('close');
       }
     }
   }
 </script>
 
-<style>
-  .modal_box_close{
+<style scoped>
+  .find-moto__header {
+    background: #801f25;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: #fff;
+  }
+  .find-moto__title {
+    font-size: 1.8em;
+    margin-left: 20px;
+  }
+  .find-moto__close{
     background: url(../assets/img/close.svg);
+    margin: 6px;
+    border: 2px solid #fff;
     width: 30px;
     height: 30px;
+    border-radius: 50%;
     background-size: cover;
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
   }
   #find_moto{
-    position: absolute;
-    width: 760px;
-    padding: 20px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
     z-index: 100;
     background: #fff;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    top: 69px;
-    display: none;
-    border: 1px solid #eee;
-  }
-  #find_moto:after{
-    content: '';
-    border: 9px solid transparent;
-    border-bottom: 9px solid #fff;
-    position: absolute;
-    top: -18px;
-    left: 45px;
-  }
-  #find_moto:before{
-    content: '';
-    border-top: 9px solid transparent;
-    position: absolute;
-    display: block;
-    width: 100%;
-    top: -10px;
+    top: 0;
     left: 0;
+    display: block;
+  }
+  .find-moto__content {
+    padding: 20px;
+    overflow: auto;
   }
   #show-modal-findmoto:hover #find_moto{
     display: block;
@@ -189,23 +214,6 @@
     transform: translateX(10px);
     opacity: 0;
   }
-  #find_moto h2{
-    text-align: center;
-    font-size: 34px;
-  }
-  .years{
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .years div{
-    padding: 3px;
-    margin: 3px;
-    background: #e7e7e7;
-  }
-  .years>div:hover, .years>div.current{
-    background: #801f25;
-    color: #fff;
-  }
   .form-group{
     position: relative;
     margin-bottom: 15px;
@@ -217,14 +225,14 @@
     max-height: 100%;
     max-width: 100%;
   }
-  .form-group .slider-marks{
+  .slider-marks{
     margin-right: -40px;
     display: flex;
     flex-wrap: wrap;
     position: relative;
     width: 100%;
   }
-  .form-group .slider-mark{
+  .slider-mark{
     display: flex;
     width: 16.66%;
     margin-bottom: 10px;
@@ -232,6 +240,9 @@
     align-items: center;
     padding: 10px;
     border: 1px solid #e7e7e7;
+  }
+  .years .slider-mark{
+    width: 10%;
   }
   .slider-mark:hover, .slider-mark.current{
     border: 1px solid #801f25;
@@ -264,9 +275,6 @@
   .prev-result{
     margin-right: 5px;
   }
-  .next-result{
-
-  }
   .result-count{
     font-weight: 600;
     font-size: 30px;
@@ -284,20 +292,26 @@
     align-items: center;
   }
   
-  @media screen and (max-width: 480px) {
-    #find_moto{
-      width: 450px;
-      padding: 10px;
+  @media screen and (max-width: 960px) {
+    .slider-mark{
+      width: 20%;
     }
   }
-  @media screen and (max-width: 375px) {
-    #find_moto{
-      width: 300px;
-      left: -10px;
+  @media screen and (max-width: 768px) {
+    .slider-mark{
+      width: 25%;
     }
-    #find_moto h2 {
-      font-size: 24px;
-      margin: 10px 0;
+  }
+  @media screen and (max-width: 480px) {
+    .find-moto__title {
+      font-size: 1.4em;
+    }
+    .slider-mark{
+      width: 33.33%;
+      font-size: 11px;
+    }
+    .years .slider-mark{
+      width: auto;
     }
     .result-count {
       font-size: 18px;
@@ -307,12 +321,6 @@
       padding: 10px;
       height: auto;
       width: 100%;
-    }
-    .form-group .slider-mark{
-      margin-bottom: 5px;
-      font-size: 11px;
-      padding: 5px;
-      width: 33.33%;
     }
     .title-group {
       padding-bottom: 10px;
