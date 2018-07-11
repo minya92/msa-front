@@ -195,14 +195,12 @@
     background: #fff;
     top: 0;
     left: 0;
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
   .find-moto__content {
     padding: 20px;
     overflow: auto;
-  }
-  #show-modal-findmoto:hover #find_moto{
-    display: block;
   }
   .find-fade-enter-active {
     transition: all .3s ease;
@@ -303,6 +301,10 @@
     }
   }
   @media screen and (max-width: 480px) {
+    .find-moto__content {
+      padding: 10px;
+      overflow: auto;
+    }
     .find-moto__title {
       font-size: 1.4em;
     }
