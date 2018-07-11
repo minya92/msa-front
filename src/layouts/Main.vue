@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" :class="headerFixedScroll ? 'fixed' : ''">
 		<div class="content-box">
 			<header>
 				<div class="header-top flex-vc">
@@ -83,22 +83,30 @@
 				showAuth: false,
 				phoneHeader: ['+7 (910) 684-44-88'],
 				showRegistry: false,
-				showFinderMoto: false
+				showFinderMoto: false,
+				headerFixedScroll: false
 			}
 		},
-		methods:{
-			logout: function(){
+		methods: {
+			logout() {
 				this.$API.get('?__type=18').then(r => {
 					this.$store.dispatch('logout')
         });
+			},
+			handleScroll () {
+				this.headerFixedScroll = window.scrollY > 35;
 			}
 		},
 		filters: {
-			emptyName: function(name){
+			emptyName(name) {
 				return name ? name : 'лк'
 			}
 		},
-		created(){
+		created () {
+			window.addEventListener('scroll', this.handleScroll);
+		},
+		destroyed () {
+			window.removeEventListener('scroll', this.handleScroll);
 		}
 	}
 </script>
@@ -226,12 +234,20 @@ header>div{
 .header-bottom{
 	height: 60px;
 	position: relative;
+	box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+	width: 100%;
+	background: #fff;
 }
 .header-bottom-section{
 	display: flex;
 	align-items: center;
 	padding: 0 15px;
 	justify-content: space-between;
+}
+.fixed .header-bottom {
+	position: fixed;
+	z-index: 90;
+	top: 0;
 }
 
 header .search_input{

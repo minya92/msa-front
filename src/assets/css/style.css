@@ -72,6 +72,9 @@ button.primary{
 .content-box {
 	flex: 1 0 auto;
 }
+.fixed .content-box {
+	margin-top: 30px;
+}
 .container-fluid{
 	max-width: 1400px;
 	width: 100%;
@@ -82,7 +85,6 @@ button.primary{
 	position: relative;
 }
 #catalog-menu > span, #show-modal-findmoto > span{
-	height: 50px;
 	margin: 10px 20px 10px 0;
 	padding: 0 10px;
 	display: flex;
