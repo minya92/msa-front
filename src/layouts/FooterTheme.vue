@@ -130,7 +130,7 @@
 			return{
 				showOrderStatus: false,
 				copyright: "2017 MSA MOTO - все права защищены",
-				phoneFooter: ['+7 (910) 684-44-88']
+				phoneFooter: ['+7 (914) 471-67-76']
 			}
 		}
 	}

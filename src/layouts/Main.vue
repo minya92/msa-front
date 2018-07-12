@@ -66,12 +66,12 @@
 	export default{
 		name: 'app',
 		components: {
-			findMoto, 
-			searchForm, 
-			auth, 
-			registry, 
-			Breadcrumbs, 
-			minicart, 
+			findMoto,
+			searchForm,
+			auth,
+			registry,
+			Breadcrumbs,
+			minicart,
 			footerTheme
 		},
 		data() {
@@ -81,7 +81,7 @@
 					catalog: 'Каталог',
 				},
 				showAuth: false,
-				phoneHeader: ['+7 (910) 684-44-88'],
+				phoneHeader: ['+7 (914) 471-67-76'],
 				showRegistry: false,
 				showFinderMoto: false,
 				headerFixedScroll: false
