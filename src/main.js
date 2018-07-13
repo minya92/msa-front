@@ -3,10 +3,6 @@ import App from './App'
 
 import router from './router'
 Vue.use(router)
-
-import axios from 'axios';
-
-import config from './config.js'
 import store from './vuex/store.js'
 
 
@@ -16,11 +12,6 @@ Vue.use(VeeValidate);
 import 'es6-promise/auto'
 import "babel-core/register"
 import 'babel-polyfill'
-
-import 'vue-awesome/icons/flag'
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
-Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 

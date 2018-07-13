@@ -126,7 +126,7 @@
         });
       }
     },
-    created() {
+    mounted() {
       this.getMarksBannerTop();
       this.getMarksBannerBottom();
       this.getCatalogs();
