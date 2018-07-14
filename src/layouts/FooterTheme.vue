@@ -35,7 +35,7 @@
 					</svg>
 					<span>Вконтакте</span>
 				</div>-->
-				<a target="_blank" href="https://www.facebook.com/msa.moto.3" class="footer-top__ssi">
+				<a target="_blank" href="https://www.facebook.com/msamotoKT" class="footer-top__ssi">
 					<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<defs>
 							<rect id="fb-path-1" x="0" y="0" width="28" height="28" rx="1"></rect>
@@ -80,7 +80,7 @@
 				<div class="container-fluid footer-bottom__content">
 					<div class="fbox-lr">
 						<div class="fbox-l-container">
-							<a target="_blank" href="https://www.facebook.com/msa.moto.3"><img src="../assets/img/fb_grey.svg"></a>
+							<a target="_blank" href="https://www.facebook.com/msamotoKT"><img src="../assets/img/fb_grey.svg"></a>
               <a target="_blank" href="https://www.youtube.com/channel/UCAqrLCG9-BwvSQPqpyvqSqQ"><img src="../assets/img/youtube_grey.svg"></a>
               <a target="_blank" href="https://www.instagram.com/msa_moto/"><img src="../assets/img/instagram_grey.svg"></a>
 							<!--img src="../assets/img/ok_grey.svg"-->
