@@ -7,6 +7,7 @@ import store from './vuex/store.js'
 
 
 import VeeValidate from 'vee-validate';
+import config from './config';
 Vue.use(VeeValidate);
 
 import 'es6-promise/auto'
