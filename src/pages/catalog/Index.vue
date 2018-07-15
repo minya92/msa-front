@@ -57,7 +57,6 @@
   import GreyMarks from './GreyMarks'
   import ActionBlocks from './ActionBlocks'
   import Categories from './Categories'
-  import FilterPrice from './FilterPrice'
   import AddToCart from '@/components/AddToCart'
   import PreloadImageLoader from '@/components/LoadImage'
   import FilterModel from '@/components/catalog/Filter'
@@ -71,8 +70,7 @@
       PreloadImageLoader, 
       GreyMarks, 
       ActionBlocks, 
-      Categories, 
-      FilterPrice,
+      Categories,
       FilterModel
     },
     data() {

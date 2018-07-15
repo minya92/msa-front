@@ -15,7 +15,7 @@
           <div class="models-top-slider">
             <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels"
               :key="index"
-              :to="{name:'catalogSearch', params: {searchDetails: imgModel.marks_models_id}}"
+              :to="{name:'catalog', query: {mark: imgModel.marks_models_id}}"
             >
               <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
             </router-link>
@@ -41,7 +41,7 @@
 
           <swiper class="main-bot-slider" :options="swiperOptionModels">
             <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
-              <router-link :to="{name:'catalogSearch', params: {searchDetails: imgModelWhite.marks_models_id}}" >
+              <router-link :to="{name:'catalog', query: {mark: imgModelWhite.marks_models_id}}" >
                 <img :src="imgModelWhite.full_image" :alt="imgModelWhite.mm_name" :title="imgModelWhite.mm_name">
               </router-link>
             </swiper-slide>

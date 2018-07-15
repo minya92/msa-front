@@ -2,7 +2,7 @@
   <div class="model-grey">
     <router-link class="models-top-slider-item" v-for="imgModelGrey in imgModelsGrey"
       :key="imgModelGrey.marks_models_id"
-      :to="{name:'catalogSearch', params: {searchDetails: imgModelGrey.marks_models_id}}"
+      :to="{name:'catalog', query: {mark: imgModelGrey.marks_models_id}}"
     >
       <img :src="$SERVER_URL + imgModelGrey.full_image" :alt="imgModelGrey.mm_name" :title="imgModelGrey.mm_name">
     </router-link>
