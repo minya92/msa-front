@@ -19,11 +19,11 @@
     "vee-validate": "^2.0.9",
     "vue": "^2.5.16",
     "vue-awesome": "^2.3.8",
-    "vue-awesome-swiper": "^3.1.3",
+    "vue-awesome-swiper": "3.0.6",
     "vue-breadcrumbs": "^1.1.1",
     "vue-masked-input": "^0.5.2",
     "vue-router": "^2.3.1",
-    "vue-slider-component": "^2.7.2",
+    "vue-slider-component": "^2.7.4",
     "vue-yandex-maps": "^0.5.8",
     "vuex": "^2.3.1"
   },
