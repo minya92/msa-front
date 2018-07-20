@@ -138,7 +138,7 @@ export default {
       this.currentYear = null;
     },
     clearModel() {
-      this.model = null;
+      this.models = null;
       this.currentModel = null;
 
       this.clearYear();
@@ -146,7 +146,6 @@ export default {
     clearYear() {
       this.years = null;
       this.currentYear = null;
-      //delete this.$route.query.year;
     },
     showMore() {
       let query = Object.assign({}, this.$route.query);

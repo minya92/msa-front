@@ -12,7 +12,7 @@
             <div class="slider-marks">
               <div :class="['slider-mark', currentMark == mark.marks_models_id ? 'current' : '']"
                 v-for="mark in marks"
-                @click="clearYear(); currentMark = mark.marks_models_id"
+                @click="clearModel(); currentMark = mark.marks_models_id"
                 :key="mark.marks_models_id"
               >
               <img v-if="mark.thumbnail" :src="mark.thumbnail" :title="mark.mm_name">
@@ -58,9 +58,9 @@
     name: 'find_moto',
     data() {
       return {
-        currentMark: '',
-        currentModel: '',
-        currentYear: '',
+        currentMark: null,
+        currentModel: null,
+        currentYear: null,
         years: null,
         marks: null,
         models: null,
@@ -116,6 +116,12 @@
       }
     },
     methods: {
+      clearModel() {
+        this.models = null;
+        this.currentModel = null;
+
+        this.clearYear();
+      },
       clearYear() {
         this.years = null;
         this.currentYear = null;
@@ -149,9 +155,11 @@
       // }
       showMore() {
         let query = Object.assign({}, this.$route.query);
-        query.year = this.currentYear;
-        query.model = this.currentModel;
-        query.mark = this.currentMark;
+        console.log(query)
+        this.currentYear ? query.year = this.currentYear : delete query.year;
+        this.currentModel ? query.model = this.currentModel : delete query.model;
+        this.currentMark ? query.mark = this.currentMark : delete query.mark;
+        console.log(query)
         
           this.$router.push({
           path: `/catalog`, 
