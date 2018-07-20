@@ -19,7 +19,7 @@
 
     <div class="filter-row">
       <label>Марка</label>
-      <select v-model="currentMark" @change="clearYear()">
+      <select v-model="currentMark" @change="clearModel()">
         <option selected disabled value="">Выберите марку</option>
         <option 
           v-for="mark in marks" 
@@ -30,9 +30,9 @@
       </select>
     </div>
     
-    <div class="filter-row" v-if="models">
+    <div class="filter-row" v-if="models && models.length > 0 && currentMark">
       <label>Модель</label>
-      <select v-model="currentModel">
+      <select v-model="currentModel" @change="clearYear()">
         <option selected disabled value="">Выберите модель</option>
         <option 
           v-for="model in models" 
@@ -43,7 +43,7 @@
       </select>
     </div>
     
-    <div class="filter-row" v-if="years && years.length > 0">
+    <div class="filter-row" v-if="years && years.length > 0 && currentModel">
       <label>Год</label>
       <select v-model="currentYear">
         <option selected disabled value="">Выберите год</option>
@@ -131,19 +131,28 @@ export default {
       });
     },
     clearFilter() {
+      this.$router.push({query: null})
+      
       this.currentMark = null;
       this.currentModel = null;
       this.currentYear = null;
     },
+    clearModel() {
+      this.model = null;
+      this.currentModel = null;
+
+      this.clearYear();
+    },
     clearYear() {
       this.years = null;
       this.currentYear = null;
+      //delete this.$route.query.year;
     },
     showMore() {
       let query = Object.assign({}, this.$route.query);
-      query.year = this.currentYear;
-      query.model = this.currentModel;
-      query.mark = this.currentMark;
+      this.currentYear ? query.year = this.currentYear : delete query.year;
+      this.currentModel ? query.model = this.currentModel : delete query.model;
+      this.currentMark ? query.mark = this.currentMark : delete query.mark;
 
       this.$router.push({
         path: `/catalog`, 
@@ -154,17 +163,17 @@ export default {
   watch: {
     '$route.query' (to, from) {
       this.getItemsMaxMinCost();
-    this.$route.query.year || this.$route.query.model || this.$route.query.mark
-    
-    this.currentMark = this.$route.query.mark || null;
-    this.currentModel = this.$route.query.model || null;
-    this.currentYear = this.$route.query.year || null;
-
-    this.$API.get('/getMarks').then(response => {
-      if (!response.data.data) return;
+      this.$route.query.year || this.$route.query.model || this.$route.query.mark
       
-      this.marks = response.data.data;
-    })
+      this.currentMark = this.$route.query.mark || null;
+      this.currentModel = this.$route.query.model || null;
+      this.currentYear = this.$route.query.year || null;
+
+      this.$API.get('/getMarks').then(response => {
+        if (!response.data.data) return;
+        
+        this.marks = response.data.data;
+      });
     },
     currentMark(val) {
       this.totalDetails(val)
