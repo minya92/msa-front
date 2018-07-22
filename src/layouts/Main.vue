@@ -33,7 +33,7 @@
 				</div>
 				<div class="header-bottom flex-vc">
 					<div class="container-fluid header-bottom-section">
-						<div style="display: flex; align-items: baseline;">
+						<div class="header-bottom-menu">
 							<div id="show-modal-findmoto"  @click="showFinderMoto = true">
 								<span><div class="menu_icon"></div>{{lang.find_menu}}</span>
 								<findMoto v-if="showFinderMoto" @close="showFinderMoto = false"></findMoto>
@@ -41,8 +41,13 @@
 							<!--router-link to="/catalog" id="catalog-menu">
 								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
 							</router-link-->
+							<div class="search-mobile" @click="visibleSearch = !visibleSearch">
+								<svg data-v-c3e4eec0="" version="1.1" role="presentation" width="14.857142857142858" height="16" viewBox="0 0 1664 1792" class="fa-icon">
+									<path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path> 
+								</svg>
+							</div>
 						</div>
-						<searchForm></searchForm>
+						<searchForm :class="visibleSearch ? 'visible-mobile' : ''"></searchForm>
 						<div class="need__future" style="width: 320px"></div>
 					</div>
 				</div>
@@ -88,7 +93,8 @@
 				phoneHeader: ['+7 (914) 471-67-76'],
 				showRegistry: false,
 				showFinderMoto: false,
-				headerFixedScroll: false
+				headerFixedScroll: false,
+				visibleSearch: false
 			}
 		},
 		methods: {
@@ -323,14 +329,12 @@ header .search_input input[type="text"]{
 	.header-bottom {
 		padding: 5px 0;
 	}
-}
-
-@media (max-width: 375px){
-	.header-bottom-section{
-		flex-direction: column;
+	#catalog-menu > span, #show-modal-findmoto > span {
+    font-size: 14px;
 	}
-	.header-bottom-section>div{
-		padding: 5px 0;
+	#catalog-menu .menu_icon, #show-modal-findmoto .menu_icon{
+		width: 30px;
+		height: 30px;
 	}
 }
 </style>

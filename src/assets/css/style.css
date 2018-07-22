@@ -199,6 +199,14 @@ input, textarea{
 header #search_form input {
 	color: #000;
 }
+.search-mobile {
+	display: none;
+	cursor: pointer;
+}
+.header-bottom-menu{
+	display: flex;
+	align-items: center;
+}
 
 .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled{
 	display: none;
@@ -629,9 +637,27 @@ height: 130px;
 	h2 {
 		font-size: 16px;
 	}
-	#show-modal-findmoto .menu_icon{
-		width: 30px;
-		height: 30px;
+	.search-mobile {
+		display: block;
+	}
+	header #search_form {
+		display: none;
+		width: 100%;
+	}
+	header #search_form.visible-mobile {
+		display: block;
+	}	
+	.header-bottom-section{
+		flex-direction: column;
+	}
+	.header-bottom-section>div{
+		padding: 5px 0;
+	}
+	.header-bottom-menu{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
 	}
 	.category-menu{
 		margin: 15px auto;
