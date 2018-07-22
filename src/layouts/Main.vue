@@ -236,7 +236,7 @@ header>div{
 	cursor: pointer;
 }
 .header-bottom{
-	height: 60px;
+	padding: 10px 0;	
 	position: relative;
   border-top: black solid;
 	box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -320,12 +320,12 @@ header .search_input input[type="text"]{
 	header .search_input input[type="text"]{
 		width: 100%;
 	}
+	.header-bottom {
+		padding: 5px 0;
+	}
 }
 
 @media (max-width: 375px){
-	.header-bottom{
-		height: auto;
-	}
 	.header-bottom-section{
 		flex-direction: column;
 	}

@@ -92,7 +92,6 @@ button.primary{
 	position: relative;
 }
 #catalog-menu > span, #show-modal-findmoto > span{
-	margin: 10px 20px 10px 0;
 	padding: 0 10px;
 	display: flex;
 	align-items: center;
@@ -630,6 +629,10 @@ height: 130px;
 	h2 {
 		font-size: 16px;
 	}
+	#show-modal-findmoto .menu_icon{
+		width: 30px;
+		height: 30px;
+	}
 	.category-menu{
 		margin: 15px auto;
 	}
@@ -709,9 +712,6 @@ height: 130px;
 	}
 }
 @media (max-width: 375px){
-	#catalog-menu > span, #show-modal-findmoto > span{
-		height: auto;
-	}
 	.top-slider-text-content>span{
 		font-size: 11px;
 	}
