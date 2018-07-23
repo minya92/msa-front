@@ -48,7 +48,8 @@
 							</div>
 						</div>
 						<searchForm :class="visibleSearch ? 'visible-mobile' : ''"></searchForm>
-						<div class="need__future" style="width: 320px"></div>
+						<minicart v-if="headerFixedScroll"></minicart>
+						<div class="need__future" v-else style="width: 320px"></div>
 					</div>
 				</div>
 			</header>
@@ -196,22 +197,6 @@ header>div{
 	display: flex;
 	justify-content: flex-end;
 }
-.minicart__img{
-	position: relative;
-	margin-right: 10px;
-}
-.minicart__count{
-	position: absolute;
-	background: #801f25;
-	color: #fff;
-	border-radius: 50%;top: -4px;
-    right: -3px;
-    font-size: 10px;
-    min-width: 14px;
-    min-height: 14px;
-    z-index: 1;
-    text-align: center;
-}
 .header-top-section-menu a:hover, .hbox-phone a:hover{
 	color: #ff0000;
 }
@@ -231,12 +216,6 @@ header>div{
 	color: #fff;
 	text-decoration: none;
 	font-size: 16px;
-}
-.mini-cart img{
-	vertical-align: bottom;
-	margin-right: 5px;
-	width: 18px;
-	height: 18px;
 }
 .login-section a{
 	cursor: pointer;
@@ -259,6 +238,12 @@ header>div{
 	position: fixed;
 	z-index: 90;
 	top: 0;
+}
+.fixed .mini-cart {
+	color: #000 !important;
+}
+.fixed .mini-cart svg path, .fixed .mini-cart svg polyline {
+	fill: #000;
 }
 
 header .search_input{
@@ -285,7 +270,7 @@ header .search_input input[type="text"]{
 		flex: none;
 	}
 }
-@media (min-width: 481px) and (max-width: 768px){
+@media  (max-width: 768px){
 	.header-top-section .hbox-phone, .header-top-section .header-top-section-menu{
 		flex: none;
 	}
@@ -294,6 +279,10 @@ header .search_input input[type="text"]{
 	}
 	.need__future{
 		display: none;
+	}
+	
+	.header-bottom  .mini-cart{
+		display: none !important;
 	}
 }
 

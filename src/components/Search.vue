@@ -56,6 +56,8 @@
       }, 1000),
       searchItems: function(){
         if (this.searchText.length == 0) return;
+
+        this.searchText = '';
         
         this.$router.push(
           {
