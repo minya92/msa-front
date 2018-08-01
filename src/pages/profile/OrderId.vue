@@ -75,65 +75,7 @@
         this.$API.get('getOrder/'+this.$route.params.id).then(r => {
           this.dataOrder = r.data.data;
         }).catch(err => {
-          //this.notFound = true;
-          this.dataOrder = {
-        "contents": [
-            {
-                "artikul": " 10003",
-                "final_cost": 51400,
-                "full_image": "images/plastic/YAMAHA/YZF_R6/2008-2014/8/Clip2net_170918200237.png",
-                "item_cost": 25700,
-                "item_cost_id": 151385882243700,
-                "item_id": 151233296495901,
-                "item_name": "YAMAHA YZF R6 2008-2014",
-                "item_on_tp": null,
-                "items_count": 2,
-                "ord_contents_id": 152042678704500,
-                "order_id": 55,
-                "thumbnail": "images/plastic-small/YAMAHA/YZF_R6/2008-2014/8/Clip2net_170918200237.jpg",
-                "type_description": "Комплекты пластика",
-                "usr_context": "msa"
-            },
-            {
-                "artikul": " 10007",
-                "final_cost": 25700,
-                "full_image": "images/plastic/YAMAHA/YZF_R6/2008-2014/4/IMG_3240.JPG",
-                "item_cost": 25700,
-                "item_cost_id": 151385882237700,
-                "item_id": 151233296496112,
-                "item_name": "YAMAHA YZF R6 2008-2014",
-                "item_on_tp": null,
-                "items_count": 1,
-                "ord_contents_id": 152042678704600,
-                "order_id": 55,
-                "thumbnail": "images/plastic-small/YAMAHA/YZF_R6/2008-2014/4/IMG_3240.JPG",
-                "type_description": "Комплекты пластика",
-                "usr_context": "msa"
-            }
-        ],
-        "details": "phone:  7 (890) 274-70-70, e-mail: music_master@mail.ru, delivery_type: 151056531944000, delivery_address: 12332куа йа, pay_type: 3, ord_details: false, fio: undefined",
-        "history": [
-            {
-                "comment": null,
-                "full_message": "Заказ создан и в ближайшее время будет обработан оперытором",
-                "ord_history_id": 152042678703700,
-                "ord_statuses_id": 0,
-                "order_id": 55,
-                "s_date": "2018-03-07T12:46:27.036Z",
-                "short_message": "Заказ создан",
-                "status_id": 0,
-                "status_name": "Создан",
-                "usr_context": "msa"
-            }
-        ],
-        "order_id": 55,
-        "status": {
-            "full_message": "Заказ создан и в ближайшее время будет обработан оперытором",
-            "ord_statuses_id": 0,
-            "short_message": "Заказ создан",
-            "status_name": "Создан"
-        }
-    }
+          this.notFound = true;
         })
       }
     },
