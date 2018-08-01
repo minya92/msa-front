@@ -11,21 +11,44 @@
         <label :class="rating >= 5 ? 'active' : ''" @mouseover="rating = 5"></label>
       </div>
     </div>
-    <textarea 
-      placeholder="введите отзыв" 
-      rows="5" 
-      resize="horizontal" 
-      maxlength="1000" 
-      v-model="message"
-    ></textarea>
-    <button  v-if='$store.getters.isAuthorized' @click="sendReview" class="primary btn_theme">Отправить</button>
-    <div v-else>
+    <div class="form-1">
+      <div class="form-1__field column">
+        <label class="require">Как Вас зовут?</label>
+        <input 
+          type="text" 
+          maxlength="40"
+          v-validate="{ required: true, min: 4, max: 40 }" 
+          name="name" 
+          v-model="authorName"
+          data-vv-as=" "
+          placeholder="Константин Чижов г. Москва" 
+          @keyup.enter="sendMessage"
+        >
+        <span v-if="errors.has('name')" class="text-error">{{ errors.first('name') }}</span>
+      </div>
+    </div>
+
+    <div class="form-1__field column">
+      <textarea 
+        placeholder="введите отзыв" 
+        rows="5" 
+        resize="horizontal" 
+        maxlength="1000" 
+        v-model="message"
+        name="message"
+        data-vv-as=" "
+        v-validate="{ required: true, min: 4, max: 1000 }" 
+      ></textarea>
+      <span v-if="errors.has('message')" class="text-error">{{ errors.first('message') }}</span>
+    </div>
+    <button @click="sendReview()" class="primary btn_theme">Отправить</button>
+    <!--<div v-else>
       <div>Авторизируйтесь, чтобы оставить отзыв.</div> 
       <button @click="showAuth = true" class="primary btn_theme">Авторизоваться</button>
       <button @click="showRegistry = true" class="primary btn_theme">Регистрироваться</button>
     </div>
 		<auth v-if="showAuth" @close="showAuth=false"></auth>
-		<registry v-if="showRegistry" @close="showRegistry=false"></registry>
+		<registry v-if="showRegistry" @close="showRegistry=false"></registry>-->
   </div>
   <div class="review__send-success" v-else>
     Спасибо за Ваш отзыв!
@@ -45,7 +68,8 @@
         rating: 5,
         isSendSuccess: false,
 				showAuth: false,
-				showRegistry: false
+				showRegistry: false,
+        authorName: ''
       }
     },
     methods: {
@@ -54,9 +78,9 @@
         
         let post = `message_text=${this.message}`+
                     `&author_email=${this.$store.getters.getEmail}`+
-                    `&author_name=${this.$store.getters.getName}`+
+                    `&author_name=${this.authorName}`+
                     `&rank=${this.rating}`;
-
+                    
         this.$store.dispatch('showLoading');
         this.$API.post('reviews', post).then(r => {
           this.isSendSuccess = true;
@@ -66,8 +90,16 @@
         });
       },
       validate: function() {
-        return this.message.length > 5 ? true : false
+        this.$validator.validateAll();
+        return !Object.keys(this.$validator.flags).some(x => { 
+                return !this.$validator.flags[x].valid
+              });
+
+        return this.message.length > 5 ? true : false;
       }
+    },
+    mounted() {
+      this.authorName = this.$store.getters.getName;
     }
   }
 </script>

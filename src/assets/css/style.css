@@ -161,6 +161,10 @@ input, textarea{
   margin-bottom: 10px;
   align-items: center;
 }
+.form-1__field.column {
+	align-items: flex-start;
+	flex-direction: column;
+}
 .form-1 label{
   width: 200px;
   font-weight: 600;
@@ -735,6 +739,16 @@ height: 130px;
 		padding-left: 5px;
 		padding-right: 5px;
 		margin: 10px auto;
+	}
+	.form-1__field{
+		display: flex;
+		margin-bottom: 10px;
+		align-items: flex-start;
+		flex-direction: column;
+	}
+	.form-1 label{
+		width: 200px;
+		font-weight: 600;
 	}
 }
 @media (max-width: 375px){

@@ -220,10 +220,6 @@
     transform: translateX(10px);
     opacity: 0;
   }
-  .form-group{
-    position: relative;
-    margin-bottom: 15px;
-  }
   .title-group{
     padding-bottom: 15px;
   }
