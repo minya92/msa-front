@@ -66,7 +66,7 @@
           }
         );
 
-        this.searchText = '';
+        this.clear();
       },
       clear: function(){
         this.searchText = '';
