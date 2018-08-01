@@ -10,8 +10,8 @@
             <div class="transbackground"></div>
             <img :src='topSlider.img'>
           </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev" style="display:none"></div>
-          <div class="swiper-button-next" slot="button-next" style="display:none"></div>
+          <div class="swiper-button-prev" slot="button-prev" style=""></div>
+          <div class="swiper-button-next" slot="button-next" style=""></div>
           <div class="models-top-slider">
             <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels"
               :key="index"
@@ -74,10 +74,15 @@
           headerText: 'Мотопластик',
           footerText: 'Широкий выбор мотопластика от протестированных нами лично китайских производителей. Доступные цены и быстрая доставка до Вашего города.',
           img: 'img/slider/slider_pic.jpg'
+        },
+        {
+          headerText: 'Новое поколение фар',
+          footerText: 'Единственный диллер в России',
+          img: 'img/slider/moto.jpg'
         }
         ],
         swiperOption: {
-          //autoplay: 3000,
+          autoplay: 3000,
           grabCursor : false,
           autoHeight: true,
           prevButton:'.swiper-button-prev',
@@ -96,7 +101,7 @@
           slidesPerGroup: 1,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
-          //loop: true,
+          loop: true,
         }
       }
     },
