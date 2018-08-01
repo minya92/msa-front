@@ -154,7 +154,7 @@ export default {
       this.currentMark ? query.mark = this.currentMark : delete query.mark;
 
       this.$router.push({
-        path: `/catalog`, 
+        path: this.$route.path, 
         query: query
       })
     }
