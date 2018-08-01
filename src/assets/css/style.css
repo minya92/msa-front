@@ -69,6 +69,10 @@ button.primary{
 	display: flex;
 	align-items: center;
 }
+.fw {
+	display: flex;
+	flex-wrap: wrap;
+}
 .content-box {
 	flex: 1 0 auto;
 }
@@ -517,6 +521,10 @@ height: 130px;
 	bottom: 0;
 	background: rgba(0,0,0,0.4);
 	z-index: 1;
+}
+.history-list {
+	margin-bottom: 20px;
+	margin-right: 20px;
 }
 
 @media (max-width: 1159px){
