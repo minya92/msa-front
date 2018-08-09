@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import lodash from 'lodash'
+  import _ from 'lodash'
 
   export default {
     name: 'search_form',

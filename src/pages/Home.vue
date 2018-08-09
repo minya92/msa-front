@@ -1,7 +1,7 @@
 <template>
   <main-layout>
     <div class="top__slider__cc">
-        <swiper class="main-slider" :options="swiperOption">
+        <swiper class="main-slider" :options="swiperOption" ref="mainSwiper">
           <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
             <div class="top-slider-text-content">
               <h2>{{ topSlider.headerText }}</h2>
@@ -10,16 +10,17 @@
             <div class="transbackground"></div>
             <img :src='topSlider.img'>
           </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev" style=""></div>
-          <div class="swiper-button-next" slot="button-next" style=""></div>
           <div class="models-top-slider">
-            <router-link class="models-top-slider-item" v-for="(imgModel, index) in imgModels"
+            <a class="models-top-slider-item" 
+              v-for="(imgModel, index) in imgModels"
               :key="index"
-              :to="{name:'catalog', query: {mark: imgModel.marks_models_id}}"
+              @click="bannerToCatalog({mark: imgModel.marks_models_id})"
             >
               <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
-            </router-link>
+            </a>
           </div>
+          <div class="swiper-button-prev" slot="button-prev" style=""></div>
+          <div class="swiper-button-next" slot="button-next" style=""></div>
         </swiper>
     </div>
 
@@ -70,23 +71,29 @@
         imgModels: [],
         imgModelsWhite: [],
         topSliders: [
-        {
-          headerText: 'Мотопластик',
-          footerText: 'Широкий выбор мотопластика от протестированных нами лично китайских производителей. Доступные цены и быстрая доставка до Вашего города.',
-          img: 'img/slider/slider_pic.jpg'
-        },
-        {
-          headerText: 'Новое поколение фар',
-          footerText: 'Единственный диллер в России',
-          img: 'img/slider/moto.jpg'
-        }
+          {
+            name: '1',
+            headerText: 'Мотопластик',
+            footerText: 'Широкий выбор мотопластика от протестированных нами лично китайских производителей. Доступные цены и быстрая доставка до Вашего города.',
+            img: 'img/slider/slider_pic.jpg',
+            url: '/catalog/types=149996868299000'
+          },
+          {
+            name: '2',
+            headerText: 'Новое поколение фар',
+            footerText: 'Единственный диллер в России',
+            img: 'img/slider/moto.jpg',
+            url: '/catalog/types=150581197408400'
+          }
         ],
         swiperOption: {
           autoplay: 3000,
           grabCursor : false,
           autoHeight: true,
-          prevButton:'.swiper-button-prev',
-          nextButton:'.swiper-button-next',
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          },
           effect: 'fade',
           loop: true,
         },
@@ -105,7 +112,18 @@
         }
       }
     },
+    computed: {
+      swiper() {
+        return this.$refs.mainSwiper.swiper
+      }
+    },
     methods: {
+      bannerToCatalog(query) {
+        this.$router.push({
+          path: this.topSliders[this.swiper.activeIndex-1].url,
+          query
+        })
+      },
       getCatalogs: function(){
         this.$API.get('getTypes').then(r => {
           var catalogs = [];
@@ -129,12 +147,19 @@
         getMarksForBaner(2).then(r => {
           this.imgModelsWhite = r;
         });
+      },
+      isInteger(value) {
+        return (value ^ 0) == value;
       }
     },
     mounted() {
       this.getMarksBannerTop();
       this.getMarksBannerBottom();
       this.getCatalogs();
+
+      if (this.isInteger(this.$route.query.banner) && this.$route.query.banner > 1 && this.topSliders.length >= this.$route.query.banner) {
+        this.swiper.slideTo(this.$route.query.banner, 0, true);
+      }
     }
   }
 </script>
