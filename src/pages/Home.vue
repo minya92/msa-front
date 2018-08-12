@@ -87,7 +87,9 @@
           }
         ],
         swiperOption: {
-          autoplay: 3000,
+          autoplay: {
+            delay: 5000,
+          },
           grabCursor : false,
           autoHeight: true,
           navigation: {
