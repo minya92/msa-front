@@ -31,9 +31,9 @@
       <ul class="history-list">
         <li v-for="history in dataOrder.history" :key="history.ord_history_id">{{history.s_date | getDate}} - {{history.status_name}}</li>
       </ul>
-      <div class="color--primary">
-        {{ statusOrder }}
-      </div>
+    </div>
+    <div class="color--primary">s
+      {{ statusOrder }}
     </div>
   </profile-layout>
   <profile-layout v-else>
@@ -67,7 +67,7 @@
         return typeof this.dataOrder.status != 'undefined' ? this.dataOrder.status.status_name : '';
       },
       statusOrder() {
-        return this.dataOrder.status && this.dataOrder.status.full_message ? this.dataOrder.status.full_message : '';
+        return this.dataOrder.status && this.dataOrder.status.full_message ? `<strong>Последнее действие:<strong> ${this.dataOrder.status.full_message}` : '';
       }
     },
     methods: {
