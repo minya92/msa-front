@@ -1,7 +1,7 @@
 <template>
   <main-layout>
     <div class="content-fluid">
-      <h1>{{$route.meta.title}}</h1>
+      <h1>{{title}}</h1>
       <div v-html="infoText"></div>
     </div>
   </main-layout>
@@ -16,14 +16,17 @@
     },
     data() {
       return {
-        infoText: '<h3>ZXMT</h3>'
+        title: 'Заголовок',
+        infoText: 'Текст'
       }
     },
     created: function(){
-      this.$API.get('getPage/'+this.$route.fullPath.slice(1)).then(r => {
+      var article = this.$route.params.id
+      this.$API.get('getPage/'+article).then(r => {
         debugger
-        var page = r.data.data.manufactures
-        this.infoText = page.text
+        var page = r.data.data[article];
+        this.title = page.title;
+        this.infoText = page.text;
       })
     }
   }
