@@ -38,9 +38,9 @@
 								<span><div class="menu_icon"></div>{{lang.find_menu}}</span>
 								<findMoto v-if="showFinderMoto" @close="showFinderMoto = false"></findMoto>
 							</div>
-							<!--router-link to="/catalog" id="catalog-menu">
+							<router-link to="/catalog" id="catalog-menu">
 								<span><div class="menu_icon"></div>{{lang.catalog}}</span>
-							</router-link-->
+							</router-link>
 							<div class="search-mobile" @click="visibleSearch = !visibleSearch">
 								<svg data-v-c3e4eec0="" version="1.1" role="presentation" width="14.857142857142858" height="16" viewBox="0 0 1664 1792" class="fa-icon">
 									<path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path> 
@@ -221,7 +221,7 @@ header>div{
 	cursor: pointer;
 }
 .header-bottom{
-	padding: 10px 0;	
+	padding: 10px 0;
 	position: relative;
   border-top: black solid;
 	box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -280,7 +280,7 @@ header .search_input input[type="text"]{
 	.need__future{
 		display: none;
 	}
-	
+
 	.header-bottom  .mini-cart{
 		display: none !important;
 	}

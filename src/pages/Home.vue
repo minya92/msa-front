@@ -11,7 +11,7 @@
             <img :src='topSlider.img'>
           </swiper-slide>
           <div class="models-top-slider">
-            <a class="models-top-slider-item" 
+            <a class="models-top-slider-item"
               v-for="(imgModel, index) in imgModels"
               :key="index"
               @click="bannerToCatalog({mark: imgModel.marks_models_id})"
@@ -19,23 +19,23 @@
               <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
             </a>
           </div>
-          <div class="swiper-button-prev" slot="button-prev" style=""></div>
-          <div class="swiper-button-next" slot="button-next" style=""></div>
+          <!--div class="swiper-button-prev" slot="button-prev" style=""></div>
+          <div class="swiper-button-next" slot="button-next" style=""></div-->
         </swiper>
     </div>
 
     <div class="container-fluid">
       <div class="category-menu">
-        <div class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id">
-          <router-link :to="`/catalog/types=${catalog.id}`">
-            <img :src="catalog.img">
-            <h2>{{ catalog.name }}</h2>
-          </router-link>
-        </div>
+        <router-link class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id" :to="`/catalog/types=${catalog.id}`">
+          <!--div class="category-menu-item"-->
+            <img class="category-menu-item" :src="catalog.img">
+            <h2 class="category-menu-item">{{ catalog.name }}</h2>
+          <!--/div-->
+        </router-link>
       </div>
     </div>
 
-    <div style="background: #771d22 url('img/bg_red_texture.jpg'); background-size:100% 100%">
+    <!--div style="background: #771d22 url('img/bg_red_texture.jpg'); background-size:100% 100%">
       <div class="container-fluid">
         <div class="home-box-with-slider">
           <h2>Поиск по бренду</h2>
@@ -51,7 +51,7 @@
           </swiper>
         </div>
       </div>
-    </div>
+    </div-->
   </main-layout>
 </template>
 
