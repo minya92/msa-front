@@ -430,8 +430,8 @@ margin: 25px auto;
   margin: 50px;
 }
 .category-menu-item img {
-	max-height: 600px;
-	max-width: 300px;
+	max-height: 300px;
+	max-width: 600px;
 	margin-right: 5px;
 }
 .category-menu-item ul li{
@@ -599,8 +599,8 @@ height: 130px;
     padding: 10px;
 	}
 	.category-menu-item img {
-    max-height: 400px;
-		max-width: 200px;
+    max-height: 200px;
+		max-width: 400px;
 	}
 	.category-menu-item h2 {
     font-size: 20px;
