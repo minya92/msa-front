@@ -600,7 +600,7 @@ height: 130px;
 	}
 	.category-menu-item img {
     max-height: 200px;
-		max-width: 400px;
+		max-width: 100%;
 	}
 	.category-menu-item h2 {
     font-size: 20px;
@@ -680,8 +680,8 @@ height: 130px;
     padding: 10px;
 	}
 	.category-menu-item img {
-    max-height: 300px;
-		max-width: 600px;
+    max-height: 250px;
+		max-width: 100%;
 	}
 	.category-menu-item h2 {
     font-size: 18px;
