@@ -18,6 +18,7 @@ import Information from '@/pages/Information'
 import FAQ from '@/pages/faq'
 import ContactUs from '@/pages/contact-us'
 import Manufactures from '@/pages/Manufactures'
+import Headlight from '@/pages/Headlight'
 import Articles from '@/pages/Articles'
 import PaymentDelivery from '@/pages/PaymentDelivery'
 import About from '@/pages/About'
@@ -55,6 +56,7 @@ const routes = [
     { path: '/info', component: Information, name: 'Information', meta: {breadcrumb: 'Правила работы с сайтом MSAmoto', title: 'Правила работы с сайтом MSAmoto'} },
     { path: '/contact-us', component: ContactUs, name: 'ContactUs', meta: {breadcrumb: 'Напишите нам', title: 'Напишите нам'} },
     { path: '/manufactures', component: Manufactures, name: 'Manufactures', meta: {breadcrumb: 'Производители', title: 'Производители'} },
+    { path: '/headlight', component: Headlight, name: 'Headlight', meta: {breadcrumb: 'Фары', title: 'Фары'} },
     { path: '/articles/:id', component: Articles, name: 'Article', meta: {breadcrumb: 'Статья', title: 'Статья'} },
     { path: '/payment-delivery', component: PaymentDelivery, name: 'PaymentDelivery', meta: {breadcrumb: 'Оплата и доставка', title: 'Оплата и доставка'} },
     { path: '/about', component: About, name: 'About', meta: {breadcrumb: 'О магазине', title: 'О магазине'} },
