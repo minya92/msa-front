@@ -17,6 +17,7 @@
               <option value="costDesc">убыванию цены</option>
             </select>
           </div>
+          <!--TODO Выделить в отдельный компонент-->
           <div class="products-section">
             <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
             <div class="product-wrapper" v-for="product in products">
@@ -63,13 +64,13 @@
 
   export default {
     components: {
-      pagination, 
-      MainLayout, 
-      RecentView, 
-      AddToCart, 
-      PreloadImageLoader, 
-      GreyMarks, 
-      ActionBlocks, 
+      pagination,
+      MainLayout,
+      RecentView,
+      AddToCart,
+      PreloadImageLoader,
+      GreyMarks,
+      ActionBlocks,
       Categories,
       FilterModel
     },
