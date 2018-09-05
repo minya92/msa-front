@@ -10,7 +10,7 @@
         <!--<img :src='topBanner.img'>-->
         <video preload="auto" loop id="bgvid" poster="" autoplay muted onplaying="style.marginTop=(window.outerHeight*0.5-this.offsetHeight)/2 + 'px'">
           <!--<source src="https://d2edahx6g47lzn.cloudfront.net/v2/home/ICON_Web30_LandingPage_5.1_p_q26.webm" type="video/webm">-->
-          <source src="https://msamoto.ru/images/msamoto_angel_eyes.mov" type="video/mp4">
+          <source :src="page.header_video" type="video/mp4">
         </video>
       </div>
       </div>
