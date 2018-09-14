@@ -10,7 +10,7 @@
       </yandex-map>
 
       <p><strong>Адрес: </strong>Забайкальск, ул. Полетная, 1</p>
-      <p><strong>Телефон: </strong>8 (914) 471-67-76</p>
+      <p><strong>Телефон: </strong>+7 (910) 684-44-88</p>
     </div>
   </main-layout>
 </template>
