@@ -14,6 +14,7 @@
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
     "md5": "^2.2.1",
+    "v-mask": "^1.3.2",
     "vee-validate": "^2.0.9",
     "vue": "^2.5.16",
     "vue-awesome": "^2.3.8",
@@ -82,13 +83,13 @@
     "verbose": true,
     "testURL": "http://localhost/",
     "moduleFileExtensions": [
-        "js",
-        "json",
-        "vue"
+      "js",
+      "json",
+      "vue"
     ],
     "transform": {
-        "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-        ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"

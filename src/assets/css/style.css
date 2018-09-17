@@ -53,7 +53,7 @@ button.primary{
 	margin: 5px 0;
 }
 .text-error, .form__error__message{
-	color: red;
+	color: #ff5252;
 	font-size: 12px;
 }
 #app {
@@ -62,6 +62,16 @@ button.primary{
 	flex-direction: column;
 	height: 100%;
 }
+/*****/
+.error--text {
+  color: #ff5252;
+}
+.v-flex {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+/*****/
 .top__slider__cc{
 	background: #000;
 }
