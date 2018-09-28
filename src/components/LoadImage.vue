@@ -1,6 +1,12 @@
 <template>
   <div v-if="zoom" class='img-zoom-container' ref="container"><img :src="imageSrc" ref="imgZoom"/></div>
   <img v-else :src="imageSrc" ref="imgZoom"/>
+
+  
+  <!--<iframe :src="src" width="100%" height="100%" frameborder="0"></iframe>
+  <video :src="src" width="100%" height="100%" frameborder="0"></video>-->
+  <!--<div v-if="zoom" class='img-zoom-container' ref="container"><img :src="imageSrc" ref="imgZoom"/></div>
+  <img v-else :src="imageSrc" ref="imgZoom"/>-->
 </template>
 
 <script>

@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="total_items">товаров: {{this.total}}</div>
-    <button class="upTop btn_theme" @click="upTop">Наверх</button>
+    <button v-if="buttonUp" class="upTop btn_theme" @click="upTop">Наверх</button>
   </div>
 </template>
 
@@ -45,6 +45,10 @@
       pageRange: {
         type: Number,
         default: 2
+      },
+      buttonUp: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
