@@ -132,7 +132,7 @@
 			return{
 				showOrderStatus: false,
 				copyright: "2017 MSA MOTO - все права защищены",
-				phoneFooter: ['+7 (910) 684-44-88']
+				phoneFooter: ['+7 (914) 471-67-76', '+7 (910) 684-44-88']
 			}
 		}
 	}
@@ -168,7 +168,7 @@
 }
 .footer-top{
 	background: #262626;
-	color: #9b9b9b;
+	color: #ff4444;
 }
 .footer-top{
 	display: flex;
@@ -192,7 +192,7 @@
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
-	background: #9b9b9b;
+	background: #733;
 	vertical-align: middle;
 	margin-bottom: 5px;
 	display: inline-block;
@@ -207,7 +207,7 @@
 	font-weight: 600;
 }
 .footer-bottom{
-	background: #000;
+	background: url(/img/carbon_texture.jpg);
 	color: #787878;
 }
 .fbox-c {
@@ -255,7 +255,7 @@
 	height: 18px;
 }
 .fbox-c-phone a{
-	color: #9b9b9b;
+	color: #ff4444;
 	text-decoration: none;
 	margin: 0 15px;
 	font-size: 16px;
@@ -268,7 +268,7 @@
    justify-content: center;
 }
 .fbox-c-menu a{
-	color: #9b9b9b;
+	color: #ff4444;
 	text-decoration: none;
 	margin: 5px 15px;
 	font-size: 12px;

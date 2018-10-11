@@ -46,21 +46,59 @@
       </div>
       <div class="cart-methods-section">
         <div class="simplecheckout-left-column">
-            <div class="checkout-heading">Покупатель</div>
-            <div class="row__customer_group" v-for="field in Object.keys(userFields)" :key="userFields[field].name">
-              <label :class="userFields[field].require ? 'require' : ''">{{ userFields[field].name }}</label>
-              <masked-input v-if="field == 'phone'" v-model="userFields[field].value" mask="\+\7 (111) 111-11-11" :class="userFields[field].error ? 'error-val' : ''"/>
-              <input v-else v-model="userFields[field].value"  @blur="validateInput(field)" :class="userFields[field].error ? 'error-val' : ''"/>
-            </div>
+          <div class="checkout-heading">Покупатель</div>
+          <div class="v-flex">
+            <label class="require">ФИО</label>
+            <text-field
+              v-model="userFields.user"
+              name="user" 
+              data-vv-as="ФИО"
+              placeholder="Иванов Сергей Александрович" 
+              v-validate="'required'" 
+              :message="errors.has('user') ? errors.first('user') : ''"
+            />
+          </div>
+          <div class="v-flex">
+            <label class="require">Email</label>
+            <text-field
+              v-model="userFields.email"
+              name="email" 
+              data-vv-as="Email"
+              placeholder="useremail@mail.ru" 
+              v-validate="'required|email'" 
+              :message="errors.has('email') ? errors.first('email') : ''"
+            />
+          </div>
+          <div class="v-flex">
+            <label class="require">Телефон</label>
+            <text-field
+              v-model="userFields.phone"
+              name="phone" 
+              data-vv-as="Телефон"
+              placeholder="+7 (###) ###-##-##"
+              :mask="'+7 (###) ###-##-##'"
+              v-validate="'required'" 
+              :message="errors.has('phone') ? errors.first('phone') : ''"
+            />
+          </div>
+          <div class="v-flex">
+            <label class="require">Адрес</label>
+            <text-field
+              v-model="userFields.address"
+              name="address" 
+              data-vv-as="Адрес"
+              placeholder="" 
+              v-validate="'required'" 
+              :message="errors.has('address') ? errors.first('address') : ''"
+            />
+          </div>
         </div>
         <div class="simplecheckout-right-column">
           <payment-methods
-            :payments="payments"
             v-model="selectPayment"
             :total="total"
           />
           <shipping-methods
-            :delivery="delivery"
             v-model="selectDelivery"
             :total="total"
           />
@@ -87,67 +125,51 @@
   import MainLayout from '@/layouts/Main'
   import PaymentMethods from './PaymentMethods'
   import ShippingMethods from './ShippingMethods'
-  import MaskedInput from 'vue-masked-input'
+  import TextField from '@/components/elements_ui/text-field'
 
   export default {
     components: {
-      MainLayout, MaskedInput, PaymentMethods, ShippingMethods
+      MainLayout,
+      PaymentMethods, 
+      ShippingMethods,
+      TextField
     },
     data() {
       return {
         products: [],
-        selectDelivery: 1,
-        selectPayment: 1,
-        delivery: [],
-        payments: [],
-        userFields: [],
+        selectDelivery: null,
+        selectPayment: null,
+        userFields: {
+          user: '',
+          email: '',
+          phone: '',
+          address: ''
+        },
         orderDetails: ''
       }
     },
     computed: {
       total () {
-        var delivery = this.delivery.find(p => p.id === this.selectDelivery)
         var deliveryCost = 0
-        if (delivery){
-          deliveryCost = delivery.deliverCost;
+        if (this.selectDelivery){
+          deliveryCost = this.selectDelivery.deliverCost;
         }
         return this.products.reduce((total, p) => {
           return total + p.price * p.quantity + deliveryCost
         }, 0)
       },
       selectPaymentMethods(){
-        var payments = this.payments.find(p => p.id == this.selectPayment);
-
-        if (!payments){
-          return '';
-        }
-
-        return payments.payName
+        return this.selectPayment ? this.selectPayment.payName : null;
       },
       selectDeliveryMethods(){
-        let delivery = this.delivery.find(p => p.id == this.selectDelivery);
-
-        if (!delivery){
+        if (!this.selectDelivery){
           return '';
         }
-        const deliverCost = delivery.deliverCost ? delivery.deliverCost : 0
-        return delivery.deliveryName + ': ' + deliverCost
+        const deliverCost = this.selectDelivery.deliverCost ? this.selectDelivery.deliverCost : 0
+        return this.selectDelivery.deliveryName + ': ' + deliverCost
       }
     },
     methods: {
-      validateInput: function(field){
-        if (field == 'email'){
-          this.validateEmail();
-        }
-      },
-      validateEmail: function() {
-        var reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/
-        if (!this.userFields.email.value.match(reg)) {
-          this.userFields.email.error = true;
-          return;
-        }
-        this.userFields.email.error = false;
-      },
       loadImage: function(image){
         if (!image){
           return 'img/default.jpg'
@@ -169,37 +191,30 @@
         this.$store.dispatch('removeCart', product);
         this.products.splice(this.products.indexOf(product), 1)
       },
-      validateUser: function(){
-        let error = false
-        for(let field in this.userFields) {
-          if (this.userFields[field].require){
-            if (this.userFields[field].value.length > 3) {
-              this.userFields[field].error = false
-            } else {
-              this.userFields[field].error = true; error = true;
-            }
-          }
-        }
-        return !error
+      validate: function() {
+        return !Object.keys(this.$validator.flags).some(x => { 
+                return !this.$validator.flags[x].valid
+              })
       },
       goCatalog: function(){
         this.$router.push({name: 'catalog'});
       },
       sendOrder: function(){
-        if (!this.validateUser())
-          return
+        this.$validator.validateAll();
+        
+        if (!this.validate()) return;
 
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
 
-        let post = `fio=${this.userFields['user'].value}&phone=${this.userFields['phone'].value}`+
-                    `&email=${this.userFields['email'].value}`+
-                    `&deliveryType=${this.selectDelivery}`+
-                    `&deliveryAddress=${this.userFields['address'].value}`+
+        let post = `fio=${this.userFields.user}&phone=${this.userFields.phone}`+
+                    `&email=${this.userFields.email}`+
+                    `&deliveryType=${this.selectDelivery.id}`+
+                    `&deliveryAddress=${this.userFields.address}`+
                     `&orderItems=${JSON.stringify(newJson)}`+
-                    `&payType=${this.selectPayment}`+
+                    `&payType=${this.selectPayment.id}`+
                     `&orderDetails=${this.orderDetails}`;
-
+                    
         this.$store.dispatch('showLoading');
         this.$API.post('placeOrder/', post).then(r => {
           let orderId = r.data.data
@@ -213,29 +228,6 @@
           this.$store.dispatch('hideLoading');
         });
       },
-      deliveryMehods: function(){
-        this.$API.get('getDelivery').then(r => {
-          this.delivery = r.data.data
-        })
-      },
-      paymentMehods: function(){
-        this.$API.get('getPayTypes').then(response => {
-          this.payments = response.data.data
-        })
-      }
-    },
-    filters: {
-      selectPaymentMethod: function(delivery){
-        if (delivery){
-          return 'delivery'
-        }
-        var deliverys = this.delivery.find(p => p.id === this.selectDelivery)
-        var deliveryCost = 0
-        if (deliverys){
-          deliveryCost = delivery.deliverCost;
-        }
-        return 'deliveryCost'
-      }
     },
     created: function(){
       if (!this.$store.getters.cartProducts.length){
@@ -243,22 +235,14 @@
       }
 
       this.$store.dispatch('showLoading');
-      this.deliveryMehods()
-      this.paymentMehods()
-
-      //поля для заполнения данных юзера
-      this.$set(this.userFields, 'user', {name: 'ФИО', value: '', require: true, error: false})
-      this.$set(this.userFields, 'phone', {name: 'Телефон', value: '', require: true, error: false})
-      this.$set(this.userFields, 'email', {name: 'Email', value: '', require: true, error: false})
-      this.$set(this.userFields, 'address', {name: 'Адрес', value: '', require: true, error: false})
 
 			this.$API.get("clients/current").then(r => {
 				if (r.data.data != null){
 					this.$store.dispatch('login', r.data.data);
-          this.userFields.user.value = this.$store.getters.getName;
-          this.userFields.email.value = this.$store.getters.getEmail;
-          this.userFields.phone.value = this.$store.getters.getPhone;
-          this.userFields.address.value = this.$store.getters.getCity;
+          this.userFields.user = this.$store.getters.getName;
+          this.userFields.email = this.$store.getters.getEmail;
+          this.userFields.phone = this.$store.getters.getPhone;
+          this.userFields.address = this.$store.getters.getCity;
 				}
 			})
 
@@ -395,26 +379,9 @@
     font-weight: 600;
     width: 100%;
   }
-  .row__customer_group{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 20px 0 0;
-    width: 100%;
-  }
-  .row__customer_group label{
+  .v-flex label{
     margin-right: 10px;
     min-width: 100px;
-  }
-  .row__customer_group input{
-    border-radius: 3px;
-    width: 100%;
-    padding: 7px 5px;
-    outline: none;
-    border: 1px solid #ccc;
-  }
-  input.error-val{
-    border: 1px solid red;
   }
   .cart__footer{
     text-align: right;

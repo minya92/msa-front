@@ -41,7 +41,7 @@
     <template v-if='product.description'>
       <div class="content-fluid product__detail_description">
         <h3>Описание</h3>
-        <div>{{product.description}}</div>
+        <div v-html="formatProductDescription"></div>
       </div>
     </template>
     <template v-if='product.compatibility'>
@@ -76,6 +76,9 @@
       }
     },
     computed:{
+      formatProductDescription() {
+        return this.product.description ? this.product.description.replace('/n','<br>') : '';
+      },
       loadFullImage: function(){
         if (this.product.images.length == 0){
           return ''

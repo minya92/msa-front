@@ -6,8 +6,8 @@ Vue.use(Router)
 import Home from '@/pages/Home'
 import Contacts from '@/pages/Contacts'
 import PageNotFound from '@/pages/404'
-import Catalog from '@/pages/catalog'
-import Product from '@/pages/product'
+import Catalog from '@/pages/catalog/Index'
+import Product from '@/pages/product/Index'
 
 import Profile from '@/pages/profile/Profile'
 import Order from '@/pages/profile/Order'
