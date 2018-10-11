@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const baseURL = (process.env.NODE_ENV === 'development')
 ? 'https://msamoto.ru'
-: 'http://' + window.location.host;
+: 'https://' + window.location.host;
 
 export const API = axios.create({
 	baseURL: baseURL + '/api',

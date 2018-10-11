@@ -82,13 +82,13 @@
     "verbose": true,
     "testURL": "http://localhost/",
     "moduleFileExtensions": [
-        "js",
-        "json",
-        "vue"
+      "js",
+      "json",
+      "vue"
     ],
     "transform": {
-        "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-        ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
