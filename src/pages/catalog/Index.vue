@@ -8,7 +8,7 @@
 
       <div>
         <catalog-section sortBlock></catalog-section>
-        <catalog-item-list :filter="filter" paginationBlock></catalog-item-list>
+        <!--<catalog-item-list :filter="filter" paginationBlock></catalog-item-list>-->
       </div>
     </div>
     <div class="content-fluid">
