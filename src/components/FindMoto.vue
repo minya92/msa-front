@@ -155,13 +155,12 @@
       // }
       showMore() {
         let query = Object.assign({}, this.$route.query);
-        console.log(query)
+        
         this.currentYear ? query.year = this.currentYear : delete query.year;
         this.currentModel ? query.model = this.currentModel : delete query.model;
         this.currentMark ? query.mark = this.currentMark : delete query.mark;
-        console.log(query)
         
-          this.$router.push({
+        this.$router.push({
           path: `/catalog`, 
           query: query
         });

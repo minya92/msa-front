@@ -95,10 +95,72 @@ export default {
 .btn_product{
 	padding: 7px 15px;
 	width: 48%;
+	margin-bottom: 10px;
 
 }
 .product:hover .btns_product{
 	display: flex;
 	justify-content: space-between;
+}
+
+@media (max-width: 960px){
+	.product{
+		padding-bottom: 46px;
+	}
+	.product .btns_product{
+		display: flex;
+		justify-content: space-between;
+		bottom: 8px;
+		top: auto;
+	}
+	.product-description {
+		max-height: 65px;
+	}
+}
+@media (min-width: 481px) and (max-width: 768px){
+	.product-wrapper{
+		margin-bottom: 10px;
+		width: 33.33%;
+	}
+	.products-section{
+		margin-right: -15px;
+	}
+	.product{
+		margin-right: 15px;
+		padding: 5px;
+		font-size: 12px;
+		display: block;
+		padding-bottom: 46px;
+	}
+}
+@media (max-width: 480px){
+	.product-wrapper{
+		margin-bottom: 10px;
+		width: 50%;
+	}
+	.products-section{
+		margin-right: -10px;
+	}
+	.product{
+		margin-right: 10px;
+		padding: 5px;
+		font-size: 12px;
+		display: block;
+		padding-bottom: 75px;
+	}
+	.product .btns_product{
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 5px;
+		justify-content: space-between;
+		bottom: 5px;
+		top: auto;
+	}
+	.product .btn_product{
+		width: 100%;
+	}
+	.product-description {
+		max-height: 65px;
+	}
 }
 </style>

@@ -75,7 +75,6 @@ const mutations = {
     saveItems(state.items)
   },
   [types.UPDATE_CART] (state, item) {
-    console.log(item)
     const record = state.items.find(p => p.id === item.cost_id)
     if (!record) {
       state.items.push({
