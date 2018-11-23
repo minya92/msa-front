@@ -13,6 +13,7 @@
             @click.native="showImageSliders = true"
           >
           </preload-image-loader>
+          <p class="main-image__tooltip">Кликните для просмотра в полный экран</p> 
         </div>
           <div class="thumblist">
             <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
@@ -153,6 +154,19 @@
     height: 370px;
     outline: 1px solid #e7e7e7;
     overflow: hidden;
+    position: relative;
+  }
+  .main-image__tooltip {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border-radius: 3px;
+    padding: 3px 5px;
+    bottom: 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  }
+  .main-image:hover .main-image__tooltip {
+    display: block;
   }
   .thumblist{
     display: flex;
