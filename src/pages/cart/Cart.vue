@@ -48,24 +48,22 @@
         <div class="simplecheckout-left-column">
           <div class="checkout-heading">Покупатель</div>
           <div class="v-flex">
-            <label class="require">ФИО</label>
+            <label>ФИО</label>
             <text-field
               v-model="userFields.user"
               name="user" 
               data-vv-as="ФИО"
-              placeholder="Иванов Сергей Александрович" 
-              v-validate="'required'" 
+              placeholder="Иванов Сергей Александрович"
               :message="errors.has('user') ? errors.first('user') : ''"
             />
           </div>
           <div class="v-flex">
-            <label class="require">Email</label>
+            <label>Email</label>
             <text-field
               v-model="userFields.email"
               name="email" 
               data-vv-as="Email"
-              placeholder="useremail@mail.ru" 
-              v-validate="'required|email'" 
+              placeholder="useremail@mail.ru"
               :message="errors.has('email') ? errors.first('email') : ''"
             />
           </div>
@@ -82,13 +80,12 @@
             />
           </div>
           <div class="v-flex">
-            <label class="require">Адрес</label>
+            <label>Адрес</label>
             <text-field
               v-model="userFields.address"
               name="address" 
               data-vv-as="Адрес"
               placeholder="" 
-              v-validate="'required'" 
               :message="errors.has('address') ? errors.first('address') : ''"
             />
           </div>
@@ -202,7 +199,10 @@
       sendOrder: function(){
         this.$validator.validateAll();
         
-        if (!this.validate()) return;
+        if (!this.validate()) {
+          window.scroll(0, 60);
+          return;
+        }
 
         let newJson = []
         this.$store.getters.cartProducts.forEach(x => newJson.push({itemsCount: x.quantity, cost_id: x.id}))
