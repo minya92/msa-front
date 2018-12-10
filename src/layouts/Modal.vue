@@ -69,19 +69,21 @@
     padding: 12px 0;
     text-align: center;
   }
-  .modal-frame input, .modal-frame button{
+  .modal-frame input{
     width: 100%;
-    height: 30px;
     display: block;
-    padding: 0 10px;
+    padding: 8px 10px;
+  }
+  .modal-frame button{
+    width: 100%;
+    display: block;
+    padding: 8px 10px;
   }
   .modal-frame input[type='text']{
-    padding: 0 15px;
     font-size: 14px;
     letter-spacing: 1px;
   }
   .modal-frame input[type='password']{
-    padding: 0 15px;
     font-size: 30px;
     letter-spacing: 5px;
   }
@@ -92,7 +94,6 @@
   }
   .modal-frame label{
     display: block;
-    padding-bottom: 5px; 
   }
   .form-group{
     margin: 5px 0;

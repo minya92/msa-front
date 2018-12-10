@@ -16,12 +16,12 @@
 </template>
 
 <script>
-  import yandexMap from 'vue-yandex-maps';
   import MainLayout from '@/layouts/Main.vue'
 
   export default {
     components: {
-      MainLayout, yandexMap
+      MainLayout, 
+      yandexMap: () => import (/* webpackChunkName: "yandex-map" */ 'vue-yandex-maps')
     },
     data(){
       return {

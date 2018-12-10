@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import debounce from 'lodash.debounce'
 
   export default {
     name: 'search_form',
@@ -44,7 +44,7 @@
       }
     },
     methods: {
-      searchItemsCount: _.debounce(function(){
+      searchItemsCount: debounce(function(){
         if (this.searchText.length < 3) {
           this.totalSearch = 0;
           return;

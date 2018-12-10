@@ -16,7 +16,7 @@ import OrderId from '@/pages/profile/OrderId'
 import Review from '@/pages/review'
 import Information from '@/pages/Information'
 import FAQ from '@/pages/faq'
-import ContactUs from '@/pages/contact-us'
+const ContactUs = () => import(/* webpackChunkName: "contact" */ '@/pages/contact-us');
 import Manufactures from '@/pages/Manufactures'
 import Headlight from '@/pages/Headlight'
 import Articles from '@/pages/Articles'

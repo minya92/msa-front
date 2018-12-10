@@ -1,57 +1,61 @@
 <template>
   <main-layout>
-    <image-sliders v-if="showImageSliders" :images="full_images" :currentImg="numCurrentImage" @close="showImageSliders = false"></image-sliders>
+    <template v-if="product">
+      <image-sliders v-if="showImageSliders" :images="full_images" :currentImg="numCurrentImage" @close="showImageSliders = false"></image-sliders>
 
-    <div class="content-fluid">
-      <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
-      <div class="product__detail">
-        <div class="product__detail__media">
-        <div class="main-image">
-          <preload-image-loader v-if="product.images && product.images.length > 0"
-            :src="loadFullImage"
-            :zoom="true"
-            @click.native="showImageSliders = true"
-          >
-          </preload-image-loader>
-          <p class="main-image__tooltip">Кликните для просмотра в полный экран</p> 
-        </div>
-          <div class="thumblist">
-            <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
+      <div class="content-fluid">
+        <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
+        <div class="product__detail">
+          <div class="product__detail__media">
+          <div class="main-image">
+            <preload-image-loader v-if="product.images && product.images.length > 0"
+              :src="loadFullImage"
+              :zoom="true"
+              @click.native="showImageSliders = true"
+            >
+            </preload-image-loader>
+            <p class="main-image__tooltip">Кликните для просмотра в полный экран</p> 
           </div>
-        </div>
-        <div class="product__detail__description">
-          <h1>{{product.name}}</h1>
-          <div class="product-price-block">
-            <div class="price">{{product.price}} {{product.currency}}</div>
-            <div class="stock">{{product.stock}}</div>
-          </div>
-          <div class="article" v-if="product.article">артикул: {{product.article}}</div>
-          <button @click="addToCart(product)"><img src="../../assets/img/cart_empty.svg">Вкорзину</button>
-          <template v-if='product.chars'>
-            <div class="characteristic-block">
-              <h3>Характеристики</h3>
-              <div v-for="char in product.chars">{{char.char_name}}: <strong>{{char.char_value}}</strong></div>
+            <div class="thumblist">
+              <a v-for="(image, index) in product.images" :key="image.id"><img :src="loadImage(image.thumbnail)" @click="numCurrentImage = index"></a>
             </div>
-          </template>
-          <div>
-            <div>Мы принимаем электронные платежи</div>
+          </div>
+          <div class="product__detail__description">
+            <h1>{{product.name}}</h1>
+            <div class="product-price-block">
+              <div class="price">{{product.price}} {{product.currency}}</div>
+              <div class="stock">{{product.stock}}</div>
+            </div>
+            <div class="article" v-if="product.article">артикул: {{product.article}}</div>
+            <button @click="addToCart(product)"><img src="../../assets/img/cart_empty.svg">Вкорзину</button>
+            <button @click="oneClickShow = true"><img src="../../assets/img/cart_empty.svg">Купить в 1 клик</button>
+            <template v-if='product.chars'>
+              <div class="characteristic-block">
+                <h3>Характеристики</h3>
+                <div v-for="char in product.chars">{{char.char_name}}: <strong>{{char.char_value}}</strong></div>
+              </div>
+            </template>
+            <div>
+              <div>Мы принимаем электронные платежи</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <template v-if='product.description'>
-      <div class="content-fluid product__detail_description">
-        <h3>Описание</h3>
-        <div v-html="formatProductDescription"></div>
-      </div>
-    </template>
-    <template v-if='product.compatibility'>
-      <div class="content-fluid product-compatibility">
-        <h3>Совместимость</h3>
-        <ul>
-          <li v-for="compatibility in product.compatibility">{{compatibility.mark_model_name}}</li>
-        </ul>
-      </div>
+      <template v-if='product.description'>
+        <div class="content-fluid product__detail_description">
+          <h3>Описание</h3>
+          <div v-html="formatProductDescription"></div>
+        </div>
+      </template>
+      <template v-if='product.compatibility'>
+        <div class="content-fluid product-compatibility">
+          <h3>Совместимость</h3>
+          <ul>
+            <li v-for="compatibility in product.compatibility">{{compatibility.mark_model_name}}</li>
+          </ul>
+        </div>
+      </template>
+      <one-click :product="product" v-if="oneClickShow" @close="oneClickShow = false"></one-click>
     </template>
   </main-layout>
 </template>
@@ -61,19 +65,21 @@
   import AddToCart from '@/components/AddToCart'
   import PreloadImageLoader from '@/components/LoadImage'
   import ImageSliders from '@/components/SliderImage'
+  import OneClick from '@/components/oneClick/OneClick'
 
   export default {
     components: {
-      MainLayout, AddToCart, PreloadImageLoader, ImageSliders
+      MainLayout, AddToCart, PreloadImageLoader, ImageSliders, OneClick
     },
     data() {
       return {
-        product: {},
+        product: null,
         numCurrentImage: 0,
         imgDefault: '../img/default.jpg',
         showCart: false,
         showImageSliders: false,
-        full_images: []
+        full_images: [],
+        oneClickShow: false
       }
     },
     computed:{
@@ -120,7 +126,7 @@
           compatibility: item.supported,
           chars: item.chars
         };
-
+        
         this.full_images = item.images.map(x => this.$SERVER_URL + x.full_image);
         this.$store.dispatch("recentItem", this.product);
       })

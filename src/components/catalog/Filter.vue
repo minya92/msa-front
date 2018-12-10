@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import lodash from 'lodash'
+import debounce from 'lodash.debounce'
 import vsc from 'vue-slider-component'
 export default {
   components: {
@@ -100,7 +100,7 @@ export default {
     }
   }),
   methods: {
-    vscChange: _.debounce(function (e) {
+    vscChange: debounce(function (e) {
       let query = Object.assign({}, this.$route.query);
       if (e[0] >= 0)  query.cost_min = e[0];
       if (e[1] >= 0)  query.cost_max = e[1];

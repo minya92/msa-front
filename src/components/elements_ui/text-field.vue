@@ -1,5 +1,5 @@
 <template>
-  <div class="v-input v-text-field" :class="message || 'error--text'">
+  <div class="v-input v-text-field" :class="message  ? 'error--text' : ''">
     <div class="v-input__control">
       <div class="v-text-field__slot">
         <input type="text" :value="value" :placeholder="placeholder" @input="$emit('input', $event.target.value)" v-mask="mask ? mask : value">
@@ -57,7 +57,7 @@ export default {
     margin-bottom: 4px;
 }
 .v-input input {
-    max-height: 32px;
+    max-height: 36px;
 }
 .v-text-field input {
     flex: 1 1 auto;
@@ -76,7 +76,7 @@ export default {
     overflow: hidden;
 }
 .v-messages {
-    color: rgba(252, 41, 41, 0.637);
+    color: #e8747b;
     flex: 1 1 auto;
     font-size: 12px;
     min-height: 12px;
@@ -86,5 +86,9 @@ export default {
     word-break: break-word;
     overflow-wrap: break-word;
     word-wrap: break-word;
+}
+.error--text input {
+  border-color: #e8747b;
+  background: rgba(232, 116, 123, 0.1);
 }
 </style>
