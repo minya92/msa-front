@@ -84,7 +84,7 @@
     },
     computed:{
       formatProductDescription() {
-        return this.product.description ? this.product.description.replace('/n','<br>') : '';
+        return this.product.description ? this.product.description.replace(/\n/g,'<br/>') : '';
       },
       loadFullImage: function(){
         if (this.product.images.length == 0){
