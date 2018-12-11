@@ -10,25 +10,37 @@
         <div class="product-description">{{product.description}}</div>
         <div class="product-price">{{product.price}} {{product.currency}}</div>
       </div>
-      <div class="btns_product">
+      <!--<div class="btns_product">
         <button class="btn_product btn_theme_white"  @click.prevent='$router.push({path: `/product/${product.id}`})'>Подробнее</button>
         <button class="btn_product btn_theme"  @click.prevent="$emit('addToCart', product)">В корзину</button>
+      </div>-->
+			<div class="btns_product">
+        <button class="btn_product btn_theme btn_max" @click="oneClickShow = true">Купить в 1 клик</button>
       </div>
+      <one-click :product="product" v-if="oneClickShow" @close="oneClickShow = false"></one-click>
     </div>
   </div>
 </template>
 
 <script>
 import PreloadImageLoader from '@/components/LoadImage'
+import OneClick from '@/components/oneClick/OneClick'
+
 export default {
   components: {
-    PreloadImageLoader
+		PreloadImageLoader,
+		OneClick
   },
   props: {
     product: {
       type: Object
     }
-  }
+	},
+	data() {
+		return {
+      oneClickShow: false
+		}
+	}
 }
 </script>
 

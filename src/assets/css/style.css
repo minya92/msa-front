@@ -39,6 +39,9 @@ button {
 	outline: none;
 	text-align: center;
 }
+.btn_max {
+	width: 100% !important;
+}
 .bg__theme_two{
 	background: #801f25;
 }
