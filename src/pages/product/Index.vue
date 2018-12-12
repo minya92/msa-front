@@ -124,7 +124,8 @@
           currency: item.currency,
           images: item.images,
           compatibility: item.supported,
-          chars: item.chars
+          chars: item.chars,
+          full_image: item.full_image
         };
         
         this.full_images = item.images.map(x => this.$SERVER_URL + x.full_image);

@@ -107,9 +107,8 @@
     },
     computed: {
       imageItem() {
-        if (!this.product.images || this.product.images.length == 0) return '';
-
-        return this.$SERVER_URL + this.product.images[0].thumbnail;
+        let image = this.product.full_image || this.product.image || '';
+        return this.$SERVER_URL + image;
       },
       getStatus() {
         return status;
