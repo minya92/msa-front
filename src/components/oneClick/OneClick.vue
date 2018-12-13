@@ -98,7 +98,7 @@
           phone: '',
           address: ''
         },
-        status: SUCCESS
+        status: DEFAULT
       }
     },
     computed: {
