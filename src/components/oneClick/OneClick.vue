@@ -63,16 +63,12 @@
           </div>
         </div>
 
-        <div class="oc-modal" v-else-if="status == -1">
-          <div class="oc-action-block">
-            <div  class="oc-info">Не удалось выполнить заказ. Свяжитесь с нашими менеджерами, они Вам помогут.</div>
-          </div>
+        <div class="oc-action-block" v-else-if="status == -1">
+          <div  class="oc-info">Не удалось выполнить заказ. Свяжитесь с нашими менеджерами, они Вам помогут.</div>
         </div>
 
-        <div class="oc-modal" v-else-if="status == 1">
-          <div class="oc-action-block">
-            <div  class="oc-info">Заказ отправлен. Наши менеджеры свяжутся с Вами с ближайшее время.</div>
-          </div>
+        <div class="oc-action-block" v-else-if="status == 1">
+          <div  class="oc-info">Заказ отправлен. Наши менеджеры свяжутся с Вами с ближайшее время.</div>
         </div>
       </div>
     </div>
@@ -102,7 +98,7 @@
           phone: '',
           address: ''
         },
-        status: DEFAULT
+        status: SUCCESS
       }
     },
     computed: {
