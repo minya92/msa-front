@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="oc-action-block" v-if="status == 0">
-          <div class="oc-info">После отправки заказа наши менеджеры свяжутся с Вами с ближайшее время</div>
+          <div class="oc-info">После отправки заказа наши менеджеры свяжутся с Вами в ближайшее время</div>
           <div class="v-block">
             <label>ФИО</label>
             <text-field
