@@ -58,12 +58,13 @@
             />
           </div>
           <div class="v-flex">
-            <label>Email</label>
+            <label class="require">Email</label>
             <text-field
               v-model="userFields.email"
               name="email" 
               data-vv-as="Email"
               placeholder="useremail@mail.ru"
+              v-validate="'required'" 
               :message="errors.has('email') ? errors.first('email') : ''"
             />
           </div>
