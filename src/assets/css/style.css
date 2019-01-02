@@ -313,6 +313,11 @@ aside{
 	font-size: 20px;
 	padding: 20px 0 10px;
 }
+main {
+	overflow: hidden;
+	flex: 1;
+	position: relative;
+}
 .content-section{
 	overflow: hidden;
 	flex: 1;

@@ -1,7 +1,12 @@
 <template>
   <main-layout>
     <template v-if="product">
-      <image-sliders v-if="showImageSliders" :images="full_images" :currentImg="numCurrentImage" @close="showImageSliders = false"></image-sliders>
+      <image-sliders 
+        v-if="showImageSliders" 
+        :images="full_images" 
+        :currentImg="numCurrentImage" 
+        @close="showImageSliders = false"
+      ></image-sliders>
 
       <div class="content-fluid">
         <AddToCart v-if="showCart" @close="showCart = false" :product="product"></AddToCart>
@@ -32,7 +37,10 @@
             <template v-if='product.chars'>
               <div class="characteristic-block">
                 <h3>Характеристики</h3>
-                <div v-for="char in product.chars">{{char.char_name}}: <strong>{{char.char_value}}</strong></div>
+                <div 
+                  v-for="char in product.chars"
+                  :key="char.id"
+                >{{char.char_name}}: <strong>{{char.char_value}}</strong></div>
               </div>
             </template>
             <div>
@@ -51,7 +59,12 @@
         <div class="content-fluid product-compatibility">
           <h3>Совместимость</h3>
           <ul>
-            <li v-for="compatibility in product.compatibility">{{compatibility.mark_model_name}}</li>
+            <li 
+              v-for="compatibility in product.compatibility"
+              :key="compatibility.id"
+            >
+              {{ compatibility.mark_model_name }}
+            </li>
           </ul>
         </div>
       </template>

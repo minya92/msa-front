@@ -1,32 +1,37 @@
 <template>
   <main-layout>
     <div class="top__slider__cc">
-        <swiper class="main-slider" :options="swiperOption" ref="mainSwiper">
-          <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
-            <div class="top-slider-text-content">
-              <h2>{{ topSlider.headerText }}</h2>
-              <span>{{ topSlider.footerText }}</span>
-            </div>
-            <div class="transbackground"></div>
-            <img :src='topSlider.img'>
-          </swiper-slide>
-          <div class="models-top-slider">
-            <a class="models-top-slider-item"
-              v-for="(imgModel, index) in imgModels"
-              :key="index"
-              @click="bannerToCatalog({mark: imgModel.marks_models_id})"
-            >
-              <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
-            </a>
+      <swiper class="main-slider" :options="swiperOption" ref="mainSwiper">
+        <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
+          <div class="top-slider-text-content">
+            <h2>{{ topSlider.headerText }}</h2>
+            <span>{{ topSlider.footerText }}</span>
           </div>
-          <!--div class="swiper-button-prev" slot="button-prev" style=""></div>
-          <div class="swiper-button-next" slot="button-next" style=""></div-->
-        </swiper>
+          <div class="transbackground"></div>
+          <img :src='$SERVER_URL + topSlider.img'>
+        </swiper-slide>
+        <div class="models-top-slider">
+          <a class="models-top-slider-item"
+            v-for="(imgModel, index) in imgModels"
+            :key="index"
+            @click="bannerToCatalog({mark: imgModel.marks_models_id})"
+          >
+            <img :src="$SERVER_URL + imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
+          </a>
+        </div>
+        <!--div class="swiper-button-prev" slot="button-prev" style=""></div>
+        <div class="swiper-button-next" slot="button-next" style=""></div-->
+      </swiper>
     </div>
 
     <div class="container-fluid">
       <div class="category-menu">
-        <router-link class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id" :to="`/catalog/types=${catalog.id}`">
+        <router-link 
+          class="category-menu-item" 
+          v-for="catalog in catalogs" 
+          :key="catalog.id" 
+          :to="`/catalog/types=${catalog.id}`"
+        >
           <!--div class="category-menu-item"-->
             <img class="category-menu-item" :src="catalog.img">
             <h2 class="category-menu-item">{{ catalog.name }}</h2>
@@ -58,7 +63,7 @@
 <script>
   import MainLayout from '@/layouts/Main.vue'
   import 'swiper/dist/css/swiper.css'
-  const { swiper, swiperSlide } = require('vue-awesome-swiper').VueAwesomeSwiper
+  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import { getMarksForBaner } from '@/api/modules/types'
 
   export default {

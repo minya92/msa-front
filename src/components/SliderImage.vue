@@ -11,7 +11,6 @@
           v-for="(image, index) in images"
           v-if="current == index" 
           :src="image" 
-          :key="index"
           @click="plus"
         />
     </transition-group>

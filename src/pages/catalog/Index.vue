@@ -6,10 +6,10 @@
         <filter-model></filter-model>
       </aside>
 
-      <div>
+      <main>
         <catalog-section sortBlock></catalog-section>
         <!--<catalog-item-list :filter="filter" paginationBlock></catalog-item-list>-->
-      </div>
+      </main>
     </div>
     <div class="content-fluid">
       <recent-view></recent-view>
