@@ -10,7 +10,8 @@
         <img 
           v-for="(image, index) in images"
           v-if="current == index" 
-          :src="image" 
+          :src="image"
+          :key="image"
           @click="plus"
         />
     </transition-group>
