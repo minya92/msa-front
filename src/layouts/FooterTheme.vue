@@ -80,7 +80,7 @@
 				<div class="container-fluid footer-bottom__content">
 					<div class="fbox-lr">
 						<div class="fbox-l-container">
-							<a target="_blank" href="https://vk.com/msamoto"><img src="../assets/img/vk_grey.svg"></a>
+							<a target="_blank" href="https://vk.com/msamoto_official"><img src="../assets/img/vk_grey.svg"></a>
 							<a target="_blank" href="https://www.facebook.com/msamotoKT"><img src="../assets/img/fb_grey.svg"></a>
 							<a target="_blank" href="https://www.youtube.com/channel/UCAqrLCG9-BwvSQPqpyvqSqQ"><img src="../assets/img/youtube_grey.svg"></a>
 							<a target="_blank" href="https://www.instagram.com/msa_moto/"><img src="../assets/img/instagram_grey.svg"></a>
