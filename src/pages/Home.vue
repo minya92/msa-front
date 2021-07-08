@@ -1,304 +1,167 @@
 <template>
   <main-layout>
+    <div class="top__slider__cc">
+        <swiper class="main-slider" :options="swiperOption" ref="mainSwiper">
+          <swiper-slide v-for='(topSlider, index) in topSliders' :key="index">
+            <div class="top-slider-text-content">
+              <h2>{{ topSlider.headerText }}</h2>
+              <span>{{ topSlider.footerText }}</span>
+            </div>
+            <div class="transbackground"></div>
+            <img :src='topSlider.img'>
+          </swiper-slide>
+          <div class="models-top-slider">
+            <a class="models-top-slider-item"
+              v-for="(imgModel, index) in imgModels"
+              :key="index"
+              @click="bannerToCatalog({mark: imgModel.marks_models_id})"
+            >
+              <img :src="imgModel.full_image" :alt="imgModel.mm_name" :title="imgModel.mm_name">
+            </a>
+          </div>
+          <!--div class="swiper-button-prev" slot="button-prev" style=""></div>
+          <div class="swiper-button-next" slot="button-next" style=""></div-->
+        </swiper>
+    </div>
+
     <div class="container-fluid">
-      <swiper class="main-slider" :options="swiperOption">
-        <swiper-slide v-for='topSlider in topSliders'>
-          <div class="top-slider-text-content">
-            <h2>{{topSlider.headerText}}</h2>
-            <span>{{topSlider.footerText}}</span>
-          </div>
-          <div class="transbackground"></div>
-          <img :src='topSlider.img'>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-        <div class="models-top-slider">
-          <div class="models-top-slider-item" v-for="imgModel in imgModels">
-            <img :src=imgModel>
-          </div>
-        </div>
-      </swiper>
       <div class="category-menu">
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Наибольшущая подкатегория товара для всех</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
-        <div class="category-menu-item">
-          <h2>Категория</h2>
-          <ul>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-            <li>Подкатегория товара</li>
-            <li>Подкатегория</li>
-          </ul>
-        </div>
+        <router-link class="category-menu-item" v-for="catalog in catalogs" :key="catalog.id" :to="`/catalog/types=${catalog.id}`">
+          <!--div class="category-menu-item"-->
+            <img class="category-menu-item" :src="catalog.img">
+            <h2 class="category-menu-item">{{ catalog.name }}</h2>
+          <!--/div-->
+        </router-link>
       </div>
     </div>
 
-    <div class="home-box-with-slider" style="background: #771d22 url('img/bg_red_texture.jpg');">
-      <h2>Найти запчасти по производителю</h2>
+    <!--div style="background: #771d22 url('img/bg_red_texture.jpg'); background-size:100% 100%">
+      <div class="container-fluid">
+        <div class="home-box-with-slider">
+          <h2>Поиск по бренду</h2>
 
-      <swiper class="main-bot-slider" :options="swiperOptionModels">
-        <swiper-slide v-for='imgModelWhite in imgModelsWhite'>
-          <img :src='imgModelWhite'>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
-    </div>
+          <swiper class="main-bot-slider" :options="swiperOptionModels">
+            <swiper-slide v-for='(imgModelWhite, index) in imgModelsWhite' :key="index">
+              <router-link :to="{name:'catalog', query: {mark: imgModelWhite.marks_models_id}}" >
+                <img :src="imgModelWhite.full_image" :alt="imgModelWhite.mm_name" :title="imgModelWhite.mm_name">
+              </router-link>
+            </swiper-slide>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
+        </div>
+      </div>
+    </div-->
   </main-layout>
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '@/layouts/Main.vue'
+  import 'swiper/dist/css/swiper.css'
+  const { swiper, swiperSlide } = require('vue-awesome-swiper').VueAwesomeSwiper
+  import { getMarksForBaner } from '@/api/modules/types'
 
   export default {
     components: {
-      MainLayout
+      MainLayout, swiper, swiperSlide
     },
     data() {
       return {
-        imgModels: ['img/honda_color.png', 
-        'img/bmw_color.png', 
-        'img/yamaha_color.png',
-        'img/suzuki_color.png', 
-        'img/ducati_color.png',
-        'img/ktm_color.png'
-        ],
-        imgModelsWhite: ['img/slider/ducati_white.png',
-        'img/slider/kawasaki_white.png',
-        'img/slider/honda_white.png', 
-        'img/slider/bmw_white.png',
-        'img/slider/suzuki_white.png',  
-        'img/slider/yamaha_white.png',
-        'img/slider/ktm_white.png'
-        ],
+        catalogs: [],
+        imgModels: [],
+        imgModelsWhite: [],
         topSliders: [
-        {
-          headerText: 'Мотоэкипировка',
-          footerText: 'В наличии и под заказ любые комплектующие для вашего мотоцикла. Для постоянных покупателей действуют скидки и промо-коды',
-          img: 'img/slider/slider_pic.jpg'
-        },
-        {
-          headerText: 'Экипировка',
-          footerText: 'В наличии и под заказ любые комплектующие. Для постоянных покупателей действуют скидки и промо-коды.',
-          img: 'img/slider/moto_wall1.jpg'
-        },
-        {
-          headerText: 'Мото',
-          footerText: 'Для постоянных покупателей действуют скидки и промо-коды. В наличии и под заказ любые комплектующие для вашего мотоцикла.',
-          img: 'img/slider/moto-wall2.jpg'
-        },
+          {
+            name: '1',
+            headerText: 'Мотопластик',
+            footerText: 'Лучший мотопластик в Китае, лучшая цена в России! Найдёте дешевле - сделаем скидку!',
+            img: 'img/slider/slider_pic.jpg',
+            url: '/catalog/types=149996868299000'
+          },
+          {
+            name: '2',
+            headerText: 'Новое поколение фар',
+            footerText: 'Единственный диллер в России',
+            img: 'img/slider/moto.jpg',
+            url: '/catalog/types=150581197408400'
+          }
         ],
         swiperOption: {
-          autoplay: 3000,
-          grabCursor : true,
+          autoplay: {
+            delay: 5000,
+          },
+          grabCursor : false,
           autoHeight: true,
-          prevButton:'.swiper-button-prev',
-          nextButton:'.swiper-button-next',
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          },
           effect: 'fade',
           loop: true,
         },
         swiperOptionModels: {
-          autoplay: 3000,
+          autoplay: {
+            delay: 5000,
+          },
           grabCursor : true,
           slidesPerView: 3,
           slidesPerColumn: 2,
           spaceBetween: 30,
+          slidesPerGroup: 1,
           prevButton:'.swiper-button-prev',
           nextButton:'.swiper-button-next',
-          loop: true
+          loop: true,
         }
       }
     },
+    computed: {
+      swiper() {
+        return this.$refs.mainSwiper.swiper
+      }
+    },
     methods: {
+      bannerToCatalog(query) {
+        this.$router.push({
+          path: this.topSliders[this.swiper.activeIndex-1].url,
+          query
+        })
+      },
+      getCatalogs: function(){
+        this.$API.get('getTypes').then(r => {
+          var catalogs = [];
+          for (var i = 0; i < r.data.data.length; i++){
+            var item = r.data.data[i];
+            catalogs.push({
+              id: item.items_types_id,
+              name: item.type_description,
+              img: item.full_image
+            });
+          }
+          this.catalogs = catalogs;
+        })
+      },
+      getMarksBannerTop: function(){
+        getMarksForBaner(1).then(r => {
+          this.imgModels = r;
+        });
+      },
+      getMarksBannerBottom: function(){
+        getMarksForBaner(2).then(r => {
+          this.imgModelsWhite = r;
+        });
+      },
+      isInteger(value) {
+        return (value ^ 0) == value;
+      }
     },
     mounted() {
+      this.getMarksBannerTop();
+      this.getMarksBannerBottom();
+      this.getCatalogs();
+
+      if (this.isInteger(this.$route.query.banner) && this.$route.query.banner > 1 && this.topSliders.length >= this.$route.query.banner) {
+        this.swiper.slideTo(this.$route.query.banner, 0, true);
+      }
     }
   }
 </script>
-
-<style scoped>
-  .main-slider{
-    max-height: 540px;
-  }
-  .swiper-slide img {
-   width: auto;
-   height: auto;
-   max-width: 100%;
-   max-height: 100%;
- }
- .category-menu{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  max-width: 1160px;
-  margin: 45px auto;
-}
-.category-menu-item{
-  flex: 1;
-  padding-right: 15px;
-}
-.category-menu-item:last-child{
-  padding-right: 0;
-}
-.category-menu-item h2{
-  font-size: 20px;
-}
-.category-menu-item ul li{
-  font-size: 14px;
-  list-style: none;
-  margin-top: 12px;
-}
-.home-box-with-slider{
-  height: 510px;
-  width: 100%;
-}
-.home-box-with-slider h2{
-  padding-left: 190px;
-  padding-top: 70px;
-  font-size: 18px;
-  text-transform: uppercase;
-  color: #fff;
-}
-.models-top-slider{
-  position: absolute;
-  top: 360px;
-  display: flex;
-  list-style: none;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  z-index: 2;
-}
-.models-top-slider .models-top-slider-item{
-  width: 160px;
-  height: 120px;
-  background: #fff;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  margin-right: 40px;
-}
-.models-top-slider .models-top-slider-item:last-child{
-  margin-right: 0px;
-}
-.top-slider-text-content{
-  position: absolute;
-  z-index: 2;
-  top: 150px;
-  text-align: center;
-  color: #fff;
-  max-width: 600px;
-  margin: auto;
-  left: 0;
-  right: 0;
-  padding: 20px;
-}
-.top-slider-text-content h2{
-  font-size: 48px;
-  text-transform: uppercase;
-  text-align: center;
-  padding-bottom: 20px;
-}
-.top-slider-text-content>span{
-  font-size: 20px;
-}
-.main-bot-slider{
-  width: 1200px;
-  margin-top: 50px;
-}
-.main-bot-slider .swiper-slide{
-  text-align: center;
-  padding: 0 40px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 130px;
-}
-.transbackground{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 1;
-}
-</style>

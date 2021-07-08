@@ -1,24 +1,40 @@
 import Vue from 'vue'
 import axios from 'axios';
 
-//
-export const apiHTTP = axios.create({
-	baseURL: 'http://msa.4rp.org/api',
-	timeout: 1000,
+const baseURL = (process.env.NODE_ENV === 'development')
+? 'https://msamoto.ru'
+: 'https://' + window.location.host;
+
+export const API = axios.create({
+	baseURL: baseURL + '/api',
+  withCredentials: true,
+  headers: {
+  	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+  }
 });
-apiHTTP.install = function(){
-  Object.defineProperty(Vue.prototype, '$apiHTTP', {
-    get () { return apiHTTP }
+export const AUTH_URL = axios.create({
+	baseURL: baseURL + '/auth',
+  withCredentials: true,
+  headers: {
+  	'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+  }
+});
+API.install = function(){
+  Object.defineProperty(Vue.prototype, '$API', {
+    get () { return API }
+ })
+  Object.defineProperty(Vue.prototype, '$AUTH_URL', {
+    get () { return AUTH_URL }
  })
 }
-Vue.use(apiHTTP);
+Vue.use(API);
 
 //
-Vue.prototype.$authenticated = false
+Vue.prototype.$SERVER_URL = baseURL + '/';
 
 export default {
 	check: function(context) {
-		apiHTTP.get('/api/v1/user').then(response => {
+		API.get('/api/v1/user').then(response => {
 			if (response.body.user != null) {
 				this.authenticated = true
 			}

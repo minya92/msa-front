@@ -1,7 +1,8 @@
 <template>
   <transition name="modal-fade" mode="out-in">
-    <div class="modal-frame">
-      <div class="modal-content-section">
+    <div class="modal-frame" @click.prevent="$emit('close')">
+      <div class="modal-content-section" @click.stop>
+        <a class="modal_box_close" @click="$emit('close')"></a>
         <slot></slot>
       </div>
     </div>
@@ -29,6 +30,10 @@
     text-align: center;
     z-index: 100;
   }
+  .modal-frame img{
+    max-width: 100%;
+    max-height: 100%;
+  }
   .modal-frame:after {
     display: inline-block;
     height: 100%;
@@ -44,7 +49,10 @@
     vertical-align: middle;    
     text-align: left;
     padding: 20px 40px;
-    width: 420px;
+    /*width: 420px;*/
+    max-height: 96%;
+    max-width: 96%;
+    overflow: auto;
   }
   .modal_box_close{
     background: url(../assets/img/close.svg);
@@ -61,52 +69,44 @@
     padding: 12px 0;
     text-align: center;
   }
-  .span-grey{
-    font-size: 14px;
-    color: #999;
-    text-align: center;
-  }
-  .text-error{
-    font-size: 12px;
-    color: #999;
-  }
   .modal-frame input{
-    width: 340px;
-    height: 30px;
+    width: 100%;
     display: block;
-    padding: 0 10px;
+    padding: 8px 10px;
+  }
+  .modal-frame button{
+    width: 100%;
+    display: block;
+    padding: 8px 10px;
   }
   .modal-frame input[type='text']{
-    padding: 0 15px;
     font-size: 14px;
     letter-spacing: 1px;
   }
   .modal-frame input[type='password']{
-    padding: 0 15px;
     font-size: 30px;
     letter-spacing: 5px;
   }
-  .modal-frame input[type='button']{
-    border: 0;
-    background: #801f25;
+  .modal-frame button{
     text-transform: uppercase;
     font-size: 14px;
-    color: #fff;
-    outline: 0;
-    display: block;
     margin: 10px 0;
   }
   .modal-frame label{
     display: block;
-    padding-bottom: 5px; 
   }
   .form-group{
     margin: 5px 0;
   }
-  .modal-fade-enter-active, .modal-fade-leave-active {
-    transition: opacity .7s
-  }
-  .modal-fade-enter, .modal-fade-leave-to {
-    opacity: 0
+  @media screen and (max-width: 375px) {
+    .modal-content-section{
+      padding: 10px;
+      max-height: 96%;
+      width: 90%;
+    }
+    .modal-frame .head-text{
+      font-size: 18px;
+      padding: 10px 0;
+    }
   }
 </style>

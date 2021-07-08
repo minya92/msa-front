@@ -1,6 +1,6 @@
 <template>
   <div id="errorBox">
-    <img src="../assets/img/404_pic.png">
+    <img src="img/404_pic.png">
     <span>Запрашиваемый документ<br>не найден</span>
   </div>
 </template>
